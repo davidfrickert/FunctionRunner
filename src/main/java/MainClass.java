@@ -1,16 +1,19 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import isolateutils.conversion.TypeConversionRegistry;
 import org.graalvm.nativeimage.*;
 import org.graalvm.nativeimage.c.function.CEntryPoint;
 
 import java.lang.management.ManagementFactory;
 import java.math.BigDecimal;
+import java.nio.ByteBuffer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static isolateutils.conversion.TypeConversionRegistry.*;
 import static org.graalvm.nativeimage.c.function.CEntryPoint.IsolateThreadContext;
 
-public class Server {
+public class MainClass {
 
     private static final int canYouSeeMeLol = 1;
 
@@ -26,15 +29,13 @@ public class Server {
         ObjectHandles.getGlobal().destroy(sharedHandle);
         printMemoryUsage("Rendering isolate final memory usage: ", initialMemory);
 
-        String result = String.join("+",
-                Stream.of(
-                        sharedStr,
-                        unwrapHandle(a),
-                        unwrapHandle(b),
-                        String.valueOf(canYouSeeMeLol)
-                ).collect(Collectors.toUnmodifiableList())
-        );
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode json = mapper.createObjectNode();
 
+        json.put("str1", unwrapHandle(a));
+        json.put("str2", unwrapHandle(b));
+
+        String result = json.toPrettyString();
         return get(father, result).orElseThrow();
 
     }
