@@ -1,42 +1,39 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import isolateutils.conversion.TypeConversionRegistry;
-import org.graalvm.nativeimage.*;
+import isolateutils.registry.TypeConversionRegistry;
+import org.graalvm.nativeimage.CurrentIsolate;
+import org.graalvm.nativeimage.IsolateThread;
+import org.graalvm.nativeimage.Isolates;
+import org.graalvm.nativeimage.ObjectHandle;
+import org.graalvm.nativeimage.ObjectHandles;
 import org.graalvm.nativeimage.c.function.CEntryPoint;
 
 import java.lang.management.ManagementFactory;
 import java.math.BigDecimal;
-import java.nio.ByteBuffer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static isolateutils.conversion.TypeConversionRegistry.*;
 import static org.graalvm.nativeimage.c.function.CEntryPoint.IsolateThreadContext;
 
 public class MainClass {
 
-    private static final int canYouSeeMeLol = 1;
+    private TypeConversionRegistry registry = TypeConversionRegistry.getInstance();
+
+    private <T> ObjectHandle get(IsolateThread targetIsolate, T t) { return registry.get(targetIsolate, t); }
 
     @CEntryPoint
-    private static ObjectHandle thisCodeIsolates(@IsolateThreadContext IsolateThread ctx,
-                                                 IsolateThread father,
-                                                 ObjectHandle sharedHandle,
-                                                 ObjectHandle a,
-                                                 ObjectHandle b) {
-        long initialMemory = printMemoryUsage("isolate initial memory usage: ", 0);
-
-        String sharedStr = ObjectHandles.getGlobal().get(sharedHandle);
-        ObjectHandles.getGlobal().destroy(sharedHandle);
-        printMemoryUsage("Rendering isolate final memory usage: ", initialMemory);
+    private static ObjectHandle thisCodeIsolates(@IsolateThreadContext IsolateThread isolate,
+                                                 IsolateThread parentIsolate,
+                                                 ObjectHandle string1,
+                                                 ObjectHandle string2) {
+        TypeConversionRegistry registry = TypeConversionRegistry.getInstance();
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode json = mapper.createObjectNode();
 
-        json.put("str1", unwrapHandle(a));
-        json.put("str2", unwrapHandle(b));
+        json.put("str1", unwrapHandle(string1));
+        json.put("str2", unwrapHandle(string2));
 
         String result = json.toPrettyString();
-        return get(father, result).orElseThrow();
+        return registry.get(parentIsolate, result);
 
     }
 
@@ -46,21 +43,20 @@ public class MainClass {
         return rvalue.toString();
     }
 
-    public static String doInIsolation(String a, Object b) {
+    public String doInIsolation(String a, Object b) {
         long initialMemory = ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed();
-        IsolateThread isolate = Isolates.createIsolate(Isolates.CreateIsolateParameters.getDefault());
+        IsolateThread newIsolate = Isolates.createIsolate(Isolates.CreateIsolateParameters.getDefault());
         IsolateThread currentThread = CurrentIsolate.getCurrentThread();
-        String notBatata = "cenoura";
 
-        ObjectHandle stringHandle = get(isolate, notBatata).orElseThrow();
-        ObjectHandle result = thisCodeIsolates(isolate, currentThread, stringHandle,
-                get(isolate, a).orElseThrow(),
-                get(isolate, b.toString()).orElseThrow()
+        ObjectHandle result = thisCodeIsolates(newIsolate,
+                currentThread,
+                get(newIsolate, a),
+                get(newIsolate, b.toString())
         );
         String theRealResult = ObjectHandles.getGlobal().get(result);
         ObjectHandles.getGlobal().destroy(result);
 
-        Isolates.tearDownIsolate(isolate);
+        Isolates.tearDownIsolate(newIsolate);
 
         printMemoryUsage("Memory usage after isolate: ", initialMemory);
 
@@ -77,7 +73,8 @@ public class MainClass {
     }
 
     public static void main(String[] args) {
-        String rst = doInIsolation("aaaaaaaa", new BigDecimal("1.0964"));
+        MainClass m = new MainClass();
+        String rst = m.doInIsolation("aaaaaaaa", new BigDecimal("1.0964"));
         System.out.println(rst);
     }
 
