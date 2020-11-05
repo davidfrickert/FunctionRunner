@@ -1,6 +1,6 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import isolateutils.registry.TypeConversionRegistry;
+import isolateutils.conversion.registry.TypeConversionRegistry;
 import org.graalvm.nativeimage.CurrentIsolate;
 import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.Isolates;
@@ -11,6 +11,7 @@ import org.graalvm.nativeimage.c.function.CEntryPoint;
 import java.lang.management.ManagementFactory;
 import java.math.BigDecimal;
 
+import static isolateutils.handles.HandleUnwrapUtils.str;
 import static org.graalvm.nativeimage.c.function.CEntryPoint.IsolateThreadContext;
 
 public class MainClass {
@@ -20,48 +21,38 @@ public class MainClass {
     private <T> ObjectHandle get(IsolateThread targetIsolate, T t) { return registry.get(targetIsolate, t); }
 
     @CEntryPoint
-    private static ObjectHandle thisCodeIsolates(@IsolateThreadContext IsolateThread isolate,
-                                                 IsolateThread parentIsolate,
-                                                 ObjectHandle string1,
-                                                 ObjectHandle string2) {
+    private static ObjectHandle createJson(@IsolateThreadContext IsolateThread isolate,
+                                           IsolateThread parentIsolate,
+                                           ObjectHandle string1,
+                                           ObjectHandle string2) {
         TypeConversionRegistry registry = TypeConversionRegistry.getInstance();
 
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode json = mapper.createObjectNode();
 
-        json.put("str1", unwrapHandle(string1));
-        json.put("str2", unwrapHandle(string2));
+        json.put("str1", str(string1));
+        json.put("str2", str(string2));
 
         String result = json.toPrettyString();
         return registry.get(parentIsolate, result);
 
     }
 
-    private static String unwrapHandle(ObjectHandle handle) {
-        Object rvalue = ObjectHandles.getGlobal().get(handle);
-        ObjectHandles.getGlobal().destroy(handle);
-        return rvalue.toString();
-    }
+    public String createJson(String a, Object b) {
+        IsolateThread childIsolate = Isolates.createIsolate(Isolates.CreateIsolateParameters.getDefault());
+        IsolateThread currentIsolate = CurrentIsolate.getCurrentThread();
 
-    public String doInIsolation(String a, Object b) {
-        long initialMemory = ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed();
-        IsolateThread newIsolate = Isolates.createIsolate(Isolates.CreateIsolateParameters.getDefault());
-        IsolateThread currentThread = CurrentIsolate.getCurrentThread();
-
-        ObjectHandle result = thisCodeIsolates(newIsolate,
-                currentThread,
-                get(newIsolate, a),
-                get(newIsolate, b.toString())
+        ObjectHandle result = createJson(childIsolate,
+                currentIsolate,
+                get(childIsolate, a),
+                get(childIsolate, b.toString())
         );
-        String theRealResult = ObjectHandles.getGlobal().get(result);
+        String rvalue = ObjectHandles.getGlobal().get(result);
+
         ObjectHandles.getGlobal().destroy(result);
+        Isolates.tearDownIsolate(childIsolate);
 
-        Isolates.tearDownIsolate(newIsolate);
-
-        printMemoryUsage("Memory usage after isolate: ", initialMemory);
-
-
-        return theRealResult;
+        return rvalue;
     }
 
 
@@ -74,7 +65,7 @@ public class MainClass {
 
     public static void main(String[] args) {
         MainClass m = new MainClass();
-        String rst = m.doInIsolation("aaaaaaaa", new BigDecimal("1.0964"));
+        String rst = m.createJson("aaaaaaaa", new BigDecimal("1.0964"));
         System.out.println(rst);
     }
 

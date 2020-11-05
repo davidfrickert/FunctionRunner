@@ -1,4 +1,4 @@
-package isolateutils.conversion.def;
+package isolateutils.conversion;
 
 import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.ObjectHandle;
@@ -7,13 +7,19 @@ import org.graalvm.nativeimage.c.function.CEntryPoint;
 import org.graalvm.nativeimage.c.type.CCharPointer;
 import org.graalvm.nativeimage.c.type.CTypeConversion;
 
-public class StringConversionStatic {
-    
-    public static ObjectHandle createHandle(IsolateThread targetIsolate,
-                                                String s) {
+public class StringConverter implements TypeConverter<String> {
+
+    @Override
+    public ObjectHandle createHandle(IsolateThread targetIsolate,
+                                            String s) {
         try (CTypeConversion.CCharPointerHolder cStringHolder = CTypeConversion.toCString(s)) {
             return toJava(targetIsolate, cStringHolder.get());
         }
+    }
+
+    @Override
+    public Class<String> getType() {
+        return String.class;
     }
 
     @CEntryPoint

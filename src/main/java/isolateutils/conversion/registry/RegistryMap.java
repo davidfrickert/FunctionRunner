@@ -1,7 +1,7 @@
-package isolateutils.registry;
+package isolateutils.conversion.registry;
 
-import isolateutils.conversion.StringConversion;
-import isolateutils.conversion.TypeConversion;
+import isolateutils.conversion.StringConverter;
+import isolateutils.conversion.TypeConverter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,28 +11,28 @@ public class RegistryMap {
     private final Map<Class<?>, Holder<?>> registry = new HashMap<>();
 
     public RegistryMap() {
-        put(Holder.create(new StringConversion()));
+        put(Holder.create(new StringConverter()));
     }
 
     private static class Holder<T> {
         private final Class<T> type;
-        private final TypeConversion<T> typeConversion;
+        private final TypeConverter<T> typeConverter;
 
-        public Holder(Class<T> type, TypeConversion<T> typeConversion) {
+        public Holder(Class<T> type, TypeConverter<T> typeConverter) {
             this.type = type;
-            this.typeConversion = typeConversion;
+            this.typeConverter = typeConverter;
         }
 
-        public static <X> Holder<X> create(TypeConversion<X> typeConversion) {
-            return new Holder<>(typeConversion.getType(), typeConversion);
+        public static <X> Holder<X> create(TypeConverter<X> typeConverter) {
+            return new Holder<>(typeConverter.getType(), typeConverter);
         }
 
-        public TypeConversion<T> get() {
-            return typeConversion;
+        public TypeConverter<T> get() {
+            return typeConverter;
         }
     }
 
-    public <T> Optional<TypeConversion<T>> get(T t) {
+    public <T> Optional<TypeConverter<T>> get(T t) {
         final var result = (Holder<T>) registry.get(t.getClass());
         return Optional.ofNullable(result.get());
     }

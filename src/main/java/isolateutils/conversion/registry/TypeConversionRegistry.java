@@ -1,4 +1,4 @@
-package isolateutils.registry;
+package isolateutils.conversion.registry;
 
 import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.ObjectHandle;
