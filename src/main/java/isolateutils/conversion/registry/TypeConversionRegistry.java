@@ -18,7 +18,7 @@ public class TypeConversionRegistry {
         this.registry = new RegistryMap();
     }
 
-    public <T> ObjectHandle convertToCType(IsolateThread targetIsolate, T t) {
+    public <T> ObjectHandle createHandle(IsolateThread targetIsolate, T t) {
         final var typeConversion = registry.get(t);
         return typeConversion.orElseThrow().createHandle(targetIsolate, t);
     }
