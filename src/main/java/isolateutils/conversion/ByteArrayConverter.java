@@ -10,10 +10,14 @@ import org.graalvm.word.Pointer;
 
 import java.nio.ByteBuffer;
 
-public class ByteArrayConverter implements TypeConverter<Byte[]> {
+public class ByteArrayConverter implements TypeConverter<byte[]> {
 
     @Override
-    public ObjectHandle createHandle(IsolateThread targetIsolate, Byte[] bytes) {
+    public ObjectHandle createHandle(IsolateThread targetIsolate, byte[] bytes) {
+        /*
+        Holder for a pinned object, such that the object doesn't move until the pin is removed.
+        The garbage collector treats pinned object specially to ensure that they are not moved or discarded.
+        */
         try (PinnedObject pin = PinnedObject.create(bytes)) {
             return toJava(targetIsolate, pin.addressOfArrayElement(0), bytes.length);
         }
@@ -29,7 +33,7 @@ public class ByteArrayConverter implements TypeConverter<Byte[]> {
     }
 
     @Override
-    public Class<Byte[]> getType() {
-        return Byte[].class;
+    public Class<byte[]> getType() {
+        return byte[].class;
     }
 }
