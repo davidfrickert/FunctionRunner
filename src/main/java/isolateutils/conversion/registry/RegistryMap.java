@@ -1,5 +1,6 @@
 package isolateutils.conversion.registry;
 
+import isolateutils.conversion.ByteArrayConverter;
 import isolateutils.conversion.StringConverter;
 import isolateutils.conversion.TypeConverter;
 
@@ -12,6 +13,7 @@ public class RegistryMap {
 
     public RegistryMap() {
         put(Holder.create(new StringConverter()));
+        put(Holder.create(new ByteArrayConverter()));
     }
 
     private static class Holder<T> {
@@ -34,15 +36,14 @@ public class RegistryMap {
 
     public <T> Optional<TypeConverter<T>> get(T t) {
         final var result = (Holder<T>) registry.get(t.getClass());
-        return Optional.ofNullable(result.get());
+        if (result == null)
+            return Optional.empty();
+        else
+            return Optional.of(result.get());
     }
 
     public void put(Holder<?> holder) {
         registry.put(holder.type, holder);
-    }
-
-    public static void main(String[] args) {
-        new RegistryMap().get(String.class);
     }
 }
 
