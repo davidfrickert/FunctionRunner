@@ -1,6 +1,7 @@
 package isolateutils.conversion.registry;
 
 import isolateutils.conversion.TypeConverter;
+import isolateutils.handles.TypedHandle;
 import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.ObjectHandle;
 
@@ -21,7 +22,7 @@ public class TypeConversionRegistry {
         this.registry = new RegistryMap();
     }
 
-    public <T> ObjectHandle convertToCType(IsolateThread targetIsolate, T t) {
+    public <T> TypedHandle<T> convertToCType(IsolateThread targetIsolate, T t) {
         final var typeConversion = registry.get(t);
         return typeConversion.orElseThrow().createHandle(targetIsolate, t);
     }

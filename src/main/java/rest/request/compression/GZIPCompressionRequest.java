@@ -2,6 +2,7 @@ package rest.request.compression;
 
 import isolateutils.conversion.registry.TypeConversionRegistry;
 import isolateutils.handles.HandleUnwrapUtils;
+import isolateutils.handles.TypedHandle;
 import org.graalvm.nativeimage.CurrentIsolate;
 import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.Isolates;
@@ -31,13 +32,14 @@ public class GZIPCompressionRequest {
         IsolateThread requestIsolate = Isolates.createIsolate(CreateIsolateParameters.getDefault());
 
         // convert file byte[] to c type
+        final TypedHandle<byte[]> typedHandle = registry.convertToCType(
+                requestIsolate,
+                fis.readAllBytes()
+        );
         // all data (passed to / received from) isolate must be C type in ObjectHandle
         final ObjectHandle handle = compressFileInIsolate(requestIsolate,
                 currentIsolateThread,
-                registry.convertToCType(
-                        requestIsolate,
-                        fis.readAllBytes()
-                )
+                typedHandle.handle
         );
 
         Isolates.tearDownIsolate(requestIsolate);
@@ -61,7 +63,7 @@ public class GZIPCompressionRequest {
         return getRegistry().convertToCType(
                 parentIsolate,
                 out.toByteArray()
-        );
+        ).handle;
     }
 
 
