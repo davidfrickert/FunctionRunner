@@ -1,0 +1,152 @@
+[Heap policy parameters: 
+  YoungGenerationSize: 268435456
+      MaximumHeapSize: 13441128800
+      MinimumHeapSize: 536870912
+     AlignedChunkSize: 1048576
+  LargeArrayThreshold: 131072]
+[[126 msec:  GC: before  epoch: 1  cause: SometimesCollectOnAllocation]
+[158 msec: Incremental GC (SometimesCollectOnAllocation) 261110K->1019K, 0.0313262 secs]
+ [158 msec:  GC: after   epoch: 1  cause: SometimesCollectOnAllocation  policy: by time  type: incremental
+  collection time: 31326236 nanoSeconds]]
+[[752 msec:  GC: before  epoch: 2  cause: SometimesCollectOnAllocation]
+[995 msec: Full GC (SometimesCollectOnAllocation) 262129K->1019K, 0.2424208 secs]
+ [995 msec:  GC: after   epoch: 2  cause: SometimesCollectOnAllocation  policy: by time  type: complete
+  collection time: 242420879 nanoSeconds]]
+[[2171 msec:  GC: before  epoch: 3  cause: SometimesCollectOnAllocation]
+[2276 msec: Incremental GC (SometimesCollectOnAllocation) 262129K->1019K, 0.1049281 secs]
+ [2276 msec:  GC: after   epoch: 3  cause: SometimesCollectOnAllocation  policy: by time  type: incremental
+  collection time: 104928172 nanoSeconds]]
+java.io.IOException: unexpected end of stream on http://localhost:9000/...
+	at okhttp3.internal.http1.Http1ExchangeCodec.readResponseHeaders(Http1ExchangeCodec.kt:202)
+	at okhttp3.internal.connection.Exchange.readResponseHeaders(Exchange.kt:106)
+	at okhttp3.internal.http.CallServerInterceptor.intercept(CallServerInterceptor.kt:79)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:34)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall.execute(RealCall.kt:154)
+	at io.minio.MinioClient.execute(MinioClient.java:647)
+	at io.minio.MinioClient.execute(MinioClient.java:563)
+	at io.minio.MinioClient.executeGet(MinioClient.java:822)
+	at io.minio.MinioClient.getObject(MinioClient.java:1022)
+	at rest.request.compression.SleepIsolate.execute(SleepIsolate.java:46)
+Caused by: java.io.EOFException: \n not found: limit=0 content=…
+	at okio.RealBufferedSource.readUtf8LineStrict(RealBufferedSource.kt:348)
+	at okhttp3.internal.http1.HeadersReader.readLine(HeadersReader.kt:29)
+	at okhttp3.internal.http1.Http1ExchangeCodec.readResponseHeaders(Http1ExchangeCodec.kt:178)
+	... 18 more
+java.io.IOException: unexpected end of stream on http://localhost:9000/...
+	at okhttp3.internal.http1.Http1ExchangeCodec.readResponseHeaders(Http1ExchangeCodec.kt:202)
+	at okhttp3.internal.connection.Exchange.readResponseHeaders(Exchange.kt:106)
+	at okhttp3.internal.http.CallServerInterceptor.intercept(CallServerInterceptor.kt:79)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:34)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall.execute(RealCall.kt:154)
+	at io.minio.MinioClient.execute(MinioClient.java:647)
+	at io.minio.MinioClient.getRegion(MinioClient.java:799)
+	at io.minio.MinioClient.execute(MinioClient.java:567)
+	at io.minio.MinioClient.executeGet(MinioClient.java:822)
+	at io.minio.MinioClient.getObject(MinioClient.java:1022)
+	at rest.request.compression.SleepIsolate.execute(SleepIsolate.java:46)
+Caused by: java.io.EOFException: \n not found: limit=0 content=…
+	at okio.RealBufferedSource.readUtf8LineStrict(RealBufferedSource.kt:348)
+	at okhttp3.internal.http1.HeadersReader.readLine(HeadersReader.kt:29)
+	at okhttp3.internal.http1.Http1ExchangeCodec.readResponseHeaders(Http1ExchangeCodec.kt:178)
+	... 19 more
+java.io.IOException: unexpected end of stream on http://localhost:9000/...
+	at okhttp3.internal.http1.Http1ExchangeCodec.readResponseHeaders(Http1ExchangeCodec.kt:202)
+	at okhttp3.internal.connection.Exchange.readResponseHeaders(Exchange.kt:106)
+	at okhttp3.internal.http.CallServerInterceptor.intercept(CallServerInterceptor.kt:79)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:34)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall.execute(RealCall.kt:154)
+	at io.minio.MinioClient.execute(MinioClient.java:647)
+	at io.minio.MinioClient.getRegion(MinioClient.java:799)
+	at io.minio.MinioClient.execute(MinioClient.java:567)
+	at io.minio.MinioClient.executeGet(MinioClient.java:822)
+	at io.minio.MinioClient.getObject(MinioClient.java:1022)
+	at rest.request.compression.SleepIsolate.execute(SleepIsolate.java:46)
+Caused by: java.io.EOFException: \n not found: limit=0 content=…
+	at okio.RealBufferedSource.readUtf8LineStrict(RealBufferedSource.kt:348)
+	at okhttp3.internal.http1.HeadersReader.readLine(HeadersReader.kt:29)
+	at okhttp3.internal.http1.Http1ExchangeCodec.readResponseHeaders(Http1ExchangeCodec.kt:178)
+	... 19 more
+java.io.IOException: unexpected end of stream on http://localhost:9000/...
+	at okhttp3.internal.http1.Http1ExchangeCodec.readResponseHeaders(Http1ExchangeCodec.kt:202)
+	at okhttp3.internal.connection.Exchange.readResponseHeaders(Exchange.kt:106)
+	at okhttp3.internal.http.CallServerInterceptor.intercept(CallServerInterceptor.kt:79)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:34)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall.execute(RealCall.kt:154)
+	at io.minio.MinioClient.execute(MinioClient.java:647)
+	at io.minio.MinioClient.getRegion(MinioClient.java:799)
+	at io.minio.MinioClient.execute(MinioClient.java:567)
+	at io.minio.MinioClient.executeGet(MinioClient.java:822)
+	at io.minio.MinioClient.getObject(MinioClient.java:1022)
+	at rest.request.compression.SleepIsolate.execute(SleepIsolate.java:46)
+Caused by: java.io.EOFException: \n not found: limit=0 content=…
+	at okio.RealBufferedSource.readUtf8LineStrict(RealBufferedSource.kt:348)
+	at okhttp3.internal.http1.HeadersReader.readLine(HeadersReader.kt:29)
+	at okhttp3.internal.http1.Http1ExchangeCodec.readResponseHeaders(Http1ExchangeCodec.kt:178)
+	... 19 more
+[[10604 msec:  GC: before  epoch: 4  cause: SometimesCollectOnAllocation]
+[10607 msec: Incremental GC (SometimesCollectOnAllocation) 262129K->1019K, 0.0025091 secs]
+ [10607 msec:  GC: after   epoch: 4  cause: SometimesCollectOnAllocation  policy: by time  type: incremental
+  collection time: 2509136 nanoSeconds]]
+[[15074 msec:  GC: before  epoch: 5  cause: SometimesCollectOnAllocation]
+[15077 msec: Incremental GC (SometimesCollectOnAllocation) 262129K->1019K, 0.0030561 secs]
+ [15077 msec:  GC: after   epoch: 5  cause: SometimesCollectOnAllocation  policy: by time  type: incremental
+  collection time: 3056102 nanoSeconds]]
+[[31843 msec:  GC: before  epoch: 6  cause: SometimesCollectOnAllocation]
+[31847 msec: Incremental GC (SometimesCollectOnAllocation) 262129K->1019K, 0.0032895 secs]
+ [31847 msec:  GC: after   epoch: 6  cause: SometimesCollectOnAllocation  policy: by time  type: incremental
+  collection time: 3289549 nanoSeconds]]
+[[39618 msec:  GC: before  epoch: 7  cause: SometimesCollectOnAllocation]
+[39622 msec: Incremental GC (SometimesCollectOnAllocation) 262129K->1019K, 0.0037987 secs]
+ [39622 msec:  GC: after   epoch: 7  cause: SometimesCollectOnAllocation  policy: by time  type: incremental
+  collection time: 3798720 nanoSeconds]]
+PrintGCSummary: YoungGenerationSize: 268435456
+PrintGCSummary: MinimumHeapSize: 536870912
+PrintGCSummary: MaximumHeapSize: 13441128800
+PrintGCSummary: AlignedChunkSize: 1048576
+PrintGCSummary: CollectedTotalChunkBytes: 1870592040
+PrintGCSummary: CollectedTotalObjectBytes: 609472
+PrintGCSummary: AllocatedNormalChunkBytes: 2100368840
+PrintGCSummary: AllocatedNormalObjectBytes: 1440288
+PrintGCSummary: IncrementalGCCount: 6
+PrintGCSummary: IncrementalGCNanos: 148907915
+PrintGCSummary: CompleteGCCount: 1
+PrintGCSummary: CompleteGCNanos: 242420879
+PrintGCSummary: GCNanos: 391328794
+PrintGCSummary: TotalNanos: 39617154613
+PrintGCSummary: GCLoadPercent: 1

@@ -1,0 +1,11 @@
+isolateutils/conversion/registry/RegistryMap.class
+rest/request/compression/SleepIsolate.class
+isolateutils/conversion/ByteArrayConverter.class
+rest/request/compression/Sleep.class
+minio/Minio.class
+isolateutils/conversion/TypeConverter.class
+App.class
+isolateutils/conversion/registry/TypeConversionRegistry.class
+isolateutils/conversion/ObjectConverter.class
+isolateutils/conversion/StringConverter.class
+isolateutils/handles/HandleUnwrapUtils.class

@@ -1,0 +1,37 @@
+Nov 21, 2020 6:28:41 PM org.apache.coyote.AbstractProtocol init
+INFO: Initializing ProtocolHandler ["http-nio-8080"]
+Nov 21, 2020 6:28:41 PM org.apache.catalina.core.StandardService startInternal
+INFO: Starting service [Tomcat]
+Nov 21, 2020 6:28:41 PM org.apache.catalina.core.StandardEngine startInternal
+INFO: Starting Servlet engine: [Apache Tomcat/9.0.39]
+Nov 21, 2020 6:28:41 PM org.apache.catalina.core.ApplicationContext log
+INFO: Initializing Spring embedded WebApplicationContext
+Nov 21, 2020 6:28:41 PM org.apache.coyote.AbstractProtocol start
+INFO: Starting ProtocolHandler ["http-nio-8080"]
+Nov 21, 2020 6:30:25 PM org.apache.catalina.core.ApplicationContext log
+INFO: Initializing Spring DispatcherServlet 'dispatcherServlet'
+Nov 21, 2020 6:34:16 PM org.apache.coyote.AbstractProtocol pause
+INFO: Pausing ProtocolHandler ["http-nio-8080"]
+Nov 21, 2020 6:34:16 PM org.apache.catalina.core.StandardService stopInternal
+INFO: Stopping service [Tomcat]
+Nov 21, 2020 6:34:16 PM org.apache.catalina.core.ApplicationContext log
+INFO: Destroying Spring FrameworkServlet 'dispatcherServlet'
+Nov 21, 2020 6:34:16 PM org.apache.coyote.AbstractProtocol stop
+INFO: Stopping ProtocolHandler ["http-nio-8080"]
+Nov 21, 2020 6:34:16 PM org.apache.coyote.AbstractProtocol destroy
+INFO: Destroying ProtocolHandler ["http-nio-8080"]
+PrintGCSummary: YoungGenerationSize: 268435456
+PrintGCSummary: MinimumHeapSize: 536870912
+PrintGCSummary: MaximumHeapSize: 13441128800
+PrintGCSummary: AlignedChunkSize: 1048576
+PrintGCSummary: CollectedTotalChunkBytes: 0
+PrintGCSummary: CollectedTotalObjectBytes: 0
+PrintGCSummary: AllocatedNormalChunkBytes: 232996480
+PrintGCSummary: AllocatedNormalObjectBytes: 211144080
+PrintGCSummary: IncrementalGCCount: 0
+PrintGCSummary: IncrementalGCNanos: 0
+PrintGCSummary: CompleteGCCount: 0
+PrintGCSummary: CompleteGCNanos: 0
+PrintGCSummary: GCNanos: 0
+PrintGCSummary: TotalNanos: 0
+PrintGCSummary: GCLoadPercent: 0

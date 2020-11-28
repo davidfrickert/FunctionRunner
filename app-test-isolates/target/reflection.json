@@ -1,0 +1,23 @@
+[
+	{
+		"name" : "io.minio.BaseArgs",
+		"allDeclaredConstructors" : true,
+		"allPublicConstructors": true,
+		"allDeclaredClasses" : true,
+		"allPublicClasses" : true
+	},
+	{
+		"name" : "io.minio.GetObjectArgs",
+		"allDeclaredConstructors" : true,
+		"allPublicConstructors": true,
+		"allDeclaredClasses" : true,
+		"allPublicClasses" : true
+	},
+	{
+		"name" : "io.minio.messages.LocationConstraint",
+		"allDeclaredConstructors" : true,
+		"allPublicConstructors": true,
+		"allDeclaredClasses" : true,
+		"allPublicClasses" : true
+	}
+]

@@ -1,0 +1,339 @@
+Nov 18, 2020 7:34:00 PM org.apache.coyote.AbstractProtocol init
+INFO: Initializing ProtocolHandler ["http-nio-8080"]
+Nov 18, 2020 7:34:00 PM org.apache.catalina.core.StandardService startInternal
+INFO: Starting service [Tomcat]
+Nov 18, 2020 7:34:00 PM org.apache.catalina.core.StandardEngine startInternal
+INFO: Starting Servlet engine: [Apache Tomcat/9.0.39]
+Nov 18, 2020 7:34:00 PM org.apache.catalina.core.ApplicationContext log
+INFO: Initializing Spring embedded WebApplicationContext
+Nov 18, 2020 7:34:00 PM org.apache.coyote.AbstractProtocol start
+INFO: Starting ProtocolHandler ["http-nio-8080"]
+Nov 18, 2020 7:34:07 PM org.apache.catalina.core.ApplicationContext log
+INFO: Initializing Spring DispatcherServlet 'dispatcherServlet'
+[Heap policy parameters: 
+  YoungGenerationSize: 268435456
+      MaximumHeapSize: 13441128800
+      MinimumHeapSize: 536870912
+     AlignedChunkSize: 1048576
+  LargeArrayThreshold: 131072]
+[[10063 msec:  GC: before  epoch: 1  cause: SometimesCollectOnAllocation]
+[10082 msec: Incremental GC (SometimesCollectOnAllocation) 276305K->19443K, 0.0197126 secs]
+ [10082 msec:  GC: after   epoch: 1  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 19712639 nanoSeconds]]
+[[12656 msec:  GC: before  epoch: 2  cause: SometimesCollectOnAllocation]
+[12678 msec: Full GC (SometimesCollectOnAllocation) 321477K->68595K, 0.0225475 secs]
+ [12678 msec:  GC: after   epoch: 2  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 22547519 nanoSeconds]]
+[[17254 msec:  GC: before  epoch: 3  cause: SometimesCollectOnAllocation]
+[17269 msec: Incremental GC (SometimesCollectOnAllocation) 337941K->88721K, 0.0151707 secs]
+ [17269 msec:  GC: after   epoch: 3  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 15170752 nanoSeconds]]
+[[20252 msec:  GC: before  epoch: 4  cause: SometimesCollectOnAllocation]
+[20276 msec: Full GC (SometimesCollectOnAllocation) 359907K->36847K, 0.0244057 secs]
+ [20276 msec:  GC: after   epoch: 4  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 24405791 nanoSeconds]]
+[[22802 msec:  GC: before  epoch: 5  cause: SometimesCollectOnAllocation]
+[22812 msec: Incremental GC (SometimesCollectOnAllocation) 306112K->167919K, 0.0099307 secs]
+ [22812 msec:  GC: after   epoch: 5  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 9930761 nanoSeconds]]
+[[27458 msec:  GC: before  epoch: 6  cause: SometimesCollectOnAllocation]
+[27472 msec: Incremental GC (SometimesCollectOnAllocation) 437265K->187025K, 0.0144202 secs]
+ [27472 msec:  GC: after   epoch: 6  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 14420229 nanoSeconds]]
+[[30406 msec:  GC: before  epoch: 7  cause: SometimesCollectOnAllocation]
+[30435 msec: Full GC (SometimesCollectOnAllocation) 458211K->36847K, 0.0284758 secs]
+ [30435 msec:  GC: after   epoch: 7  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 28475863 nanoSeconds]]
+[[32938 msec:  GC: before  epoch: 8  cause: SometimesCollectOnAllocation]
+[32948 msec: Incremental GC (SometimesCollectOnAllocation) 306112K->167919K, 0.0101299 secs]
+ [32948 msec:  GC: after   epoch: 8  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 10129991 nanoSeconds]]
+[[37539 msec:  GC: before  epoch: 9  cause: SometimesCollectOnAllocation]
+[37555 msec: Incremental GC (SometimesCollectOnAllocation) 437265K->187025K, 0.0157183 secs]
+ [37555 msec:  GC: after   epoch: 9  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 15718353 nanoSeconds]]
+[[40396 msec:  GC: before  epoch: 10  cause: SometimesCollectOnAllocation]
+[40424 msec: Full GC (SometimesCollectOnAllocation) 458211K->36847K, 0.0281233 secs]
+ [40424 msec:  GC: after   epoch: 10  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 28123398 nanoSeconds]]
+[[42939 msec:  GC: before  epoch: 11  cause: SometimesCollectOnAllocation]
+[42949 msec: Incremental GC (SometimesCollectOnAllocation) 306112K->167919K, 0.0100428 secs]
+ [42949 msec:  GC: after   epoch: 11  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 10042855 nanoSeconds]]
+[[47516 msec:  GC: before  epoch: 12  cause: SometimesCollectOnAllocation]
+[47530 msec: Incremental GC (SometimesCollectOnAllocation) 437265K->187025K, 0.0143236 secs]
+ [47530 msec:  GC: after   epoch: 12  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 14323679 nanoSeconds]]
+[[50414 msec:  GC: before  epoch: 13  cause: SometimesCollectOnAllocation]
+[50442 msec: Full GC (SometimesCollectOnAllocation) 458211K->36847K, 0.0281098 secs]
+ [50442 msec:  GC: after   epoch: 13  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 28109842 nanoSeconds]]
+[[52973 msec:  GC: before  epoch: 14  cause: SometimesCollectOnAllocation]
+[52983 msec: Incremental GC (SometimesCollectOnAllocation) 306112K->167919K, 0.0099900 secs]
+ [52983 msec:  GC: after   epoch: 14  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 9990019 nanoSeconds]]
+[[57582 msec:  GC: before  epoch: 15  cause: SometimesCollectOnAllocation]
+[57596 msec: Incremental GC (SometimesCollectOnAllocation) 437265K->187025K, 0.0142820 secs]
+ [57596 msec:  GC: after   epoch: 15  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 14282067 nanoSeconds]]
+[[60466 msec:  GC: before  epoch: 16  cause: SometimesCollectOnAllocation]
+[60494 msec: Full GC (SometimesCollectOnAllocation) 458211K->36847K, 0.0282371 secs]
+ [60494 msec:  GC: after   epoch: 16  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 28237182 nanoSeconds]]
+[[63013 msec:  GC: before  epoch: 17  cause: SometimesCollectOnAllocation]
+[63023 msec: Incremental GC (SometimesCollectOnAllocation) 306112K->167919K, 0.0101066 secs]
+ [63023 msec:  GC: after   epoch: 17  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 10106673 nanoSeconds]]
+[[67637 msec:  GC: before  epoch: 18  cause: SometimesCollectOnAllocation]
+[67652 msec: Incremental GC (SometimesCollectOnAllocation) 437265K->187025K, 0.0144901 secs]
+ [67652 msec:  GC: after   epoch: 18  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 14490187 nanoSeconds]]
+[[70492 msec:  GC: before  epoch: 19  cause: SometimesCollectOnAllocation]
+[70506 msec: Incremental GC (SometimesCollectOnAllocation) 458211K->219793K, 0.0137425 secs]
+ [70506 msec:  GC: after   epoch: 19  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 13742559 nanoSeconds]]
+[[72999 msec:  GC: before  epoch: 20  cause: SometimesCollectOnAllocation]
+[73028 msec: Full GC (SometimesCollectOnAllocation) 489058K->69615K, 0.0284281 secs]
+ [73028 msec:  GC: after   epoch: 20  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 28428128 nanoSeconds]]
+[[77554 msec:  GC: before  epoch: 21  cause: SometimesCollectOnAllocation]
+[77569 msec: Incremental GC (SometimesCollectOnAllocation) 338961K->88721K, 0.0146985 secs]
+ [77569 msec:  GC: after   epoch: 21  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 14698535 nanoSeconds]]
+[[80403 msec:  GC: before  epoch: 22  cause: SometimesCollectOnAllocation]
+[80417 msec: Incremental GC (SometimesCollectOnAllocation) 359907K->121489K, 0.0137764 secs]
+ [80417 msec:  GC: after   epoch: 22  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 13776454 nanoSeconds]]
+[[82919 msec:  GC: before  epoch: 23  cause: SometimesCollectOnAllocation]
+[82944 msec: Full GC (SometimesCollectOnAllocation) 390754K->69615K, 0.0244162 secs]
+ [82944 msec:  GC: after   epoch: 23  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 24416238 nanoSeconds]]
+[[87516 msec:  GC: before  epoch: 24  cause: SometimesCollectOnAllocation]
+[87531 msec: Incremental GC (SometimesCollectOnAllocation) 338961K->88721K, 0.0147030 secs]
+ [87531 msec:  GC: after   epoch: 24  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 14703040 nanoSeconds]]
+[[90445 msec:  GC: before  epoch: 25  cause: SometimesCollectOnAllocation]
+[90470 msec: Full GC (SometimesCollectOnAllocation) 359907K->36847K, 0.0246067 secs]
+ [90470 msec:  GC: after   epoch: 25  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 24606778 nanoSeconds]]
+[[93000 msec:  GC: before  epoch: 26  cause: SometimesCollectOnAllocation]
+[93011 msec: Incremental GC (SometimesCollectOnAllocation) 306112K->167919K, 0.0111378 secs]
+ [93011 msec:  GC: after   epoch: 26  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 11137818 nanoSeconds]]
+[[97562 msec:  GC: before  epoch: 27  cause: SometimesCollectOnAllocation]
+[97576 msec: Incremental GC (SometimesCollectOnAllocation) 437265K->187025K, 0.0148229 secs]
+ [97576 msec:  GC: after   epoch: 27  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 14822933 nanoSeconds]]
+[[100408 msec:  GC: before  epoch: 28  cause: SometimesCollectOnAllocation]
+[100436 msec: Full GC (SometimesCollectOnAllocation) 458211K->36847K, 0.0285688 secs]
+ [100436 msec:  GC: after   epoch: 28  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 28568863 nanoSeconds]]
+[[102943 msec:  GC: before  epoch: 29  cause: SometimesCollectOnAllocation]
+[102953 msec: Incremental GC (SometimesCollectOnAllocation) 306112K->167919K, 0.0100156 secs]
+ [102953 msec:  GC: after   epoch: 29  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 10015662 nanoSeconds]]
+[[107494 msec:  GC: before  epoch: 30  cause: SometimesCollectOnAllocation]
+[107509 msec: Incremental GC (SometimesCollectOnAllocation) 437265K->187025K, 0.0147944 secs]
+ [107509 msec:  GC: after   epoch: 30  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 14794413 nanoSeconds]]
+[[110370 msec:  GC: before  epoch: 31  cause: SometimesCollectOnAllocation]
+[110399 msec: Full GC (SometimesCollectOnAllocation) 458211K->36847K, 0.0284419 secs]
+ [110399 msec:  GC: after   epoch: 31  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 28441903 nanoSeconds]]
+[[112922 msec:  GC: before  epoch: 32  cause: SometimesCollectOnAllocation]
+[112932 msec: Incremental GC (SometimesCollectOnAllocation) 306112K->167919K, 0.0102740 secs]
+ [112932 msec:  GC: after   epoch: 32  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 10274069 nanoSeconds]]
+[[117518 msec:  GC: before  epoch: 33  cause: SometimesCollectOnAllocation]
+[117533 msec: Incremental GC (SometimesCollectOnAllocation) 437265K->187025K, 0.0148545 secs]
+ [117533 msec:  GC: after   epoch: 33  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 14854554 nanoSeconds]]
+[[120373 msec:  GC: before  epoch: 34  cause: SometimesCollectOnAllocation]
+[120386 msec: Incremental GC (SometimesCollectOnAllocation) 458211K->219793K, 0.0137857 secs]
+ [120386 msec:  GC: after   epoch: 34  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 13785740 nanoSeconds]]
+[[122901 msec:  GC: before  epoch: 35  cause: SometimesCollectOnAllocation]
+[122930 msec: Full GC (SometimesCollectOnAllocation) 489058K->69615K, 0.0291220 secs]
+ [122930 msec:  GC: after   epoch: 35  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 29122051 nanoSeconds]]
+[[127500 msec:  GC: before  epoch: 36  cause: SometimesCollectOnAllocation]
+[127515 msec: Incremental GC (SometimesCollectOnAllocation) 338961K->88721K, 0.0156870 secs]
+ [127515 msec:  GC: after   epoch: 36  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 15687026 nanoSeconds]]
+[[130390 msec:  GC: before  epoch: 37  cause: SometimesCollectOnAllocation]
+[130404 msec: Incremental GC (SometimesCollectOnAllocation) 359907K->121489K, 0.0139028 secs]
+ [130404 msec:  GC: after   epoch: 37  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 13902866 nanoSeconds]]
+[[132941 msec:  GC: before  epoch: 38  cause: SometimesCollectOnAllocation]
+[132968 msec: Full GC (SometimesCollectOnAllocation) 390754K->69615K, 0.0266126 secs]
+ [132968 msec:  GC: after   epoch: 38  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 26612644 nanoSeconds]]
+[[137584 msec:  GC: before  epoch: 39  cause: SometimesCollectOnAllocation]
+[137599 msec: Incremental GC (SometimesCollectOnAllocation) 338961K->88721K, 0.0149432 secs]
+ [137599 msec:  GC: after   epoch: 39  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 14943269 nanoSeconds]]
+[[140533 msec:  GC: before  epoch: 40  cause: SometimesCollectOnAllocation]
+[140547 msec: Incremental GC (SometimesCollectOnAllocation) 359907K->121489K, 0.0138983 secs]
+ [140547 msec:  GC: after   epoch: 40  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 13898359 nanoSeconds]]
+[[143063 msec:  GC: before  epoch: 41  cause: SometimesCollectOnAllocation]
+[143088 msec: Full GC (SometimesCollectOnAllocation) 390754K->69615K, 0.0248093 secs]
+ [143088 msec:  GC: after   epoch: 41  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 24809381 nanoSeconds]]
+[[147634 msec:  GC: before  epoch: 42  cause: SometimesCollectOnAllocation]
+[147649 msec: Incremental GC (SometimesCollectOnAllocation) 338961K->88721K, 0.0150056 secs]
+ [147649 msec:  GC: after   epoch: 42  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 15005670 nanoSeconds]]
+[[150491 msec:  GC: before  epoch: 43  cause: SometimesCollectOnAllocation]
+[150516 msec: Full GC (SometimesCollectOnAllocation) 359907K->36847K, 0.0247372 secs]
+ [150516 msec:  GC: after   epoch: 43  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 24737241 nanoSeconds]]
+[[153025 msec:  GC: before  epoch: 44  cause: SometimesCollectOnAllocation]
+[153035 msec: Incremental GC (SometimesCollectOnAllocation) 306112K->167919K, 0.0101075 secs]
+ [153035 msec:  GC: after   epoch: 44  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 10107504 nanoSeconds]]
+[[157596 msec:  GC: before  epoch: 45  cause: SometimesCollectOnAllocation]
+[157611 msec: Incremental GC (SometimesCollectOnAllocation) 437265K->187025K, 0.0148055 secs]
+ [157611 msec:  GC: after   epoch: 45  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 14805548 nanoSeconds]]
+[[160499 msec:  GC: before  epoch: 46  cause: SometimesCollectOnAllocation]
+[160528 msec: Full GC (SometimesCollectOnAllocation) 458211K->36847K, 0.0290107 secs]
+ [160528 msec:  GC: after   epoch: 46  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 29010760 nanoSeconds]]
+[[163045 msec:  GC: before  epoch: 47  cause: SometimesCollectOnAllocation]
+[163055 msec: Incremental GC (SometimesCollectOnAllocation) 306112K->167919K, 0.0102683 secs]
+ [163055 msec:  GC: after   epoch: 47  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 10268348 nanoSeconds]]
+[[167682 msec:  GC: before  epoch: 48  cause: SometimesCollectOnAllocation]
+[167697 msec: Incremental GC (SometimesCollectOnAllocation) 437265K->187025K, 0.0149813 secs]
+ [167697 msec:  GC: after   epoch: 48  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 14981330 nanoSeconds]]
+[[170568 msec:  GC: before  epoch: 49  cause: SometimesCollectOnAllocation]
+[170582 msec: Incremental GC (SometimesCollectOnAllocation) 458211K->219793K, 0.0139754 secs]
+ [170582 msec:  GC: after   epoch: 49  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 13975470 nanoSeconds]]
+[[173111 msec:  GC: before  epoch: 50  cause: SometimesCollectOnAllocation]
+[173141 msec: Full GC (SometimesCollectOnAllocation) 489058K->69615K, 0.0299713 secs]
+ [173141 msec:  GC: after   epoch: 50  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 29971391 nanoSeconds]]
+[[177715 msec:  GC: before  epoch: 51  cause: SometimesCollectOnAllocation]
+[177731 msec: Incremental GC (SometimesCollectOnAllocation) 338961K->88721K, 0.0152790 secs]
+ [177731 msec:  GC: after   epoch: 51  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 15279001 nanoSeconds]]
+[[180583 msec:  GC: before  epoch: 52  cause: SometimesCollectOnAllocation]
+[180597 msec: Incremental GC (SometimesCollectOnAllocation) 359907K->121489K, 0.0141077 secs]
+ [180597 msec:  GC: after   epoch: 52  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 14107702 nanoSeconds]]
+[[183111 msec:  GC: before  epoch: 53  cause: SometimesCollectOnAllocation]
+[183136 msec: Full GC (SometimesCollectOnAllocation) 390754K->69615K, 0.0251726 secs]
+ [183136 msec:  GC: after   epoch: 53  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 25172644 nanoSeconds]]
+[[187737 msec:  GC: before  epoch: 54  cause: SometimesCollectOnAllocation]
+[187753 msec: Incremental GC (SometimesCollectOnAllocation) 338961K->88721K, 0.0154129 secs]
+ [187753 msec:  GC: after   epoch: 54  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 15412912 nanoSeconds]]
+[[190635 msec:  GC: before  epoch: 55  cause: SometimesCollectOnAllocation]
+[190660 msec: Full GC (SometimesCollectOnAllocation) 359907K->36847K, 0.0249347 secs]
+ [190660 msec:  GC: after   epoch: 55  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 24934750 nanoSeconds]]
+[[193227 msec:  GC: before  epoch: 56  cause: SometimesCollectOnAllocation]
+[193237 msec: Incremental GC (SometimesCollectOnAllocation) 306112K->167919K, 0.0100908 secs]
+ [193237 msec:  GC: after   epoch: 56  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 10090854 nanoSeconds]]
+[[197796 msec:  GC: before  epoch: 57  cause: SometimesCollectOnAllocation]
+[197811 msec: Incremental GC (SometimesCollectOnAllocation) 437265K->187025K, 0.0148470 secs]
+ [197811 msec:  GC: after   epoch: 57  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 14847066 nanoSeconds]]
+[[200656 msec:  GC: before  epoch: 58  cause: SometimesCollectOnAllocation]
+[200684 msec: Full GC (SometimesCollectOnAllocation) 458211K->36847K, 0.0286411 secs]
+ [200684 msec:  GC: after   epoch: 58  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 28641185 nanoSeconds]]
+[[203218 msec:  GC: before  epoch: 59  cause: SometimesCollectOnAllocation]
+[203229 msec: Incremental GC (SometimesCollectOnAllocation) 306112K->167919K, 0.0108924 secs]
+ [203229 msec:  GC: after   epoch: 59  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 10892450 nanoSeconds]]
+[[207791 msec:  GC: before  epoch: 60  cause: SometimesCollectOnAllocation]
+[207807 msec: Incremental GC (SometimesCollectOnAllocation) 437265K->187025K, 0.0157884 secs]
+ [207807 msec:  GC: after   epoch: 60  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 15788479 nanoSeconds]]
+[[210694 msec:  GC: before  epoch: 61  cause: SometimesCollectOnAllocation]
+[210724 msec: Full GC (SometimesCollectOnAllocation) 458211K->36847K, 0.0299026 secs]
+ [210724 msec:  GC: after   epoch: 61  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 29902657 nanoSeconds]]
+[[213240 msec:  GC: before  epoch: 62  cause: SometimesCollectOnAllocation]
+[213250 msec: Incremental GC (SometimesCollectOnAllocation) 306112K->167919K, 0.0102661 secs]
+ [213250 msec:  GC: after   epoch: 62  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 10266159 nanoSeconds]]
+[[217810 msec:  GC: before  epoch: 63  cause: SometimesCollectOnAllocation]
+[217825 msec: Incremental GC (SometimesCollectOnAllocation) 437265K->187025K, 0.0150827 secs]
+ [217825 msec:  GC: after   epoch: 63  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 15082790 nanoSeconds]]
+[[220667 msec:  GC: before  epoch: 64  cause: SometimesCollectOnAllocation]
+[220682 msec: Incremental GC (SometimesCollectOnAllocation) 458211K->219793K, 0.0141823 secs]
+ [220682 msec:  GC: after   epoch: 64  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 14182386 nanoSeconds]]
+[[223193 msec:  GC: before  epoch: 65  cause: SometimesCollectOnAllocation]
+[223223 msec: Full GC (SometimesCollectOnAllocation) 489058K->69615K, 0.0298263 secs]
+ [223223 msec:  GC: after   epoch: 65  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 29826326 nanoSeconds]]
+[[227781 msec:  GC: before  epoch: 66  cause: SometimesCollectOnAllocation]
+[227797 msec: Incremental GC (SometimesCollectOnAllocation) 338961K->88721K, 0.0161437 secs]
+ [227797 msec:  GC: after   epoch: 66  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 16143745 nanoSeconds]]
+[[230638 msec:  GC: before  epoch: 67  cause: SometimesCollectOnAllocation]
+[230653 msec: Incremental GC (SometimesCollectOnAllocation) 359907K->121489K, 0.0149073 secs]
+ [230653 msec:  GC: after   epoch: 67  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 14907354 nanoSeconds]]
+[[233171 msec:  GC: before  epoch: 68  cause: SometimesCollectOnAllocation]
+[233197 msec: Full GC (SometimesCollectOnAllocation) 390754K->69615K, 0.0258620 secs]
+ [233197 msec:  GC: after   epoch: 68  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 25862096 nanoSeconds]]
+[[237794 msec:  GC: before  epoch: 69  cause: SometimesCollectOnAllocation]
+[237810 msec: Incremental GC (SometimesCollectOnAllocation) 338961K->88721K, 0.0160344 secs]
+ [237810 msec:  GC: after   epoch: 69  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 16034413 nanoSeconds]]
+[[240657 msec:  GC: before  epoch: 70  cause: SometimesCollectOnAllocation]
+[240684 msec: Full GC (SometimesCollectOnAllocation) 359907K->36847K, 0.0266785 secs]
+ [240684 msec:  GC: after   epoch: 70  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 26678512 nanoSeconds]]
+[[243200 msec:  GC: before  epoch: 71  cause: SometimesCollectOnAllocation]
+[243210 msec: Incremental GC (SometimesCollectOnAllocation) 306112K->167919K, 0.0103441 secs]
+ [243210 msec:  GC: after   epoch: 71  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 10344167 nanoSeconds]]
+[[247788 msec:  GC: before  epoch: 72  cause: SometimesCollectOnAllocation]
+[247804 msec: Incremental GC (SometimesCollectOnAllocation) 437265K->187025K, 0.0165472 secs]
+ [247804 msec:  GC: after   epoch: 72  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: incremental
+  collection time: 16547285 nanoSeconds]]
+[[250688 msec:  GC: before  epoch: 73  cause: SometimesCollectOnAllocation]
+[250717 msec: Full GC (SometimesCollectOnAllocation) 458211K->36847K, 0.0295961 secs]
+ [250717 msec:  GC: after   epoch: 73  cause: SometimesCollectOnAllocation  policy: by time: 50% in incremental collections  type: complete
+  collection time: 29596109 nanoSeconds]]
+Nov 18, 2020 7:38:12 PM org.apache.coyote.AbstractProtocol pause
+INFO: Pausing ProtocolHandler ["http-nio-8080"]
+Nov 18, 2020 7:38:12 PM org.apache.catalina.core.StandardService stopInternal
+INFO: Stopping service [Tomcat]
+Nov 18, 2020 7:38:12 PM org.apache.catalina.core.StandardWrapper unload
+INFO: Waiting for [1] instance(s) to be deallocated for Servlet [dispatcherServlet]
+Nov 18, 2020 7:38:13 PM org.apache.catalina.core.StandardWrapper unload
+INFO: Waiting for [1] instance(s) to be deallocated for Servlet [dispatcherServlet]
+Nov 18, 2020 7:38:13 PM org.apache.catalina.core.ApplicationContext log
+INFO: Destroying Spring FrameworkServlet 'dispatcherServlet'
+Nov 18, 2020 7:38:13 PM org.apache.coyote.AbstractProtocol stop
+INFO: Stopping ProtocolHandler ["http-nio-8080"]
+Nov 18, 2020 7:38:13 PM org.apache.coyote.AbstractProtocol destroy
+INFO: Destroying ProtocolHandler ["http-nio-8080"]
+PrintGCSummary: YoungGenerationSize: 268435456
+PrintGCSummary: MinimumHeapSize: 536870912
+PrintGCSummary: MaximumHeapSize: 13441128800
+PrintGCSummary: AlignedChunkSize: 1048576
+PrintGCSummary: CollectedTotalChunkBytes: 20180291352
+PrintGCSummary: CollectedTotalObjectBytes: 19699950752
+PrintGCSummary: AllocatedNormalChunkBytes: 20373311792
+PrintGCSummary: AllocatedNormalObjectBytes: 19871612528
+PrintGCSummary: IncrementalGCCount: 48
+PrintGCSummary: IncrementalGCNanos: 652426135
+PrintGCSummary: CompleteGCCount: 25
+PrintGCSummary: CompleteGCNanos: 679239252
+PrintGCSummary: GCNanos: 1331665387
+PrintGCSummary: TotalNanos: 250701157698
+PrintGCSummary: GCLoadPercent: 1

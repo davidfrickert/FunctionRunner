@@ -1,0 +1,16 @@
+/home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/isolateutils/conversion/BooleanConverter.java
+/home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/isolateutils/conversion/TypeConverter.java
+/home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/isolateutils/handles/HandleUnwrapUtils.java
+/home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/isolateutils/conversion/registry/RegistryMap.java
+/home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/isolateutils/conversion/registry/TypeConversionRegistry.java
+/home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/rest/api/compression/GZIPCompress.java
+/home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/rest/request/compression/GZIPMinIORequestIsolate.java
+/home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/isolateutils/conversion/ObjectConverter.java
+/home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/rest/api/compression/GZIPMinIO.java
+/home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/rest/request/compression/GZIPMinIORequest.java
+/home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/isolateutils/conversion/StringConverter.java
+/home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/rest/request/compression/GZIPCompressionRequest.java
+/home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/isolateutils/conversion/ByteArrayConverter.java
+/home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/rest/request/compression/GZIPCompressionRequestIsolate.java
+/home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/App.java
+/home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/minio/Minio.java
