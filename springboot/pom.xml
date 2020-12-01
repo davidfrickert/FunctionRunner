@@ -38,6 +38,18 @@
             <version>${springboot.version}</version>
             <scope>test</scope>
         </dependency>
+        <!--
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+            <version>${springboot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectreactor</groupId>
+            <artifactId>reactor-spring</artifactId>
+            <version>1.0.1.RELEASE</version>
+        </dependency>
+        -->
         <!-- GraalVM -->
         <dependency>
             <groupId>org.graalvm.sdk</groupId>
@@ -112,7 +124,9 @@
                         --no-fallback
                         <!---H:+TraceClassInitialization-->
                         --enable-https
+                        --enable-url-protocols=http
                         -H:ReflectionConfigurationFiles=reflection.json
+                        -H:+AllowVMInspection
                         --initialize-at-build-time=org.springframework.boot.logging.logback.LogbackLoggingSystem$Factory
                         --initialize-at-build-time=org.springframework.boot.logging.java.JavaLoggingSystem$Factory
                         -R:+PrintGCSummary

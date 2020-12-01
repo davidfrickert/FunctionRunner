@@ -7,11 +7,8 @@ import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.Isolates;
 import org.graalvm.nativeimage.Isolates.CreateIsolateParameters;
 import org.graalvm.nativeimage.ObjectHandle;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.zip.GZIPOutputStream;
 
 public class GZIPMinIORequest {
 	private static final TypeConversionRegistry registry = TypeConversionRegistry.getInstance();
@@ -20,7 +17,7 @@ public class GZIPMinIORequest {
 		IsolateThread currentIsolateThread = CurrentIsolate.getCurrentThread();
 		IsolateThread requestIsolate = Isolates.createIsolate(CreateIsolateParameters.getDefault());
 
-		final boolean result = GZIPMinIORequestIsolate.execute(
+		final ObjectHandle _result = GZIPMinIORequestIsolate.execute(
 				requestIsolate,
 				currentIsolateThread,
 				registry.createHandle(
@@ -28,11 +25,12 @@ public class GZIPMinIORequest {
 						fileName
 				)
 		);
-		System.out.println(result);
+		boolean result = HandleUnwrapUtils.str(_result).equals("success");
+
 		final long l = System.nanoTime();
 		System.out.println("startTearDown");
 		Isolates.tearDownIsolate(requestIsolate);
-		System.out.println("Took " + ((l-System.nanoTime()) / (1_000_000_000)) + "secs to destroy Isolate");
+		System.out.println("Took " + ((System.nanoTime() - l) / (1_000_000_000.)) + "secs to destroy Isolate");
 		return result;
 	}
 }

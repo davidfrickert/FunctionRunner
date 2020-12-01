@@ -2,7 +2,6 @@ isolateutils/conversion/registry/RegistryMap.class
 rest/request/compression/GZIPMinIORequestIsolate.class
 isolateutils/conversion/BooleanConverter.class
 rest/request/compression/GZIPMinIORequest.class
-rest/request/compression/GZIPMinIORequestIsolate$1.class
 rest/request/compression/GZIPCompressionRequestIsolate.class
 App.class
 isolateutils/conversion/ObjectConverter.class
@@ -10,6 +9,7 @@ isolateutils/handles/HandleUnwrapUtils.class
 rest/request/compression/GZIPCompressionRequest.class
 isolateutils/conversion/ByteArrayConverter.class
 rest/api/compression/GZIPCompress.class
+minio/Credentials.class
 minio/Minio.class
 rest/api/compression/GZIPMinIO.class
 isolateutils/conversion/TypeConverter.class

@@ -9,6 +9,7 @@
 /home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/rest/api/compression/GZIPMinIO.java
 /home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/rest/request/compression/GZIPMinIORequest.java
 /home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/isolateutils/conversion/StringConverter.java
+/home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/minio/Credentials.java
 /home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/rest/request/compression/GZIPCompressionRequest.java
 /home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/isolateutils/conversion/ByteArrayConverter.java
 /home/david/Thesis/FaaS-GraalVM/springboot/src/main/java/rest/request/compression/GZIPCompressionRequestIsolate.java
