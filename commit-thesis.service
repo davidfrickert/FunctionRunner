@@ -1,0 +1,10 @@
+[Unit]
+Description=Commit and push changes of thesis on shutdown
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStop=/home/david/Thesis/FaaS-GraalVM/commit-auto.sh
+
+[Install]
+WantedBy=multi-user.target

@@ -1,9 +1,5 @@
 package rest.request.compression;
 
-import io.minio.GetObjectArgs;
-import io.minio.GetObjectResponse;
-import io.minio.MinioClient;
-import io.minio.PutObjectArgs;
 import isolateutils.conversion.registry.TypeConversionRegistry;
 import isolateutils.handles.HandleUnwrapUtils;
 import lombok.SneakyThrows;
@@ -41,14 +37,12 @@ public class GZIPMinIORequestIsolate {
 		System.out.println("(Unwrap filename handle)(Runtime)Isolate used memory: " + (runtime.totalMemory() - runtime.freeMemory()) / (1024. * 1024) + "MB");
 		Minio m = new Minio();
 		final InputStream obj = m.getObj(BUCKET, fileName);
-		System.out.println(obj.available());
 
-
-		final MinioClient minioClient = Minio.get();
-		minioClient.traceOn(System.out);
+		//final MinioClient minioClient = Minio.get();
+		//minioClient.traceOn(System.out);
 		System.out.println("(Minio.get())(Runtime)Isolate used memory: " + (runtime.totalMemory() - runtime.freeMemory()) / (1024. * 1024) + "MB");
 
-		GetObjectResponse response = minioClient.getObject(GetObjectArgs.builder().bucket(BUCKET).object(fileName).build());
+		//GetObjectResponse response = minioClient.getObject(GetObjectArgs.builder().bucket(BUCKET).object(fileName).build());
 		System.out.println("(Get Object from MinIO)(Runtime)Isolate used memory: " + (runtime.totalMemory() - runtime.freeMemory()) / (1024. * 1024) + "MB");
 
 
@@ -58,8 +52,8 @@ public class GZIPMinIORequestIsolate {
 		final Thread thread = new Thread(() -> {
 			try {
 				try (GZIPOutputStream gzipOut = new GZIPOutputStream(pipedOutputStream)) {
-					IOUtils.copy(response, gzipOut);
-					response.close();
+					IOUtils.copy(obj, gzipOut);
+					obj.close();
 				}
 				System.out.println("(Written gzip to pipe)(Runtime)Isolate used memory: " + (runtime.totalMemory() - runtime.freeMemory()) / (1024. * 1024) + "MB");
 				pipedOutputStream.close();
@@ -71,7 +65,8 @@ public class GZIPMinIORequestIsolate {
 
 		boolean success;
 		try {
-			minioClient.putObject(PutObjectArgs.builder().bucket(BUCKET).object("file.gzip").stream(pipedInputStream, -1, 10485760).build());
+			m.putObject(BUCKET, "file.gzip", pipedInputStream);
+			//minioClient.putObject(PutObjectArgs.builder().bucket(BUCKET).object("file.gzip").stream(pipedInputStream, -1, 10485760).build());
 			pipedInputStream.close();
 			success = true;
 		} catch (Exception e) {

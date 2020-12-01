@@ -10,6 +10,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -45,12 +46,19 @@ public class Minio {
 	}
 
 	public InputStream getObj(String bucket, String objectName) throws NoSuchAlgorithmException, InsufficientDataException, InternalException, IOException {
+		final Runtime runtime = Runtime.getRuntime();
+
 		RestTemplate restTemplate = new RestTemplate();
+		HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+		requestFactory.setBufferRequestBody(false);
+		restTemplate.setRequestFactory(requestFactory);
+
 		final URI uri = URI.create(LOCATION + "/" + bucket + "/" + objectName);
 		final HttpHeaders headers = headers(new byte[0], 0);
+
 		var httpEntity = new HttpEntity<>(headers);
 		final ResponseEntity<Resource> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, Resource.class);
-
+		System.out.println("(Exchange request)(Runtime)Isolate used memory: " + (runtime.totalMemory() - runtime.freeMemory()) / (1024. * 1024) + "MB");
 		InputStream responseInputStream;
 		try {
 			responseInputStream = response.getBody().getInputStream();
@@ -58,27 +66,30 @@ public class Minio {
 		catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-
 		return responseInputStream;
 	}
 
-	public InputStream post(String bucket, String objectName, InputStream fileStream) throws NoSuchAlgorithmException, InsufficientDataException, InternalException, IOException {
+	public void putObject(String bucket, String objectName, InputStream fileStream) throws NoSuchAlgorithmException, InsufficientDataException, InternalException, IOException {
+		final Runtime runtime = Runtime.getRuntime();
+
 		RestTemplate restTemplate = new RestTemplate();
+
+		HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+		requestFactory.setBufferRequestBody(false);
+		restTemplate.setRequestFactory(requestFactory);
+
 		final URI uri = URI.create(LOCATION + "/" + bucket + "/" + objectName);
+		System.out.println("(URI + setup RestTemplate)(Runtime)Isolate used memory: " + (runtime.totalMemory() - runtime.freeMemory()) / (1024. * 1024) + "MB");
+
 		byte[] info = fileStream.readAllBytes();
+		System.out.println("(readAllBytes)(Runtime)Isolate used memory: " + (runtime.totalMemory() - runtime.freeMemory()) / (1024. * 1024) + "MB");
+
 		final HttpHeaders headers = headers(info, info.length);
-		var httpEntity = new HttpEntity<>(headers);
-		final ResponseEntity<Resource> response = restTemplate.exchange(uri, HttpMethod.PUT, httpEntity, Resource.class);
+		headers.set("Content-Type", "application/octet-stream");
+		var httpEntity = new HttpEntity<>(info, headers);
 
-		InputStream responseInputStream;
-		try {
-			responseInputStream = response.getBody().getInputStream();
-		}
-		catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-
-		return responseInputStream;
+		final ResponseEntity<?> response = restTemplate.exchange(uri, HttpMethod.PUT, httpEntity, String.class);
+		System.out.println("(Response)(Runtime)Isolate used memory: " + (runtime.totalMemory() - runtime.freeMemory()) / (1024. * 1024) + "MB");
 	}
 
 	public HttpHeaders headers (byte[] body, int length) throws InsufficientDataException, NoSuchAlgorithmException, InternalException, IOException {
