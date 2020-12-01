@@ -1,0 +1,75 @@
+Dec 01, 2020 11:02:57 PM org.apache.coyote.AbstractProtocol init
+INFO: Initializing ProtocolHandler ["http-nio-8080"]
+Dec 01, 2020 11:02:57 PM org.apache.catalina.core.StandardService startInternal
+INFO: Starting service [Tomcat]
+Dec 01, 2020 11:02:57 PM org.apache.catalina.core.StandardEngine startInternal
+INFO: Starting Servlet engine: [Apache Tomcat/9.0.39]
+Dec 01, 2020 11:02:57 PM org.apache.catalina.core.ApplicationContext log
+INFO: Initializing Spring embedded WebApplicationContext
+Dec 01, 2020 11:02:57 PM org.apache.coyote.AbstractProtocol start
+INFO: Starting ProtocolHandler ["http-nio-8080"]
+Dec 01, 2020 11:03:01 PM org.apache.catalina.core.ApplicationContext log
+INFO: Initializing Spring DispatcherServlet 'dispatcherServlet'
+Dec 01, 2020 11:03:01 PM com.fasterxml.jackson.databind.ext.Java7Handlers <clinit>
+WARNING: Unable to load JDK7 types (java.nio.file.Path): no Java7 type support added
+[Heap policy parameters: 
+  YoungGenerationSize: 268435456
+      MaximumHeapSize: 13146649360
+      MinimumHeapSize: 536870912
+     AlignedChunkSize: 1048576
+  LargeArrayThreshold: 131072]
+[[988 msec:  GC: before  epoch: 1  cause: SometimesCollectOnAllocation]
+[990 msec: Incremental GC (SometimesCollectOnAllocation) 261413K->4463K, 0.0019234 secs]
+ [990 msec:  GC: after   epoch: 1  cause: SometimesCollectOnAllocation  policy: by time  type: incremental
+  collection time: 1923424 nanoSeconds]]
+Dec 01, 2020 11:03:02 PM com.fasterxml.jackson.databind.ext.Java7Handlers <clinit>
+WARNING: Unable to load JDK7 types (java.nio.file.Path): no Java7 type support added
+[Heap policy parameters: 
+  YoungGenerationSize: 268435456
+      MaximumHeapSize: 13146649360
+      MinimumHeapSize: 536870912
+     AlignedChunkSize: 1048576
+  LargeArrayThreshold: 131072]
+[[957 msec:  GC: before  epoch: 1  cause: SometimesCollectOnAllocation]
+[959 msec: Incremental GC (SometimesCollectOnAllocation) 261413K->4463K, 0.0017925 secs]
+ [959 msec:  GC: after   epoch: 1  cause: SometimesCollectOnAllocation  policy: by time  type: incremental
+  collection time: 1792513 nanoSeconds]]
+Dec 01, 2020 11:03:03 PM com.fasterxml.jackson.databind.ext.Java7Handlers <clinit>
+WARNING: Unable to load JDK7 types (java.nio.file.Path): no Java7 type support added
+[Heap policy parameters: 
+  YoungGenerationSize: 268435456
+      MaximumHeapSize: 13146649360
+      MinimumHeapSize: 536870912
+     AlignedChunkSize: 1048576
+  LargeArrayThreshold: 131072]
+[[1762 msec:  GC: before  epoch: 1  cause: SometimesCollectOnAllocation]
+[1771 msec: Incremental GC (SometimesCollectOnAllocation) 261413K->4463K, 0.0089874 secs]
+ [1771 msec:  GC: after   epoch: 1  cause: SometimesCollectOnAllocation  policy: by time  type: incremental
+  collection time: 8987419 nanoSeconds]]
+Dec 01, 2020 11:03:05 PM org.apache.coyote.AbstractProtocol pause
+INFO: Pausing ProtocolHandler ["http-nio-8080"]
+Dec 01, 2020 11:03:05 PM org.apache.catalina.core.StandardService stopInternal
+INFO: Stopping service [Tomcat]
+Dec 01, 2020 11:03:05 PM org.apache.catalina.core.StandardWrapper unload
+INFO: Waiting for [1] instance(s) to be deallocated for Servlet [dispatcherServlet]
+Dec 01, 2020 11:03:06 PM org.apache.catalina.core.ApplicationContext log
+INFO: Destroying Spring FrameworkServlet 'dispatcherServlet'
+Dec 01, 2020 11:03:06 PM org.apache.coyote.AbstractProtocol stop
+INFO: Stopping ProtocolHandler ["http-nio-8080"]
+Dec 01, 2020 11:03:06 PM org.apache.coyote.AbstractProtocol destroy
+INFO: Destroying ProtocolHandler ["http-nio-8080"]
+PrintGCSummary: YoungGenerationSize: 268435456
+PrintGCSummary: MinimumHeapSize: 536870912
+PrintGCSummary: MaximumHeapSize: 13146649360
+PrintGCSummary: AlignedChunkSize: 1048576
+PrintGCSummary: CollectedTotalChunkBytes: 0
+PrintGCSummary: CollectedTotalObjectBytes: 0
+PrintGCSummary: AllocatedNormalChunkBytes: 52222000
+PrintGCSummary: AllocatedNormalObjectBytes: 30011848
+PrintGCSummary: IncrementalGCCount: 0
+PrintGCSummary: IncrementalGCNanos: 0
+PrintGCSummary: CompleteGCCount: 0
+PrintGCSummary: CompleteGCNanos: 0
+PrintGCSummary: GCNanos: 0
+PrintGCSummary: TotalNanos: 0
+PrintGCSummary: GCLoadPercent: 0

@@ -9,9 +9,12 @@ import org.graalvm.nativeimage.Isolates.CreateIsolateParameters;
 import org.graalvm.nativeimage.ObjectHandle;
 
 import java.io.IOException;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class GZIPMinIORequest {
 	private static final TypeConversionRegistry registry = TypeConversionRegistry.getInstance();
+	private static final Queue<Double> tearDownTimes = new ConcurrentLinkedQueue<>();
 
 	public static boolean execInIsolate (String fileName) throws IOException {
 		IsolateThread currentIsolateThread = CurrentIsolate.getCurrentThread();
@@ -28,9 +31,15 @@ public class GZIPMinIORequest {
 		boolean result = HandleUnwrapUtils.str(_result).equals("success");
 
 		final long l = System.nanoTime();
-		System.out.println("startTearDown");
 		Isolates.tearDownIsolate(requestIsolate);
-		System.out.println("Took " + ((System.nanoTime() - l) / (1_000_000_000.)) + "secs to destroy Isolate");
+		double timeTaken = (System.nanoTime() - l) / (1_000_000_000.);
+		tearDownTimes.add(timeTaken);
+
+		System.out.println("Took " + timeTaken + "secs to destroy Isolate");
 		return result;
+	}
+
+	public static Queue<Double> getLatencyValues() {
+		return tearDownTimes;
 	}
 }

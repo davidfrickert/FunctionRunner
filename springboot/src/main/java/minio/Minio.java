@@ -49,9 +49,6 @@ public class Minio {
 		final Runtime runtime = Runtime.getRuntime();
 
 		RestTemplate restTemplate = new RestTemplate();
-		HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-		requestFactory.setBufferRequestBody(false);
-		restTemplate.setRequestFactory(requestFactory);
 
 		final URI uri = URI.create(LOCATION + "/" + bucket + "/" + objectName);
 		final HttpHeaders headers = headers(new byte[0], 0);
