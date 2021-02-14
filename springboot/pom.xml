@@ -8,7 +8,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <graalvm.version>20.3.0</graalvm.version>
+        <graalvm.version>20.3.1.2</graalvm.version>
         <java.version>11</java.version>
         <springboot.version>2.4.2</springboot.version>
     </properties>
