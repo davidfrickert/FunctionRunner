@@ -53,6 +53,18 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- metrics -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-core</artifactId>
+            <version>1.6.3</version>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>1.6.3</version>
+        </dependency>
+
         <!-- other deps -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
