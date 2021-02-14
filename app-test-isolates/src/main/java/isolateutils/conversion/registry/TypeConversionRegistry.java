@@ -14,7 +14,7 @@ public class TypeConversionRegistry {
         return INSTANCE;
     }
 
-    private TypeConversionRegistry() {
+    public TypeConversionRegistry() {
         this.registry = new RegistryMap();
     }
 

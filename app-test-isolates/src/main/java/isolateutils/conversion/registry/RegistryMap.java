@@ -1,6 +1,7 @@
 package isolateutils.conversion.registry;
 
 import isolateutils.conversion.ByteArrayConverter;
+import isolateutils.conversion.ObjectConverter;
 import isolateutils.conversion.StringConverter;
 import isolateutils.conversion.TypeConverter;
 
@@ -14,13 +15,26 @@ public class RegistryMap {
     public RegistryMap() {
         put(String.class, new StringConverter());
         put(byte[].class, new ByteArrayConverter());
+        put(Object.class, new ObjectConverter());
     }
 
 
     public <T> Optional<TypeConverter<T>> get(T t) {
-        final var result = (TypeConverter<T>) registry.get(t.getClass());
+        TypeConverter result = (TypeConverter<T>) registry.get(t.getClass());
+        
         if (result == null) {
-            System.out.println("Miss: wanted " + t.getClass() + ", but got only: \n" + registry);
+            Class<?> superclass = t.getClass().getSuperclass();
+            while (result == null && superclass != null) {
+                System.out.println("missed, attempting with superclass " + superclass);
+                result = registry.get(superclass);
+                superclass = superclass.getSuperclass();
+            }
+
+            if (result == null) {
+                System.out.println("Miss: wanted " + t.getClass() + ", but got only: \n" + registry);
+            } else {
+                System.out.println("Great success!");
+            }
         }
         return Optional.ofNullable(result);
     }

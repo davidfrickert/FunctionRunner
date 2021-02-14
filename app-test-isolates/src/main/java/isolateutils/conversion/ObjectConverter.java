@@ -1,22 +1,22 @@
 package isolateutils.conversion;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.ObjectHandle;
 import org.graalvm.nativeimage.ObjectHandles;
 import org.graalvm.nativeimage.PinnedObject;
 import org.graalvm.nativeimage.c.function.CEntryPoint;
-import org.graalvm.nativeimage.c.type.CCharPointer;
 import org.graalvm.nativeimage.c.type.CTypeConversion;
 import org.graalvm.word.Pointer;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.nio.ByteBuffer;
 
-public class ObjectConverter implements TypeConverter<Serializable> {
+public class ObjectConverter implements TypeConverter<Object> {
 
     @Override
-    public ObjectHandle createHandle(IsolateThread targetIsolate, Serializable o) {
+    public ObjectHandle createHandle(IsolateThread targetIsolate, Object o) {
           /*
         Holder for a pinned object, such that the object doesn't move until the pin is removed.
         The garbage collector treats pinned object specially to ensure that they are not moved or discarded.
