@@ -1,1 +1,0 @@
-cat $1 | grep "GC (" | awk '{ print $7 }' | awk '{ sum += $1 } END { print sum "seconds"}'  
