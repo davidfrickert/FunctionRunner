@@ -8,9 +8,9 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <graalvm.version>20.3.0</graalvm.version>
+        <graalvm.version>21.0.0.2</graalvm.version>
         <java.version>11</java.version>
-        <springboot.version>2.4.0-SNAPSHOT</springboot.version>
+        <springboot.version>2.4.2</springboot.version>
     </properties>
 
     <dependencies>
@@ -18,7 +18,7 @@
         <dependency>
             <groupId>org.springframework.experimental</groupId>
             <artifactId>spring-graalvm-native</artifactId>
-            <version>0.8.3</version>
+            <version>0.8.5</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -94,6 +94,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${springboot.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -121,18 +122,31 @@
                     <imageName>app</imageName>
                     <mainClass>App</mainClass>
                     <buildArgs>
+                        <!-- Forces a failure if NI is not built -->
                         --no-fallback
-                        <!---H:+TraceClassInitialization-->
+                        <!-- Enable HTTP + HTTPS -->
                         --enable-https
-                        --enable-url-protocols=http
+                        --enable-http
+                        <!-- Reflection conf for MinIO Lib-->
                         -H:ReflectionConfigurationFiles=classes/reflection.json
-                        -H:+AllowVMInspection
-                        --initialize-at-build-time=org.springframework.boot.logging.logback.LogbackLoggingSystem$Factory
-                        --initialize-at-build-time=org.springframework.boot.logging.java.JavaLoggingSystem$Factory
+
+                        <!-- Force build time initialization of logging classes
+                        initialize-at-build-time=org.springframework.boot.logging.logback.LogbackLoggingSystem$Factory
+                        initialize-at-build-time=org.springframework.boot.logging.java.JavaLoggingSystem$Factory
+                        -->
+
+                        <!-- GC data -->
                         -R:+PrintGCSummary
                         -R:+PrintGC
                         -R:+PrintGCTimeStamps
                         -R:+VerboseGC
+
+                        <!-- Alpine Linux containers
+
+                         -->
+                        -H:-CheckToolchain
+                         --static
+                         --libc=musl
                     </buildArgs>
                 </configuration>
             </plugin>
