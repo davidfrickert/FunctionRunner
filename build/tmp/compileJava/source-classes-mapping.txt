@@ -1,0 +1,19 @@
+json/JsonUtils.java
+ json.JsonUtils
+App.java
+ App
+isolateutils/conversion/registry/TypeConversionRegistry.java
+ isolateutils.conversion.registry.TypeConversionRegistry
+isolateutils/conversion/StringConverter.java
+ isolateutils.conversion.StringConverter
+isolateutils/conversion/TypeConverter.java
+ isolateutils.conversion.TypeConverter
+isolateutils/handles/HandleUnwrapUtils.java
+ isolateutils.handles.HandleUnwrapUtils
+MainClass.java
+ MainClass
+isolateutils/conversion/registry/RegistryMap.java
+ isolateutils.conversion.registry.RegistryMap
+ isolateutils.conversion.registry.RegistryMap$Holder
+isolateutils/conversion/ByteArrayConverter.java
+ isolateutils.conversion.ByteArrayConverter

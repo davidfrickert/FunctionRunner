@@ -1,2 +1,0 @@
-cat $1 | grep "GC (" | awk '{ print $6 }' | awk -F "->" '{print substr($1, 1, length($1) -1) - substr($2, 1, length($2) -2)}' | awk '{ sum += $1 } END { print sum / 1000000 "G" }' 
-

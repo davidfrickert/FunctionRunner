@@ -1,0 +1,102 @@
+Dec 01, 2020 10:42:28 PM org.apache.coyote.AbstractProtocol init
+INFO: Initializing ProtocolHandler ["http-nio-8080"]
+Dec 01, 2020 10:42:28 PM org.apache.catalina.core.StandardService startInternal
+INFO: Starting service [Tomcat]
+Dec 01, 2020 10:42:28 PM org.apache.catalina.core.StandardEngine startInternal
+INFO: Starting Servlet engine: [Apache Tomcat/9.0.39]
+Dec 01, 2020 10:42:28 PM org.apache.catalina.core.ApplicationContext log
+INFO: Initializing Spring embedded WebApplicationContext
+Dec 01, 2020 10:42:28 PM org.apache.coyote.AbstractProtocol start
+INFO: Starting ProtocolHandler ["http-nio-8080"]
+Dec 01, 2020 10:42:31 PM org.apache.catalina.core.ApplicationContext log
+INFO: Initializing Spring DispatcherServlet 'dispatcherServlet'
+Dec 01, 2020 10:42:31 PM com.fasterxml.jackson.databind.ext.Java7Handlers <clinit>
+WARNING: Unable to load JDK7 types (java.nio.file.Path): no Java7 type support added
+Dec 01, 2020 10:42:37 PM org.apache.coyote.AbstractProtocol pause
+INFO: Pausing ProtocolHandler ["http-nio-8080"]
+Dec 01, 2020 10:42:37 PM org.apache.catalina.core.StandardService stopInternal
+INFO: Stopping service [Tomcat]
+Dec 01, 2020 10:42:37 PM org.apache.catalina.core.StandardWrapper unload
+INFO: Waiting for [1] instance(s) to be deallocated for Servlet [dispatcherServlet]
+Dec 01, 2020 10:42:38 PM org.apache.catalina.core.StandardWrapper unload
+INFO: Waiting for [1] instance(s) to be deallocated for Servlet [dispatcherServlet]
+Dec 01, 2020 10:42:39 PM org.apache.catalina.core.StandardWrapper unload
+INFO: Waiting for [1] instance(s) to be deallocated for Servlet [dispatcherServlet]
+Dec 01, 2020 10:42:39 PM org.apache.catalina.core.ApplicationContext log
+INFO: Destroying Spring FrameworkServlet 'dispatcherServlet'
+Dec 01, 2020 10:42:39 PM org.apache.catalina.loader.WebappClassLoaderBase clearReferencesThreads
+WARNING: The web application [ROOT] is still processing a request that has yet to finish. This is very likely to create a memory leak. You can control the time allowed for requests to finish by using the unloadDelay attribute of the standard Context implementation. Stack trace of request processing thread:[
+ com.oracle.svm.core.c.function.IsolateSupportImpl.tearDownIsolate(IsolateSupportImpl.java:98)
+ org.graalvm.nativeimage.Isolates.tearDownIsolate(Isolates.java:284)
+ rest.request.compression.GZIPMinIORequest.execInIsolate(GZIPMinIORequest.java:34)
+ rest.api.compression.GZIPMinIO.compress(GZIPMinIO.java:13)
+ java.lang.reflect.Method.invoke(Method.java:566)
+ org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:197)
+ org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:141)
+ org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106)
+ org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:893)
+ org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:807)
+ org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+ org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1061)
+ org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:961)
+ org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+ org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+ javax.servlet.http.HttpServlet.service(HttpServlet.java:626)
+ org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+ javax.servlet.http.HttpServlet.service(HttpServlet.java:733)
+ org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+ org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+ org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+ org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+ org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+ org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+ org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+ org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+ org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+ org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+ org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+ org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+ org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+ org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+ org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+ org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+ org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+ org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
+ org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+ org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+ org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143)
+ org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+ org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+ org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+ org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374)
+ org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+ org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
+ org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
+ org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+ java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+ java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+ org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+ java.lang.Thread.run(Thread.java:834)
+ com.oracle.svm.core.thread.JavaThreads.threadStartRoutine(JavaThreads.java:519)
+ com.oracle.svm.core.posix.thread.PosixJavaThreads.pthreadStartRoutine(PosixJavaThreads.java:192)]
+Dec 01, 2020 10:42:39 PM org.apache.coyote.AbstractProtocol stop
+INFO: Stopping ProtocolHandler ["http-nio-8080"]
+Dec 01, 2020 10:42:44 PM org.apache.tomcat.util.net.AbstractEndpoint shutdownExecutor
+WARNING: The executor associated with thread pool [http-nio-8080] has not fully shutdown. Some application threads may still be running.
+Dec 01, 2020 10:42:44 PM org.apache.coyote.AbstractProtocol destroy
+INFO: Destroying ProtocolHandler ["http-nio-8080"]
+PrintGCSummary: YoungGenerationSize: 268435456
+PrintGCSummary: MinimumHeapSize: 536870912
+PrintGCSummary: MaximumHeapSize: 13146649360
+PrintGCSummary: AlignedChunkSize: 1048576
+PrintGCSummary: CollectedTotalChunkBytes: 0
+PrintGCSummary: CollectedTotalObjectBytes: 0
+PrintGCSummary: AllocatedNormalChunkBytes: 53266440
+PrintGCSummary: AllocatedNormalObjectBytes: 30014904
+PrintGCSummary: IncrementalGCCount: 0
+PrintGCSummary: IncrementalGCNanos: 0
+PrintGCSummary: CompleteGCCount: 0
+PrintGCSummary: CompleteGCNanos: 0
+PrintGCSummary: GCNanos: 0
+PrintGCSummary: TotalNanos: 0
+PrintGCSummary: GCLoadPercent: 0
