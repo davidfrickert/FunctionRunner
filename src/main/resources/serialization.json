@@ -1,0 +1,30 @@
+[
+  {
+    "name": "java.lang.String"
+  }, {
+    "name": "io.vavr.control.Either",
+    "allPublicClasses" : true
+  }, {
+    "name": "io.vavr.control.Either$Left"
+  }, {
+    "name": "io.vavr.control.Either$Right"
+  }, {
+    "name": "java.lang.Throwable"
+  }, {
+    "name": "java.lang.Exception"
+  }, {
+    "name": "java.lang.ReflectiveOperationException"
+  }, {
+    "name": "java.lang.NoSuchMethodException"
+  }, {
+    "name": "java.lang.StackTraceElement"
+  }, {
+    "name": "java.io.IOException"
+  },{
+    "name": "java.io.ObjectStreamException"
+  }, {
+    "name": "java.io.NotSerializableException"
+  }, {
+    "name": "pt.ist.photon_graal.isolateutils.IsolateError"
+  }
+]

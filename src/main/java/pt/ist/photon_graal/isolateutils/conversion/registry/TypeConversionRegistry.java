@@ -2,6 +2,9 @@ package pt.ist.photon_graal.isolateutils.conversion.registry;
 
 import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.ObjectHandle;
+import pt.ist.photon_graal.isolateutils.conversion.TypeConverter;
+
+import java.util.NoSuchElementException;
 
 public class TypeConversionRegistry {
     private final RegistryMap registry;
@@ -19,7 +22,12 @@ public class TypeConversionRegistry {
     }
 
     public <T> ObjectHandle createHandle(IsolateThread targetIsolate, T t) {
-        final var typeConversion = registry.get(t);
-        return typeConversion.orElseThrow().createHandle(targetIsolate, t);
+        TypeConverter<T> typeConverter = registry.get(t)
+                .orElseThrow(() -> new NoSuchElementException("No type converter found for type " + t.getClass().getName()));
+
+        System.out.println(typeConverter.getClass().getName());
+
+        return typeConverter
+                .createHandle(targetIsolate, t);
     }
 }
