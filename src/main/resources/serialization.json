@@ -25,6 +25,6 @@
   }, {
     "name": "java.io.NotSerializableException"
   }, {
-    "name": "pt.ist.photon_graal.isolateutils.IsolateError"
+    "name": "pt.ist.photon_graal.runner.isolateutils.IsolateError"
   }
 ]
