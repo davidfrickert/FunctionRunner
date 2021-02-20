@@ -1,4 +1,4 @@
-package isolateutils.conversion.registry;
+package pt.ist.photon_graal.isolateutils.conversion.registry;
 
 import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.ObjectHandle;

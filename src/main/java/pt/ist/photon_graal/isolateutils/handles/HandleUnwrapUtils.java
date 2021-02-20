@@ -1,4 +1,4 @@
-package isolateutils.handles;
+package pt.ist.photon_graal.isolateutils.handles;
 
 import org.graalvm.nativeimage.ObjectHandle;
 import org.graalvm.nativeimage.ObjectHandles;

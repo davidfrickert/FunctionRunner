@@ -1,9 +1,9 @@
-package isolateutils.conversion.registry;
+package pt.ist.photon_graal.isolateutils.conversion.registry;
 
-import isolateutils.conversion.BooleanConverter;
-import isolateutils.conversion.ByteArrayConverter;
-import isolateutils.conversion.StringConverter;
-import isolateutils.conversion.TypeConverter;
+import pt.ist.photon_graal.isolateutils.conversion.BooleanConverter;
+import pt.ist.photon_graal.isolateutils.conversion.ByteArrayConverter;
+import pt.ist.photon_graal.isolateutils.conversion.StringConverter;
+import pt.ist.photon_graal.isolateutils.conversion.TypeConverter;
 
 import java.util.HashMap;
 import java.util.Map;

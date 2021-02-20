@@ -1,12 +1,10 @@
-package isolateutils.conversion;
+package pt.ist.photon_graal.isolateutils.conversion;
 
 import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.ObjectHandle;
 import org.graalvm.nativeimage.ObjectHandles;
 import org.graalvm.nativeimage.c.function.CEntryPoint;
 import org.graalvm.nativeimage.c.type.CTypeConversion;
-
-import java.nio.ByteBuffer;
 
 public class BooleanConverter implements TypeConverter<Boolean>  {
 	@Override
