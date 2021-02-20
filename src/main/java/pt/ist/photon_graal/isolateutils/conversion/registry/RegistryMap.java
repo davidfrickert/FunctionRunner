@@ -1,5 +1,7 @@
 package pt.ist.photon_graal.isolateutils.conversion.registry;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pt.ist.photon_graal.isolateutils.conversion.*;
 
 import java.util.HashMap;
@@ -8,6 +10,7 @@ import java.util.Optional;
 
 public class RegistryMap {
     private final Map<Class<?>, TypeConverter<?>> registry = new HashMap<>();
+    private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     public RegistryMap() {
         put(String.class, new StringConverter());
@@ -24,16 +27,14 @@ public class RegistryMap {
         if (result == null) {
             Class<?> superclass = t.getClass().getSuperclass();
             while (result == null && superclass != null) {
-                System.out.println("missed, attempting with superclass " + superclass);
+                logger.debug("missed, attempting with superclass [{}]", superclass);
                 result = registry.get(superclass);
                 superclass = superclass.getSuperclass();
             }
+        }
 
-            if (result == null) {
-                System.out.println("Miss: wanted " + t.getClass() + ", but got only: \n" + registry);
-            } else {
-                System.out.println("Great success!");
-            }
+        if (result == null) {
+            logger.warn("Miss. wanted [{}], but got only [{}]", t.getClass(), registry);
         }
         return Optional.ofNullable(result);
     }

@@ -9,6 +9,8 @@ import org.graalvm.nativeimage.Isolates;
 import org.graalvm.nativeimage.ObjectHandle;
 import org.graalvm.nativeimage.c.function.CEntryPoint;
 import org.graalvm.nativeimage.c.function.CEntryPoint.IsolateThreadContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import pt.ist.photon_graal.isolateutils.IsolateError;
 import pt.ist.photon_graal.isolateutils.conversion.registry.TypeConversionRegistry;
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class FunctionRunnerImpl implements FunctionRunner {
+
     private static TypeConversionRegistry getRegistry() {
         return TypeConversionRegistry.getInstance();
     }
@@ -74,9 +77,9 @@ public class FunctionRunnerImpl implements FunctionRunner {
 
             Object[] args = (Object[]) objStream.readObject();
 
-            System.out.printf("Received [%s] as argument%n", Arrays.toString(args));
-            System.out.println();
-            System.out.printf("Classes are [%s]", Arrays.stream(args).map(Object::getClass).collect(Collectors.toList()));
+            Logger logger = getLogger();
+            logger.debug("Received [{}] as argument", Arrays.toString(args));
+            logger.debug("Function argument classes are [{}]", Arrays.stream(args).map(Object::getClass).collect(Collectors.toList()));
 
             Class<?>[] argTypes = Arrays.stream(args)
                 .map(Object::getClass)
@@ -98,7 +101,7 @@ public class FunctionRunnerImpl implements FunctionRunner {
     }
 
     private static ObjectHandle error(IsolateThread receivingIsolate, Throwable error) {
-        error.printStackTrace();
+        getLogger().debug("Error: ", error);
         return getRegistry().createHandle(
                 receivingIsolate,
                 Either.left(IsolateError.fromThrowableFull(error))
@@ -106,10 +109,14 @@ public class FunctionRunnerImpl implements FunctionRunner {
     }
 
     private static ObjectHandle success(IsolateThread receivingIsolate, Object returnVal) {
-        System.out.println("success: " + returnVal);
+        getLogger().debug("Success return: {}", returnVal);
         return getRegistry().createHandle(
                 receivingIsolate,
                 Either.right(returnVal)
         );
+    }
+
+    private static final Logger getLogger() {
+       return LoggerFactory.getLogger(FunctionRunnerImpl.class);
     }
 }
