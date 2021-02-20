@@ -1,4 +1,4 @@
-package pt.ist.photon_graal.isolateutils.conversion;
+package pt.ist.photon_graal.runner.isolateutils.conversion;
 
 import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.ObjectHandle;

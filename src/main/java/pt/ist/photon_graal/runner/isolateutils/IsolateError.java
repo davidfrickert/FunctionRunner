@@ -1,4 +1,4 @@
-package pt.ist.photon_graal.isolateutils;
+package pt.ist.photon_graal.runner.isolateutils;
 
 import org.springframework.lang.Nullable;
 

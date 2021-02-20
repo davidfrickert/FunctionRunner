@@ -1,4 +1,4 @@
-package pt.ist.photon_graal.client;
+package pt.ist.photon_graal.rest;
 
 import io.vavr.control.Either;
 import org.slf4j.Logger;
@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import pt.ist.photon_graal.isolateutils.IsolateError;
+import pt.ist.photon_graal.rest.api.DTOFunctionExecute;
+import pt.ist.photon_graal.runner.isolateutils.IsolateError;
 import pt.ist.photon_graal.runner.FunctionRunner;
 
 import java.io.IOException;
@@ -22,13 +23,11 @@ public class RestFunctionRunner {
 
     @PostMapping(value = "/execute")
     public @ResponseBody
-    String compressNoIsolate (@RequestBody String input) throws IOException, ClassNotFoundException {
-        String classFqn = "test.func.ToUpperCase";
-        String methodName = "apply";
+    String compressNoIsolate (@RequestBody DTOFunctionExecute input) throws IOException, ClassNotFoundException {
 
         logger.debug("Received [{}] as input from REST", input);
 
-        Either<IsolateError, String> result = functionRunner.run(classFqn, methodName, input);
+        Either<IsolateError, String> result = functionRunner.run(input.getClassFQN(), input.getMethodName(), input.getArgs());
 
         if (result.isRight()) {
             return result.get();

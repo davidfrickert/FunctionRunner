@@ -1,10 +1,10 @@
-package pt.ist.photon_graal.isolateutils.conversion.registry;
+package pt.ist.photon_graal.runner.isolateutils.conversion.registry;
 
 import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.ObjectHandle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pt.ist.photon_graal.isolateutils.conversion.TypeConverter;
+import pt.ist.photon_graal.runner.isolateutils.conversion.TypeConverter;
 
 import java.util.NoSuchElementException;
 

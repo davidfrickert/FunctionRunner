@@ -1,4 +1,4 @@
-package pt.ist.photon_graal.isolateutils.conversion;
+package pt.ist.photon_graal.runner.isolateutils.conversion;
 
 import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.ObjectHandle;
@@ -8,18 +8,28 @@ import org.graalvm.nativeimage.c.function.CEntryPoint;
 import org.graalvm.nativeimage.c.type.CTypeConversion;
 import org.graalvm.word.Pointer;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.nio.ByteBuffer;
 
-public class ByteArrayConverter implements TypeConverter<byte[]> {
+public class ArrayConverter implements TypeConverter<Object[]>{
 
     @Override
-    public ObjectHandle createHandle(IsolateThread targetIsolate, byte[] bytes) {
-        /*
-        Holder for a pinned object, such that the object doesn't move until the pin is removed.
-        The garbage collector treats pinned object specially to ensure that they are not moved or discarded.
-        */
-        try (PinnedObject pin = PinnedObject.create(bytes)) {
-            return toJava(targetIsolate, pin.addressOfArrayElement(0), bytes.length);
+    public ObjectHandle createHandle(IsolateThread targetIsolate, Object[] ts) {
+        try (PinnedObject notUsed = PinnedObject.create(ts)) {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
+                oos.writeObject(ts);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            byte[] bytes = bos.toByteArray();
+
+            try (PinnedObject pin = PinnedObject.create(bytes)) {
+                return toJava(targetIsolate, pin.addressOfArrayElement(0), bytes.length);
+            }
         }
     }
 

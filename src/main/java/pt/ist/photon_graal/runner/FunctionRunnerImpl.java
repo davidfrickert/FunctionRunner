@@ -12,9 +12,9 @@ import org.graalvm.nativeimage.c.function.CEntryPoint.IsolateThreadContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import pt.ist.photon_graal.isolateutils.IsolateError;
-import pt.ist.photon_graal.isolateutils.conversion.registry.TypeConversionRegistry;
-import pt.ist.photon_graal.isolateutils.handles.HandleUnwrapUtils;
+import pt.ist.photon_graal.runner.isolateutils.IsolateError;
+import pt.ist.photon_graal.runner.isolateutils.conversion.registry.TypeConversionRegistry;
+import pt.ist.photon_graal.runner.isolateutils.handles.HandleUnwrapUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
