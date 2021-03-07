@@ -8,7 +8,7 @@
 		"allDeclaredClasses" : true,
 		"allPublicClasses" : true
 	}, {
-		"name": "test.func.ToUpperCase",
+		"name": "pt.ulisboa.ist.func.BaseFunction",
 		"allPublicConstructors" : true,
 		"allPublicMethods" : true,
 		"allPublicClasses" : true

@@ -3,6 +3,7 @@ package pt.ist.photon_graal.runner.isolateutils;
 import org.springframework.lang.Nullable;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class IsolateError implements Serializable {
     private final String message;
@@ -46,5 +47,15 @@ public class IsolateError implements Serializable {
 
     public IsolateError getCause() {
         return cause;
+    }
+
+    @Override
+    public String toString() {
+        return "IsolateError{" +
+                "message='" + message + '\'' +
+                ", exceptionClass='" + exceptionClass + '\'' +
+                ", stackTrace=" + Arrays.toString(stackTrace) +
+                ", cause=" + cause +
+                '}';
     }
 }

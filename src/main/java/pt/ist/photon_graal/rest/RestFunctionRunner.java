@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import pt.ist.photon_graal.rest.api.DTOFunctionExecute;
-import pt.ist.photon_graal.runner.isolateutils.IsolateError;
 import pt.ist.photon_graal.runner.FunctionRunner;
+import pt.ist.photon_graal.runner.isolateutils.IsolateError;
 
 import java.io.IOException;
 
@@ -32,7 +32,7 @@ public class RestFunctionRunner {
         if (result.isRight()) {
             return result.get();
         } else {
-            return result.getLeft().getMessage();
+            return result.getLeft().toString();
         }
     }
 }
