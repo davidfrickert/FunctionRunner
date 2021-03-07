@@ -1,22 +1,19 @@
 package pt.ist.photon_graal.rest.api;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import pt.ist.photon_graal.rest.function.Settings;
 
 public class DTOFunctionExecute {
-    private String classFQN;
-    private String methodName;
-    private Object[] args;
+    private final String classFQN;
+    private final String methodName;
+    private final Object[] args;
 
-    private Boolean isStatic;
+    private final Boolean isStatic;
 
-    public DTOFunctionExecute(@JsonProperty(value = "classFQN",required = true)
-                                      String classFQN
-            , @JsonProperty(value = "methodName",required = true)
-                                      String methodName
-            , @JsonProperty(value = "args",required = true)
-                                      Object[] args
-            , @JsonProperty("is_static")
-                                      boolean isStatic) {
+    public DTOFunctionExecute(Settings functionSettings, DTOFunctionArgs args) {
+        this(functionSettings.getClassFQN(), functionSettings.getMethodName(), functionSettings.isStatic(), args.getArgs());
+    }
+
+    public DTOFunctionExecute(String classFQN, String methodName, boolean isStatic, Object[] args) {
         this.classFQN = classFQN;
         this.methodName = methodName;
         this.args = args;

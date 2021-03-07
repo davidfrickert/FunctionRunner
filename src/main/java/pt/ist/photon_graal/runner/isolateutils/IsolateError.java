@@ -1,7 +1,5 @@
 package pt.ist.photon_graal.runner.isolateutils;
 
-import org.springframework.lang.Nullable;
-
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -29,7 +27,7 @@ public class IsolateError implements Serializable {
         return new IsolateError(t.getClass().getName(), t.getMessage(), t.getStackTrace(), cause);
     }
 
-    public static IsolateError fromThrowable(@Nullable Throwable t) {
+    public static IsolateError fromThrowable(Throwable t) {
         return t != null ? new IsolateError(t.getClass().getName(), t.getMessage(), t.getStackTrace()) : null;
     }
 

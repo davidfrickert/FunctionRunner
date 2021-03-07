@@ -11,7 +11,6 @@ import org.graalvm.nativeimage.c.function.CEntryPoint;
 import org.graalvm.nativeimage.c.function.CEntryPoint.IsolateThreadContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import pt.ist.photon_graal.runner.isolateutils.IsolateError;
 import pt.ist.photon_graal.runner.isolateutils.conversion.registry.TypeConversionRegistry;
 import pt.ist.photon_graal.runner.isolateutils.handles.HandleUnwrapUtils;
@@ -23,7 +22,6 @@ import java.util.Arrays;
 import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 
-@Component
 public class FunctionRunnerImpl implements FunctionRunner {
 
     private static TypeConversionRegistry getRegistry() {
