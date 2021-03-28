@@ -109,11 +109,13 @@
                         -H:+ReportExceptionStackTraces
                         <!-- This option makes the build not fail if it can't find some classes in reflection.json-->
                         -H:+AllowIncompleteClasspath
-                        <!-- GC data -->
+                        <!-- GC data
+
                         -R:+PrintGCSummary
                         -R:+PrintGC
                         -R:+PrintGCTimeStamps
                         -R:+VerboseGC
+                        -->
 
                         <!-- Alpine Linux containers
                         -H:-CheckToolchain

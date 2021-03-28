@@ -1,6 +1,7 @@
 package pt.ist.photon_graal.rest.api;
 
-import pt.ist.photon_graal.rest.function.Settings;
+import pt.ist.photon_graal.settings.Settings;
+import pt.ist.photon_graal.settings.CurrentSettings;
 
 public class DTOFunctionExecute {
     private final String classFQN;
@@ -9,11 +10,11 @@ public class DTOFunctionExecute {
 
     private final Boolean isStatic;
 
-    public DTOFunctionExecute(Settings functionSettings, DTOFunctionArgs args) {
+    private DTOFunctionExecute(Settings functionSettings, DTOFunctionArgs args) {
         this(functionSettings.getClassFQN(), functionSettings.getMethodName(), functionSettings.isStatic(), args.getArgs());
     }
 
-    public DTOFunctionExecute(String classFQN, String methodName, boolean isStatic, Object[] args) {
+    private DTOFunctionExecute(String classFQN, String methodName, boolean isStatic, Object[] args) {
         this.classFQN = classFQN;
         this.methodName = methodName;
         this.args = args;
@@ -41,5 +42,17 @@ public class DTOFunctionExecute {
 
     public boolean isStatic() {
         return isStatic != null && isStatic;
+    }
+
+    public static DTOFunctionExecute of(Settings functionSettings, DTOFunctionArgs args) {
+        return new DTOFunctionExecute(functionSettings, args);
+    }
+
+    public static DTOFunctionExecute of(DTOFunctionArgs args) {
+        return new DTOFunctionExecute(CurrentSettings.VALUE, args);
+    }
+
+    public static DTOFunctionExecute of(String classFQN, String methodName, boolean isStatic, Object[] args) {
+        return new DTOFunctionExecute(classFQN, methodName, isStatic, args);
     }
 }

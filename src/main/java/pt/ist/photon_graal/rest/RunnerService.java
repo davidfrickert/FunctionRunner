@@ -9,7 +9,7 @@ import pt.ist.photon_graal.runner.isolateutils.IsolateError;
 
 
 public class RunnerService {
-    private FunctionRunner functionRunner;
+    private final FunctionRunner functionRunner;
 
     public RunnerService(FunctionRunner functionRunner) {
         this.functionRunner = functionRunner;
@@ -23,10 +23,6 @@ public class RunnerService {
 
         Either<IsolateError, String> result = functionRunner.run(input.getClassFQN(), input.getMethodName(), input.getArgs());
 
-        if (result.isRight()) {
-            return result.get();
-        } else {
-            return result.getLeft().toString();
-        }
+        return result.get();
     }
 }
