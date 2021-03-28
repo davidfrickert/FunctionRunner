@@ -7,8 +7,8 @@ import lombok.Data;
 public class DTOFunctionArgs {
     private final Object[] args;
 
-    public DTOFunctionArgs(@JsonProperty(value = "args", required = true)
-                                       Object[] args) {
+    public DTOFunctionArgs(
+            @JsonProperty(value = "args", required = true) Object[] args) {
         this.args = args;
     }
 }

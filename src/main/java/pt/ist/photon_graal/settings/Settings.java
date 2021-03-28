@@ -1,4 +1,4 @@
-package pt.ist.photon_graal.rest.function;
+package pt.ist.photon_graal.settings;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ public class Settings {
     private final Boolean isStatic;
 
     public Settings(String classFQN, String methodName) {
-        this(classFQN, methodName, null);
+        this(classFQN, methodName, false);
     }
 
     public Settings(String classFQN, String methodName, Boolean isStatic) {
