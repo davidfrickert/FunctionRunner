@@ -1,5 +1,6 @@
 package pt.ist.photon_graal;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -9,6 +10,8 @@ import pt.ist.photon_graal.rest.RunnerService;
 import pt.ist.photon_graal.rest.api.DTOFunctionArgs;
 import pt.ist.photon_graal.rest.api.DTOFunctionExecute;
 import pt.ist.photon_graal.runner.FunctionRunnerImpl;
+import pt.ist.photon_graal.settings.CurrentSettings;
+import pt.ist.photon_graal.settings.Settings;
 
 public class App {
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
@@ -23,10 +26,11 @@ public class App {
 
         String result;
         try {
+            ObjectNode input = mapper.readValue(inputJson, ObjectNode.class);
 
-            DTOFunctionArgs allArgs = mapper.readValue(inputJson, DTOFunctionArgs.class);
+            DTOFunctionArgs allArgs = mapper.treeToValue(input, DTOFunctionArgs.class);
 
-            DTOFunctionExecute executionInput = DTOFunctionExecute.of(allArgs);
+            DTOFunctionExecute executionInput = DTOFunctionExecute.of(getSettingsForInvocation(input), allArgs);
 
             result = runnerService.execute(executionInput);
         } catch (Exception e) {
@@ -34,6 +38,18 @@ public class App {
         }
 
         returnValue(result);
+    }
+
+    private static Settings getSettingsForInvocation(ObjectNode input) throws JsonProcessingException {
+        Settings settings;
+
+        if (input.has("settings")) {
+            settings = mapper.treeToValue(input.get("settings"), Settings.class);
+        } else {
+            settings = CurrentSettings.VALUE;
+        }
+
+        return settings;
     }
 
     private static void returnValue(Object value) {
