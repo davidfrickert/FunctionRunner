@@ -88,8 +88,10 @@ public class HttpMain {
 			try {
 				InputStream is = exchange.getRequestBody();
 
+				JsonNode inputJSON = mapper.readTree(new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8)));
+				JsonNode value = inputJSON.get("value");
 				DTOFunctionArgs args = mapper
-					.readValue(new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8)), DTOFunctionArgs.class);
+					.treeToValue(value, DTOFunctionArgs.class);
 
 				logger.debug(args.toString());
 

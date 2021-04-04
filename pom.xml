@@ -63,7 +63,7 @@
         <!-- Function -->
         <dependency>
             <groupId>photons.graal.functions</groupId>
-            <artifactId>Base-Function-0.0.1-SNAPSHOT</artifactId>
+            <artifactId>base-function</artifactId>
             <version>0.0.1</version>
         </dependency>
 
