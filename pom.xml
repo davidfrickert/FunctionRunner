@@ -63,7 +63,7 @@
         <!-- Function -->
         <dependency>
             <groupId>photons.graal.functions</groupId>
-            <artifactId>base-function</artifactId>
+            <artifactId>Base-Function-0.0.1-SNAPSHOT</artifactId>
             <version>0.0.1</version>
         </dependency>
 
@@ -95,7 +95,7 @@
                 <configuration>
                     <skip>false</skip>
                     <imageName>app</imageName>
-                    <mainClass>pt.ist.photon_graal.App</mainClass>
+                    <mainClass>pt.ist.photon_graal.HttpMain</mainClass>
                     <buildArgs>
                         <!-- Forces a failure if NI is not built -->
                         --no-fallback
