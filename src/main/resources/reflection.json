@@ -8,7 +8,7 @@
 		"allDeclaredClasses" : true,
 		"allPublicClasses" : true
 	}, {
-		"name": "pt.ulisboa.ist.func.BaseFunction",
+		"name": "{{classFQN}}",
 		"allPublicConstructors" : true,
 		"allPublicMethods" : true,
 		"allPublicClasses" : true
