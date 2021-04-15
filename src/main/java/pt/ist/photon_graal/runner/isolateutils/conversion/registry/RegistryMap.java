@@ -22,19 +22,23 @@ public class RegistryMap {
 
 
     public <T> Optional<TypeConverter<T>> get(T t) {
-        TypeConverter result = registry.get(t.getClass());
+        Class<?> aClass = t.getClass();
 
-        if (result == null) {
-            Class<?> superclass = t.getClass().getSuperclass();
-            while (result == null && superclass != null) {
-                logger.debug("missed, attempting with superclass [{}]", superclass);
-                result = registry.get(superclass);
-                superclass = superclass.getSuperclass();
+        if (registry.containsKey(aClass)) {
+            TypeConverter result = registry.get(t.getClass());
+
+            if (result == null) {
+                Class<?> superclass = t.getClass().getSuperclass();
+                while (result == null && superclass != null) {
+                    logger.debug("missed, attempting with superclass [{}]", superclass);
+                    result = registry.get(superclass);
+                    superclass = superclass.getSuperclass();
+                }
             }
-        }
 
-        if (result == null) {
-            logger.warn("Miss. wanted [{}], but got only [{}]", t.getClass(), registry);
+            if (result == null) {
+                logger.warn("Miss. wanted [{}], but got only [{}]", t.getClass(), registry);
+            }
         }
         return Optional.ofNullable(result);
     }

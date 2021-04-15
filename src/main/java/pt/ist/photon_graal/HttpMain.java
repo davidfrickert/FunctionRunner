@@ -7,21 +7,19 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.InetSocketAddress;
-import java.nio.charset.StandardCharsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pt.ist.photon_graal.metrics.MetricsSupport;
 import pt.ist.photon_graal.rest.RunnerService;
 import pt.ist.photon_graal.rest.api.DTOFunctionArgs;
 import pt.ist.photon_graal.rest.api.DTOFunctionExecute;
 import pt.ist.photon_graal.runner.FunctionRunnerImpl;
 import pt.ist.photon_graal.settings.CurrentSettings;
 import pt.ist.photon_graal.settings.Settings;
+
+import java.io.*;
+import java.net.InetSocketAddress;
+import java.nio.charset.StandardCharsets;
 
 public class HttpMain {
 	private static final Logger logger = LoggerFactory.getLogger(HttpMain.class);
@@ -37,7 +35,14 @@ public class HttpMain {
 
 		this.server.createContext("/init", new InitHandler());
 		this.server.createContext("/run", new RunHandler(functionSettings, rs));
-		this.server.setExecutor(null);
+		this.server.createContext("/metrics", httpExchange -> {
+			String response = MetricsSupport.getMeterRegistryPrometheus().scrape();
+			httpExchange.sendResponseHeaders(200, response.getBytes().length);
+			try (OutputStream os = httpExchange.getResponseBody()) {
+				os.write(response.getBytes());
+			}
+		});
+		// this.server.setExecutor(null);
 	}
 
 	public void start() {
@@ -149,7 +154,7 @@ public class HttpMain {
 
 			response = root;
 		}
-		logger.info("Output: " + response.toString());
+		logger.info("Output: " + response);
 		return response.toString();
 	}
 }
