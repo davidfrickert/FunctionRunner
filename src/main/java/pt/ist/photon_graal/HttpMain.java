@@ -20,10 +20,14 @@ import pt.ist.photon_graal.settings.Settings;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.Executors;
 
 public class HttpMain {
 	private static final Logger logger = LoggerFactory.getLogger(HttpMain.class);
 	private static final ObjectMapper mapper = new ObjectMapper();
+
+	// TODO move this to properties file
+	private static final int threadPoolSize = 4;
 
 	private final HttpServer server;
 	private boolean initialized;
@@ -35,14 +39,8 @@ public class HttpMain {
 
 		this.server.createContext("/init", new InitHandler());
 		this.server.createContext("/run", new RunHandler(functionSettings, rs));
-		this.server.createContext("/metrics", httpExchange -> {
-			String response = MetricsSupport.getMeterRegistryPrometheus().scrape();
-			httpExchange.sendResponseHeaders(200, response.getBytes().length);
-			try (OutputStream os = httpExchange.getResponseBody()) {
-				os.write(response.getBytes());
-			}
-		});
-		// this.server.setExecutor(null);
+
+		this.server.setExecutor(Executors.newFixedThreadPool(threadPoolSize));
 	}
 
 	public void start() {
@@ -78,7 +76,7 @@ public class HttpMain {
 		}
 	}
 
-	private class RunHandler implements HttpHandler {
+	private static class RunHandler implements HttpHandler {
 
 		private final Settings functionSettings;
 		private final RunnerService runnerService;
