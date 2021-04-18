@@ -7,7 +7,6 @@ import pt.ist.photon_graal.rest.api.DTOFunctionExecute;
 import pt.ist.photon_graal.runner.FunctionRunner;
 import pt.ist.photon_graal.runner.isolateutils.IsolateError;
 
-
 public class RunnerService {
     private final FunctionRunner functionRunner;
 

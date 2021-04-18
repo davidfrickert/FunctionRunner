@@ -20,25 +20,13 @@ public class RegistryMap {
         put(Object[].class, new ArrayConverter());
     }
 
-
     public <T> Optional<TypeConverter<T>> get(T t) {
         Class<?> aClass = t.getClass();
-
+        TypeConverter result;
         if (registry.containsKey(aClass)) {
-            TypeConverter result = registry.get(t.getClass());
-
-            if (result == null) {
-                Class<?> superclass = t.getClass().getSuperclass();
-                while (result == null && superclass != null) {
-                    logger.debug("missed, attempting with superclass [{}]", superclass);
-                    result = registry.get(superclass);
-                    superclass = superclass.getSuperclass();
-                }
-            }
-
-            if (result == null) {
-                logger.warn("Miss. wanted [{}], but got only [{}]", t.getClass(), registry);
-            }
+           result = registry.get(t.getClass());
+        } else {
+            result = registry.get(Object.class);
         }
         return Optional.ofNullable(result);
     }

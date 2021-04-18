@@ -7,20 +7,30 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Timer;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pt.ist.photon_graal.metrics.MemoryHelper;
 import pt.ist.photon_graal.metrics.MetricsSupport;
 import pt.ist.photon_graal.rest.RunnerService;
 import pt.ist.photon_graal.rest.api.DTOFunctionArgs;
 import pt.ist.photon_graal.rest.api.DTOFunctionExecute;
 import pt.ist.photon_graal.runner.FunctionRunnerImpl;
+import pt.ist.photon_graal.settings.Configuration;
 import pt.ist.photon_graal.settings.CurrentSettings;
 import pt.ist.photon_graal.settings.Settings;
-
-import java.io.*;
-import java.net.InetSocketAddress;
-import java.nio.charset.StandardCharsets;
-import java.util.concurrent.Executors;
 
 public class HttpMain {
 	private static final Logger logger = LoggerFactory.getLogger(HttpMain.class);
@@ -31,8 +41,15 @@ public class HttpMain {
 
 	private final HttpServer server;
 	private boolean initialized;
+	private MetricsSupport metricsSupport;
 
-	public HttpMain(int port, Settings functionSettings) throws IOException {
+	private final Counter invocationsCounter;
+	private final Timer invocationTimer;
+	private AtomicLong memoryUsedBefore;
+	private final Runtime memoryUsedAfter;
+	private final AtomicInteger concurrentExecutions;
+
+	public HttpMain(int port, Settings functionSettings, Configuration configuration) throws IOException {
 		this.server = HttpServer.create(new InetSocketAddress(port), -1);
 
 		final RunnerService rs = new RunnerService(new FunctionRunnerImpl());
@@ -41,21 +58,34 @@ public class HttpMain {
 		this.server.createContext("/run", new RunHandler(functionSettings, rs));
 
 		this.server.setExecutor(Executors.newFixedThreadPool(threadPoolSize));
+
+		this.metricsSupport = MetricsSupport.get();
+		this.invocationsCounter = metricsSupport.getMeterRegistry().counter("invocations");
+		this.invocationTimer = metricsSupport.getMeterRegistry().timer("exec_time");
+		this.memoryUsedBefore = metricsSupport.getMeterRegistry().gauge("memory_before", new AtomicLong(0));
+		this.memoryUsedAfter = metricsSupport.getMeterRegistry().gauge("memory_after", Collections.emptyList(), Runtime.getRuntime(),
+																	   MemoryHelper::currentMemoryUsage);
+
+		this.concurrentExecutions = metricsSupport.getMeterRegistry().gauge("concurrent_executions", new AtomicInteger(0));
 	}
 
 	public void start() {
 		this.server.start();
 	}
 
-	private static void writeResponse(HttpExchange t, int code, String content) throws IOException {
+	private static void writeResponse(HttpExchange t, int code, String content) {
 		byte[] bytes = content.getBytes(StandardCharsets.UTF_8);
-		t.sendResponseHeaders(code, bytes.length);
-		OutputStream os = t.getResponseBody();
-		os.write(bytes);
-		os.close();
+		try {
+			t.sendResponseHeaders(code, bytes.length);
+			OutputStream os = t.getResponseBody();
+			os.write(bytes);
+			os.close();
+		} catch (IOException e) {
+			logger.error("Couldn't send response to caller", e);
+		}
 	}
 
-	private static void writeError(HttpExchange t, String errorMessage) throws IOException {
+	private static void writeError(HttpExchange t, String errorMessage) {
 		ObjectNode message = mapper.createObjectNode();
 		message.put("error", errorMessage);
 		writeResponse(t, 502, message.toString());
@@ -64,7 +94,7 @@ public class HttpMain {
 	private class InitHandler implements HttpHandler {
 
 		@Override
-		public void handle(HttpExchange exchange) throws IOException {
+		public void handle(HttpExchange exchange) {
 			if (initialized) {
 				String errorMessage = "Cannot initialize the action more than once.";
 				System.err.println(errorMessage);
@@ -76,7 +106,7 @@ public class HttpMain {
 		}
 	}
 
-	private static class RunHandler implements HttpHandler {
+	private class RunHandler implements HttpHandler {
 
 		private final Settings functionSettings;
 		private final RunnerService runnerService;
@@ -87,7 +117,15 @@ public class HttpMain {
 		}
 
 		@Override
-		public void handle(HttpExchange exchange) throws IOException {
+		public void handle(HttpExchange exchange) {
+			concurrentExecutions.incrementAndGet();
+			memoryUsedBefore.set(MemoryHelper.currentMemoryUsage(Runtime.getRuntime()));
+
+			invocationTimer.record(() -> doHandle(exchange));
+			metricsSupport.push();
+		}
+
+		private void doHandle(HttpExchange exchange) {
 			try {
 				InputStream is = exchange.getRequestBody();
 
@@ -106,9 +144,11 @@ public class HttpMain {
 
 				String restResult = returnValue(invocationResult);
 
+				HttpMain.this.invocationsCounter.increment();
+				HttpMain.this.concurrentExecutions.decrementAndGet();
 				HttpMain.writeResponse(exchange, 200, restResult);
 			} catch (Exception e) {
-				e.printStackTrace(System.err);
+				logger.error("Fatal error occured while executing function!", e);
 				HttpMain.writeError(exchange, "An error has occurred (see logs for details): " + e);
 			} finally {
 				writeLogMarkers();
@@ -122,7 +162,8 @@ public class HttpMain {
 
 	public static void main(String[] args) throws IOException {
 		Settings functionSettings = CurrentSettings.VALUE;
-		HttpMain proxy = new HttpMain(8080, functionSettings);
+		Configuration config = Configuration.get();
+		HttpMain proxy = new HttpMain(8080, functionSettings, config);
 		proxy.start();
 	}
 

@@ -24,6 +24,6 @@ public class Settings {
 
     @Override
     public String toString() {
-        return classFQN + "." + methodName;
+        return classFQN + "::" + methodName;
     }
 }

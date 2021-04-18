@@ -11,7 +11,7 @@
         <graalvm.version>21.0.0.2</graalvm.version>
         <java.version>11</java.version>
         <micrometer.version>1.6.6</micrometer.version>
-        <dagger.version>2.34.1</dagger.version>
+        <lombok.version>1.18.20</lombok.version>
     </properties>
 
     <dependencies>
@@ -35,7 +35,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.20</version>
+            <version>${lombok.version}</version>
         </dependency>
         <dependency>
             <groupId>io.vavr</groupId>
@@ -55,13 +55,6 @@
             <version>3.12.0</version>
         </dependency>
 
-        <!-- Properties configuration -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-configuration2</artifactId>
-            <version>2.7</version>
-        </dependency>
-
         <!-- Metrics -->
         <dependency>
             <groupId>io.micrometer</groupId>
@@ -79,13 +72,6 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.2.3</version>
-        </dependency>
-
-        <!-- Dependency Injection -->
-        <dependency>
-            <groupId>com.google.dagger</groupId>
-            <artifactId>dagger</artifactId>
-            <version>${dagger.version}</version>
         </dependency>
 
         <!-- Function -->
@@ -108,9 +94,9 @@
                     <encoding>UTF-8</encoding>
                     <annotationProcessorPaths>
                         <path>
-                            <groupId>com.google.dagger</groupId>
-                            <artifactId>dagger-compiler</artifactId>
-                            <version>${dagger.version}</version>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
@@ -140,6 +126,8 @@
                         <!-- Reflection conf for MinIO Lib-->
                         -H:ReflectionConfigurationFiles=classes/reflection.json
                         -H:SerializationConfigurationFiles=classes/serialization.json
+                        -H:ResourceConfigurationFiles=classes/resources.json
+                        -H:Log=registerResource
                         <!---H:JNIConfigurationFiles=classes/native-conf.json-->
                         -H:+ReportExceptionStackTraces
                         <!-- This option makes the build not fail if it can't find some classes in reflection.json-->
