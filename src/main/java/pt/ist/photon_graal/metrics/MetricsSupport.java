@@ -4,6 +4,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.prometheus.PrometheusConfig;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
 import io.prometheus.client.exporter.PushGateway;
+import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pt.ist.photon_graal.settings.CurrentSettings;
@@ -12,12 +13,14 @@ import java.io.IOException;
 import pt.ist.photon_graal.settings.Configuration;
 
 public class MetricsSupport {
-    private static final Logger logger = LoggerFactory.getLogger(Configuration.class);
+    private static final Logger logger = LoggerFactory.getLogger(MetricsSupport.class);
 
     private final MeterRegistry registry;
     private final PushGateway pushGateway;
 
-    private static MetricsSupport INSTANCE;
+    private static MetricsSupport instance;
+
+    private static final UUID runtimeIdentifier = UUID.randomUUID();
 
     private MetricsSupport(final MetricsConfig metricsConfig) {
         this.registry = initRegistry(new PrometheusMeterRegistry(PrometheusConfig.DEFAULT));
@@ -25,14 +28,13 @@ public class MetricsSupport {
     }
 
     public static MetricsSupport get() throws IOException {
-        if (INSTANCE == null) {
-            INSTANCE = new MetricsSupport(Configuration.get());
+        if (instance == null) {
+            instance = new MetricsSupport(Configuration.get());
         }
-        return INSTANCE;
+        return instance;
     }
 
     public MeterRegistry getMeterRegistry() {
-        logger.debug("getting meter registry");
         return registry;
     }
 
@@ -42,7 +44,7 @@ public class MetricsSupport {
 
     public void push() {
         try {
-            pushGateway.pushAdd(getPromMeterRegistry().getPrometheusRegistry(), CurrentSettings.VALUE.toString());
+            pushGateway.pushAdd(getPromMeterRegistry().getPrometheusRegistry(), runtimeIdentifier.toString());
         } catch (IOException e) {
             logger.warn("Couldn't push metrics to external system", e);
         }

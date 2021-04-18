@@ -43,11 +43,11 @@ public class HttpMain {
 	private boolean initialized;
 	private MetricsSupport metricsSupport;
 
-	private final Counter invocationsCounter;
 	private final Timer invocationTimer;
 	private AtomicLong memoryUsedBefore;
 	private final Runtime memoryUsedAfter;
 	private final AtomicInteger concurrentExecutions;
+	private final AtomicInteger maxConcurrentExecutions;
 
 	public HttpMain(int port, Settings functionSettings, Configuration configuration) throws IOException {
 		this.server = HttpServer.create(new InetSocketAddress(port), -1);
@@ -60,13 +60,13 @@ public class HttpMain {
 		this.server.setExecutor(Executors.newFixedThreadPool(threadPoolSize));
 
 		this.metricsSupport = MetricsSupport.get();
-		this.invocationsCounter = metricsSupport.getMeterRegistry().counter("invocations");
 		this.invocationTimer = metricsSupport.getMeterRegistry().timer("exec_time");
 		this.memoryUsedBefore = metricsSupport.getMeterRegistry().gauge("memory_before", new AtomicLong(0));
 		this.memoryUsedAfter = metricsSupport.getMeterRegistry().gauge("memory_after", Collections.emptyList(), Runtime.getRuntime(),
 																	   MemoryHelper::currentMemoryUsage);
 
 		this.concurrentExecutions = metricsSupport.getMeterRegistry().gauge("concurrent_executions", new AtomicInteger(0));
+		this.maxConcurrentExecutions = metricsSupport.getMeterRegistry().gauge("max_concurrent_executions", new AtomicInteger(0));
 	}
 
 	public void start() {
@@ -127,6 +127,8 @@ public class HttpMain {
 
 		private void doHandle(HttpExchange exchange) {
 			try {
+				HttpMain.this.setMax();
+				metricsSupport.push();
 				InputStream is = exchange.getRequestBody();
 
 				JsonNode inputJSON = mapper.readTree(new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8)));
@@ -144,7 +146,6 @@ public class HttpMain {
 
 				String restResult = returnValue(invocationResult);
 
-				HttpMain.this.invocationsCounter.increment();
 				HttpMain.this.concurrentExecutions.decrementAndGet();
 				HttpMain.writeResponse(exchange, 200, restResult);
 			} catch (Exception e) {
@@ -158,6 +159,14 @@ public class HttpMain {
 		private void writeLogMarkers() {
 			logger.debug("End of invocation. " + this.functionSettings);
 		}
+	}
+
+	private void setMax() {
+		final int current = concurrentExecutions.get();
+		final int max = maxConcurrentExecutions.get();
+
+		if (current > max)
+			maxConcurrentExecutions.compareAndSet(max, current);
 	}
 
 	public static void main(String[] args) throws IOException {
