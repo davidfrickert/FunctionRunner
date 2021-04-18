@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Timer;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,7 +36,7 @@ public class HttpMain {
 	private static final ObjectMapper mapper = new ObjectMapper();
 
 	// TODO move this to properties file
-	private static final int threadPoolSize = 4;
+	private static final int threadPoolSize = 20;
 
 	private final HttpServer server;
 	private boolean initialized;
@@ -67,6 +66,8 @@ public class HttpMain {
 
 		this.concurrentExecutions = metricsSupport.getMeterRegistry().gauge("concurrent_executions", new AtomicInteger(0));
 		this.maxConcurrentExecutions = metricsSupport.getMeterRegistry().gauge("max_concurrent_executions", new AtomicInteger(0));
+
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> MetricsSupport.getIfAvailable().ifPresent(MetricsSupport::delete)));
 	}
 
 	public void start() {
