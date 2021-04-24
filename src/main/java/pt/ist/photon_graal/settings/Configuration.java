@@ -15,15 +15,19 @@ public class Configuration implements MetricsConfig {
 
     private static Configuration INSTANCE;
 
-    private Configuration() throws IOException {
+    private Configuration()  {
         InputStream fis = Configuration.class.getClassLoader().getResourceAsStream("config.properties");
 
         config = new TypedProperties();
-        config.load(fis);
+        try {
+            config.load(fis);
+        } catch (IOException e) {
+            throw new RuntimeException("Couldn't initialize application configuration!", e);
+        }
         logger.info("Successful load of properties file");
     }
 
-    public static Configuration get() throws IOException {
+    public static Configuration get() {
         if(INSTANCE == null) {
             INSTANCE = new Configuration();
         }
@@ -43,5 +47,13 @@ public class Configuration implements MetricsConfig {
     @Override
     public String getPushAddress() {
         return getPushHost() + ":" + getPushPort();
+    }
+
+    public String getFunctionClassFQN() {
+        return config.getProperty("function.class");
+    }
+
+    public String getFunctionMethod() {
+        return config.getProperty("function.method");
     }
 }
