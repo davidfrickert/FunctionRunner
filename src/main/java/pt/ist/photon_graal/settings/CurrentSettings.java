@@ -1,7 +1,12 @@
 package pt.ist.photon_graal.settings;
 
 public final class CurrentSettings {
+    public static final Settings VALUE;
+
     private CurrentSettings() { }
 
-    public static final Settings VALUE = new Settings("{{classFQN}}", "{{methodName}}");
+    static {
+        Configuration configuration = Configuration.get();
+        VALUE = new Settings(configuration.getFunctionClassFQN(), configuration.getFunctionMethod());
+    }
 }
