@@ -21,4 +21,9 @@ public class Settings {
     public boolean isStatic() {
         return isStatic != null && isStatic;
     }
+
+    @Override
+    public String toString() {
+        return classFQN + "::" + methodName;
+    }
 }
