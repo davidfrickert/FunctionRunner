@@ -17,6 +17,11 @@
   }, {
     "name": "java.lang.NoSuchMethodException"
   }, {
+    "name": "java.lang.Number"
+  }, {
+    "name": "java.lang.Integer"
+  },
+  {
     "name": "java.lang.StackTraceElement"
   }, {
     "name": "java.io.IOException"

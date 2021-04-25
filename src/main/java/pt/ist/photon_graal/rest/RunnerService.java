@@ -20,8 +20,9 @@ public class RunnerService {
 
         logger.debug("Received [{}] as input from REST", input);
 
-        Either<IsolateError, String> result = functionRunner.run(input.getClassFQN(), input.getMethodName(), input.getArgs());
+        // TODO fix this.. if the function returns something different this will classcastexception
+        Either<IsolateError, Integer> result = functionRunner.run(input.getClassFQN(), input.getMethodName(), input.getArgs());
 
-        return result.get();
+        return result.isRight() ? result.get().toString() : result.getLeft().toString();
     }
 }

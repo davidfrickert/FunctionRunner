@@ -6,7 +6,7 @@ public final class CurrentSettings {
     private CurrentSettings() { }
 
     static {
-        Configuration configuration = Configuration.get();
-        VALUE = new Settings(configuration.getFunctionClassFQN(), configuration.getFunctionMethod());
+        Configuration conf = Configuration.get();
+        VALUE = new Settings(conf.getFunctionClassFQN(), conf.getFunctionMethod(), conf.isFunctionStatic());
     }
 }
