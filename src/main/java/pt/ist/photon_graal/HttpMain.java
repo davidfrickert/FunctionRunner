@@ -35,9 +35,6 @@ public class HttpMain {
 	private static final Logger logger = LoggerFactory.getLogger(HttpMain.class);
 	private static final ObjectMapper mapper = new ObjectMapper();
 
-	// TODO move this to properties file
-	private static final int threadPoolSize = 20;
-
 	private final HttpServer server;
 	private boolean initialized;
 	private MetricsSupport metricsSupport;
@@ -56,7 +53,7 @@ public class HttpMain {
 		this.server.createContext("/init", new InitHandler());
 		this.server.createContext("/run", new RunHandler(functionSettings, rs));
 
-		this.server.setExecutor(Executors.newFixedThreadPool(threadPoolSize));
+		this.server.setExecutor(Executors.newCachedThreadPool());
 
 		this.metricsSupport = MetricsSupport.get();
 		this.invocationTimer = metricsSupport.getMeterRegistry().timer("exec_time");

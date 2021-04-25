@@ -2,20 +2,21 @@ package pt.ist.photon_graal.runner.isolateutils;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 public class IsolateError implements Serializable {
     private final String message;
     private final String exceptionClass;
-    private final StackTraceElement[] stackTrace;
+    private final String stackTrace;
 
     private IsolateError cause;
 
-    private IsolateError(String exceptionClass, String message, StackTraceElement[] stackTrace, IsolateError cause) {
+    private IsolateError(String exceptionClass, String message, String stackTrace, IsolateError cause) {
         this(exceptionClass, message, stackTrace);
         this.cause = cause;
     }
 
-    private IsolateError(String exceptionClass, String message, StackTraceElement[] stackTrace) {
+    private IsolateError(String exceptionClass, String message, String stackTrace) {
         this.exceptionClass = exceptionClass;
         this.message = message;
         this.stackTrace = stackTrace;
@@ -24,11 +25,11 @@ public class IsolateError implements Serializable {
     public static IsolateError fromThrowableFull(Throwable t) {
         IsolateError cause = fromThrowable(t.getCause());
 
-        return new IsolateError(t.getClass().getName(), t.getMessage(), t.getStackTrace(), cause);
+        return new IsolateError(t.getClass().getName(), t.getMessage(), ExceptionUtils.getStackTrace(t), cause);
     }
 
     public static IsolateError fromThrowable(Throwable t) {
-        return t != null ? new IsolateError(t.getClass().getName(), t.getMessage(), t.getStackTrace()) : null;
+        return t != null ? new IsolateError(t.getClass().getName(), t.getMessage(), ExceptionUtils.getStackTrace(t)) : null;
     }
 
     public String getMessage() {
@@ -39,7 +40,7 @@ public class IsolateError implements Serializable {
         return exceptionClass;
     }
 
-    public StackTraceElement[] getStackTrace() {
+    public String getStackTrace() {
         return stackTrace;
     }
 
@@ -47,12 +48,16 @@ public class IsolateError implements Serializable {
         return cause;
     }
 
+    public String getMessageWithExceptionClass() {
+        return getExceptionClass() + " - " + getMessage();
+    }
+
     @Override
     public String toString() {
         return "IsolateError{" +
                 "message='" + message + '\'' +
                 ", exceptionClass='" + exceptionClass + '\'' +
-                ", stackTrace=" + Arrays.toString(stackTrace) +
+                ", stackTrace=" + stackTrace +
                 ", cause=" + cause +
                 '}';
     }

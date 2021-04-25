@@ -8,7 +8,7 @@
 		"allDeclaredClasses" : true,
 		"allPublicClasses" : true
 	}, {
-		"name": "{{classFQN}}",
+		"name": "ch.ethz.systems.Sleep",
 		"allPublicConstructors" : true,
 		"allPublicMethods" : true,
 		"allPublicClasses" : true

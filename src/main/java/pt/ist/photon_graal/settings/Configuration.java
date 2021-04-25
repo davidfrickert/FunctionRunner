@@ -3,6 +3,7 @@ package pt.ist.photon_graal.settings;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pt.ist.photon_graal.metrics.MetricsConfig;
@@ -55,5 +56,9 @@ public class Configuration implements MetricsConfig {
 
     public String getFunctionMethod() {
         return config.getProperty("function.method");
+    }
+
+    public boolean isFunctionStatic() {
+        return Optional.ofNullable(config.getBoolean("function.static")).orElse(false);
     }
 }

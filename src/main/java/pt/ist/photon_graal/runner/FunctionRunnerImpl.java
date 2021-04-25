@@ -87,9 +87,10 @@ public class FunctionRunnerImpl implements FunctionRunner {
             Method function = klass
                     .getDeclaredMethod(methodName, argTypes);
 
-            Object functionInstance = klass.getConstructor().newInstance();
+            //Object functionInstance = klass.getConstructor().newInstance();
 
-            Object result = function.invoke(functionInstance, args);
+            // TODO update this to run with instance if non-static method
+            Object result = function.invoke(null, args);
 
             return success(parentIsolate, result);
         } catch (Throwable t) {

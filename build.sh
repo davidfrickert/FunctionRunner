@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 ./lib/add_to_local_mvn_repo.sh
 ./mvnw clean package
 mv target/app target/exec
