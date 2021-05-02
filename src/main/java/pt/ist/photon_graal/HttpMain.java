@@ -126,8 +126,10 @@ public class HttpMain {
 		private void doHandle(HttpExchange exchange) {
 			try {
 				HttpMain.this.setMax();
-				metricsSupport.push();
+				//metricsSupport.push();
 				InputStream is = exchange.getRequestBody();
+
+				Timer.Sample beforeExec = Timer.start();
 
 				JsonNode inputJSON = mapper.readTree(new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8)));
 				JsonNode value = inputJSON.get("value");
@@ -139,10 +141,11 @@ public class HttpMain {
 				DTOFunctionExecute execute = DTOFunctionExecute.of(functionSettings, args);
 
 				logger.debug(execute.toString());
+				beforeExec.stop(metricsSupport.getMeterRegistry().timer("proxy.parse_request"));
 
 				Object invocationResult = runnerService.execute(execute);
 
-				String restResult = returnValue(invocationResult);
+				String restResult = metricsSupport.getMeterRegistry().timer("proxy.parse_response").record(() -> returnValue(invocationResult));
 
 				HttpMain.this.concurrentExecutions.decrementAndGet();
 				HttpMain.writeResponse(exchange, 200, restResult);
