@@ -1,5 +1,6 @@
 package pt.ist.photon_graal.runner;
 
+import io.micrometer.core.instrument.Timer;
 import io.vavr.control.Either;
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
@@ -46,38 +47,36 @@ public class FunctionRunnerImpl implements FunctionRunner {
     public <T> Either<IsolateError, T> run(String className, String methodName, Object... args) {
         var currentIsolateThread = CurrentIsolate.getCurrentThread();
 
-        final IsolateThread requestIsolate = ms.getMeterRegistry().timer("isolate.create")
-                                               .record(this::doCreateIsolate);
+        Timer.Sample isolateCreation = Timer.start();
+        var requestIsolate =  Isolates.createIsolate(Isolates.CreateIsolateParameters.getDefault());
+        isolateCreation.stop(ms.getMeterRegistry().timer("isolate.create"));
 
         final ObjectHandle result;
-        Instant before = Instant.now();
+
+        Timer.Sample inputConversion = Timer.start();
         final ObjectHandle classNameHandle = getRegistry().createHandle(requestIsolate, className);
         final ObjectHandle methodNameHandle = getRegistry().createHandle(requestIsolate, methodName);
         final ObjectHandle argsHandle = getRegistry().createHandle(requestIsolate, args);
-        Instant after = Instant.now();
-        ms.getMeterRegistry().timer("isolate.input_conversion").record(Duration.between(before, after));
+        inputConversion.stop(ms.getMeterRegistry().timer("isolate.input_conversion"));
 
-        result = ms.getMeterRegistry().timer("isolate.execution").record(() -> FunctionRunnerImpl.execute(
+        Timer.Sample execution = Timer.start();
+        result = FunctionRunnerImpl.execute(
             requestIsolate,
             currentIsolateThread,
             classNameHandle,
             methodNameHandle,
-            argsHandle));
+            argsHandle);
+        execution.stop(ms.getMeterRegistry().timer("isolate.execution"));
 
-        ms.getMeterRegistry().timer("isolate.teardown").record(() -> doTearDownIsolate(requestIsolate));
-
-        return ms.getMeterRegistry().timer("isolate.output_conversion").record(() -> {
-            byte[] bytes = HandleUnwrapUtils.get(result);
-            return SerializationUtils.deserialize(bytes);
-        });
-    }
-
-    private IsolateThread doCreateIsolate() {
-        return Isolates.createIsolate(Isolates.CreateIsolateParameters.getDefault());
-    }
-
-    private void doTearDownIsolate(IsolateThread requestIsolate) {
+        Timer.Sample tearDown = Timer.start();
         Isolates.tearDownIsolate(requestIsolate);
+        tearDown.stop(ms.getMeterRegistry().timer("isolate.teardown"));
+
+        Timer.Sample outputConversion = Timer.start();
+        final Either<IsolateError, T> output = SerializationUtils.deserialize((byte[]) HandleUnwrapUtils.get(result));
+        outputConversion.stop(ms.getMeterRegistry().timer("isolate.output_conversion"));
+
+        return output;
     }
 
     @CEntryPoint
