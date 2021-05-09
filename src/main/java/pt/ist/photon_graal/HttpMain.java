@@ -40,7 +40,6 @@ public class HttpMain {
 	private MetricsSupport metricsSupport;
 
 	private final Timer invocationTimer;
-	private AtomicLong memoryUsedBefore;
 	private final Runtime memoryUsedAfter;
 	private final AtomicInteger concurrentExecutions;
 	private final AtomicInteger maxConcurrentExecutions;
@@ -57,7 +56,6 @@ public class HttpMain {
 
 		this.metricsSupport = MetricsSupport.get();
 		this.invocationTimer = metricsSupport.getMeterRegistry().timer("exec_time");
-		this.memoryUsedBefore = metricsSupport.getMeterRegistry().gauge("memory_before", new AtomicLong(0));
 		this.memoryUsedAfter = metricsSupport.getMeterRegistry().gauge("memory_after", Collections.emptyList(), Runtime.getRuntime(),
 																	   MemoryHelper::currentMemoryUsage);
 
@@ -117,7 +115,6 @@ public class HttpMain {
 		@Override
 		public void handle(HttpExchange exchange) {
 			concurrentExecutions.incrementAndGet();
-			memoryUsedBefore.set(MemoryHelper.currentMemoryUsage(Runtime.getRuntime()));
 
 			invocationTimer.record(() -> doHandle(exchange));
 			metricsSupport.push();
