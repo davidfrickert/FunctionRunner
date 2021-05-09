@@ -1,12 +1,10 @@
 package pt.ist.photon_graal.runner.data;
 
-import io.vavr.Tuple2;
 import pt.ist.photon_graal.helpers.Tuple;
 
 import java.io.Serializable;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResultWrapper<T> implements Serializable {
@@ -21,7 +19,7 @@ public class ResultWrapper<T> implements Serializable {
     }
 
     public ResultWrapper(T result) {
-        this(new LinkedList<>(), result);
+        this(new ArrayList<>(), result);
     }
 
     public List<Tuple<String, Duration>> getStats() {
