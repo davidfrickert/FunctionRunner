@@ -90,15 +90,13 @@ public class FunctionRunnerImpl implements FunctionRunner {
             String className = HandleUnwrapUtils.get(classNameHandle);
             String methodName = HandleUnwrapUtils.get(methodNameHandle);
 
-            byte[] argsBytes = HandleUnwrapUtils.get(argsHandle);
-            ByteArrayInputStream byteStream = new ByteArrayInputStream(argsBytes);
-            ObjectInputStream objStream = new ObjectInputStream(byteStream);
+            Object[] args = SerializationUtils.deserialize((byte[]) HandleUnwrapUtils.get(argsHandle));
 
-            Object[] args = (Object[]) objStream.readObject();
-
+            /*
             Logger logger = getLogger();
             logger.debug("Received [{}] as argument", Arrays.toString(args));
             logger.debug("Function argument classes are [{}]", Arrays.stream(args).map(Object::getClass).collect(Collectors.toList()));
+             */
 
             Class<?>[] argTypes = Arrays.stream(args)
                 .map(Object::getClass)
@@ -121,7 +119,7 @@ public class FunctionRunnerImpl implements FunctionRunner {
     }
 
     private static ObjectHandle error(IsolateThread receivingIsolate, Throwable error) {
-        getLogger().debug("Error: ", error);
+        // getLogger().debug("Error: ", error);
         return getRegistry().createHandle(
                 receivingIsolate,
                 Either.left(IsolateError.fromThrowableFull(error))
@@ -129,14 +127,14 @@ public class FunctionRunnerImpl implements FunctionRunner {
     }
 
     private static ObjectHandle success(IsolateThread receivingIsolate, Object returnVal) {
-        getLogger().debug("Success return: {}", returnVal);
+        // getLogger().debug("Success return: {}", returnVal);
         return getRegistry().createHandle(
                 receivingIsolate,
                 Either.right(returnVal)
         );
     }
 
-    private static final Logger getLogger() {
+    private static Logger getLogger() {
        return LoggerFactory.getLogger(FunctionRunnerImpl.class);
     }
 }
