@@ -32,6 +32,8 @@
   }, {
     "name": "java.util.ArrayList"
   }, {
+    "name": "java.util.Collections$EmptyList"
+  }, {
     "name": "pt.ist.photon_graal.helpers.Tuple"
   },{
     "name": "pt.ist.photon_graal.runner.isolateutils.IsolateError"
