@@ -8,7 +8,7 @@
 		"allDeclaredClasses" : true,
 		"allPublicClasses" : true
 	}, {
-		"name": "java.util.HashMap",
+		"name": "pt.ist.photon_graal.helpers.Tuple",
 		"allDeclaredConstructors" : true,
 		"allPublicConstructors" : true,
 		"allDeclaredMethods" : true,
@@ -48,15 +48,18 @@
 		"allPublicClasses" : true
 	}, {
 		"name": "java.util.ArrayList",
+		"allPublicConstructors" : true,
+		"allPublicMethods" : true,
+		"allPublicClasses" : true,
 		"fields": [{"name": "size", "allowUnsafeAccess": true}]
-	},   {
-	"name" : "org.apache.commons.logging.LogFactory",
-	"allDeclaredConstructors" : true,
-	"allPublicConstructors" : true,
-	"allDeclaredMethods" : true,
-	"allPublicMethods" : true,
-	"allDeclaredClasses" : true,
-	"allPublicClasses" : true
+	}, {
+		"name" : "org.apache.commons.logging.LogFactory",
+		"allDeclaredConstructors" : true,
+		"allPublicConstructors" : true,
+		"allDeclaredMethods" : true,
+		"allPublicMethods" : true,
+		"allDeclaredClasses" : true,
+		"allPublicClasses" : true
 	},
 		{
 			"name" : "org.apache.commons.logging.impl.SimpleLog",

@@ -30,6 +30,10 @@
   }, {
     "name": "java.time.Duration"
   }, {
+    "name": "java.util.ArrayList"
+  }, {
+    "name": "pt.ist.photon_graal.helpers.Tuple"
+  },{
     "name": "pt.ist.photon_graal.runner.isolateutils.IsolateError"
   }, {
     "name": "pt.ist.photon_graal.runner.data.ResultWrapper"
