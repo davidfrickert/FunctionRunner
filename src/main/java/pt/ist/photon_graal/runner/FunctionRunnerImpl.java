@@ -7,9 +7,7 @@ import java.io.ObjectInputStream;
 import java.lang.reflect.Method;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 import lombok.SneakyThrows;
@@ -22,6 +20,7 @@ import org.graalvm.nativeimage.c.function.CEntryPoint;
 import org.graalvm.nativeimage.c.function.CEntryPoint.IsolateThreadContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pt.ist.photon_graal.helpers.Tuple;
 import pt.ist.photon_graal.metrics.MetricsSupport;
 import pt.ist.photon_graal.runner.data.ResultWrapper;
 import pt.ist.photon_graal.runner.isolateutils.IsolateError;
@@ -81,7 +80,7 @@ public class FunctionRunnerImpl implements FunctionRunner {
 
         if (output.isRight()) {
             ResultWrapper<T> r = output.get();
-            r.getStats().forEach((tag, val) -> ms.getMeterRegistry().timer(tag).record(val));
+            r.getStats().forEach(stat -> ms.getMeterRegistry().timer(stat._1()).record(stat._2()));
         }
 
         return output.map(ResultWrapper::getResult);
@@ -94,7 +93,7 @@ public class FunctionRunnerImpl implements FunctionRunner {
                                         ObjectHandle methodNameHandle,
                                         ObjectHandle argsHandle) {
         try {
-            Map<String, Duration> stats = new HashMap<>();
+            List<Tuple<String, Duration>> stats = new LinkedList<>();
 
             Instant beforeUnwrap = Instant.now();
 
@@ -102,7 +101,7 @@ public class FunctionRunnerImpl implements FunctionRunner {
             String methodName = HandleUnwrapUtils.get(methodNameHandle);
             Object[] args = SerializationUtils.deserialize((byte[]) HandleUnwrapUtils.get(argsHandle));
 
-            stats.put("isolate.inside.unwrap", Duration.between(beforeUnwrap, Instant.now()));
+            stats.add(new Tuple<>("isolate.inside.unwrap", Duration.between(beforeUnwrap, Instant.now())));
             /*
             Logger logger = getLogger();
             logger.debug("Received [{}] as argument", Arrays.toString(args));
@@ -119,7 +118,7 @@ public class FunctionRunnerImpl implements FunctionRunner {
             Method function = klass
                     .getDeclaredMethod(methodName, argTypes);
 
-            stats.put("isolate.inside.fetch_classes", Duration.between(beforeFetchClasses, Instant.now()));
+            stats.add(new Tuple<>("isolate.inside.fetch_classes", Duration.between(beforeFetchClasses, Instant.now())));
 
             //Object functionInstance = klass.getConstructor().newInstance();
 
@@ -127,7 +126,7 @@ public class FunctionRunnerImpl implements FunctionRunner {
             // TODO update this to run with instance if non-static method
             Object result = function.invoke(null, args);
 
-            stats.put("isolate.inside.exec", Duration.between(beforeExec, Instant.now()));
+            stats.add(new Tuple<>("isolate.inside.exec", Duration.between(beforeExec, Instant.now())));
 
             return success(parentIsolate, result, stats);
         } catch (Throwable t) {
@@ -144,7 +143,7 @@ public class FunctionRunnerImpl implements FunctionRunner {
         );
     }
 
-    private static ObjectHandle success(IsolateThread receivingIsolate, Object returnVal, Map<String, Duration> stats) {
+    private static ObjectHandle success(IsolateThread receivingIsolate, Object returnVal, List<Tuple<String, Duration>> stats) {
         // getLogger().debug("Success return: {}", returnVal);
         return getRegistry().createHandle(
                 receivingIsolate,
