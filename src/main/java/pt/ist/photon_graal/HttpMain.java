@@ -142,8 +142,6 @@ public class HttpMain {
 
 				Object invocationResult = runnerService.execute(execute);
 
-				// TODO remove this
-				System.gc();
 				String restResult = metricsSupport.getMeterRegistry().timer("proxy.parse_response").record(() -> returnValue(invocationResult));
 
 				HttpMain.this.concurrentExecutions.decrementAndGet();
