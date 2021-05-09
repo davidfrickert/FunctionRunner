@@ -28,6 +28,8 @@
   }, {
     "name": "java.io.NotSerializableException"
   }, {
+    "name": "java.time.Duration"
+  }, {
     "name": "pt.ist.photon_graal.runner.isolateutils.IsolateError"
   }, {
     "name": "pt.ist.photon_graal.runner.data.ResultWrapper"
