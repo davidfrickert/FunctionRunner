@@ -21,6 +21,10 @@
 		"allPublicConstructors" : true,
 		"allPublicMethods" : true
 	}, {
+		"name": "pt.ist.photon_graal.runner.data.ResultWrapper",
+		"allPublicConstructors" : true,
+		"allPublicMethods" : true
+	}, {
 		"name": "java.lang.Throwable",
 		"allDeclaredConstructors" : true,
 		"allPublicConstructors" : true,

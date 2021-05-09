@@ -8,6 +8,8 @@ import java.lang.reflect.Method;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 import lombok.SneakyThrows;
@@ -21,6 +23,7 @@ import org.graalvm.nativeimage.c.function.CEntryPoint.IsolateThreadContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pt.ist.photon_graal.metrics.MetricsSupport;
+import pt.ist.photon_graal.runner.data.ResultWrapper;
 import pt.ist.photon_graal.runner.isolateutils.IsolateError;
 import pt.ist.photon_graal.runner.isolateutils.conversion.registry.TypeConversionRegistry;
 import pt.ist.photon_graal.runner.isolateutils.handles.HandleUnwrapUtils;
@@ -73,10 +76,15 @@ public class FunctionRunnerImpl implements FunctionRunner {
         tearDown.stop(ms.getMeterRegistry().timer("isolate.teardown"));
 
         Timer.Sample outputConversion = Timer.start();
-        final Either<IsolateError, T> output = SerializationUtils.deserialize((byte[]) HandleUnwrapUtils.get(result));
+        final Either<IsolateError, ResultWrapper<T>> output = SerializationUtils.deserialize((byte[]) HandleUnwrapUtils.get(result));
         outputConversion.stop(ms.getMeterRegistry().timer("isolate.output_conversion"));
 
-        return output;
+        if (output.isRight()) {
+            ResultWrapper<T> r = output.get();
+            r.getStats().forEach((tag, val) -> ms.getMeterRegistry().timer(tag).record(val));
+        }
+
+        return output.map(ResultWrapper::getResult);
     }
 
     @CEntryPoint
@@ -86,17 +94,22 @@ public class FunctionRunnerImpl implements FunctionRunner {
                                         ObjectHandle methodNameHandle,
                                         ObjectHandle argsHandle) {
         try {
+            Map<String, Duration> stats = new HashMap<>();
+
+            Instant beforeUnwrap = Instant.now();
 
             String className = HandleUnwrapUtils.get(classNameHandle);
             String methodName = HandleUnwrapUtils.get(methodNameHandle);
-
             Object[] args = SerializationUtils.deserialize((byte[]) HandleUnwrapUtils.get(argsHandle));
 
+            stats.put("isolate.inside.unwrap", Duration.between(beforeUnwrap, Instant.now()));
             /*
             Logger logger = getLogger();
             logger.debug("Received [{}] as argument", Arrays.toString(args));
             logger.debug("Function argument classes are [{}]", Arrays.stream(args).map(Object::getClass).collect(Collectors.toList()));
              */
+
+            Instant beforeFetchClasses = Instant.now();
 
             Class<?>[] argTypes = Arrays.stream(args)
                 .map(Object::getClass)
@@ -106,12 +119,17 @@ public class FunctionRunnerImpl implements FunctionRunner {
             Method function = klass
                     .getDeclaredMethod(methodName, argTypes);
 
+            stats.put("isolate.inside.fetch_classes", Duration.between(beforeFetchClasses, Instant.now()));
+
             //Object functionInstance = klass.getConstructor().newInstance();
 
+            Instant beforeExec = Instant.now();
             // TODO update this to run with instance if non-static method
             Object result = function.invoke(null, args);
 
-            return success(parentIsolate, result);
+            stats.put("isolate.inside.exec", Duration.between(beforeExec, Instant.now()));
+
+            return success(parentIsolate, result, stats);
         } catch (Throwable t) {
             return error(parentIsolate, t);
         }
@@ -126,11 +144,11 @@ public class FunctionRunnerImpl implements FunctionRunner {
         );
     }
 
-    private static ObjectHandle success(IsolateThread receivingIsolate, Object returnVal) {
+    private static ObjectHandle success(IsolateThread receivingIsolate, Object returnVal, Map<String, Duration> stats) {
         // getLogger().debug("Success return: {}", returnVal);
         return getRegistry().createHandle(
                 receivingIsolate,
-                Either.right(returnVal)
+                Either.right(new ResultWrapper(stats, returnVal))
         );
     }
 
