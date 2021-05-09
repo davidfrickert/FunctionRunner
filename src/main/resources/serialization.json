@@ -30,6 +30,8 @@
   }, {
     "name": "java.time.Duration"
   }, {
+    "name": "java.time.Ser"
+  }, {
     "name": "java.util.ArrayList"
   }, {
     "name": "java.util.Collections$EmptyList"
