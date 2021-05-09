@@ -2,8 +2,7 @@
   {
     "name": "java.lang.String"
   }, {
-    "name": "io.vavr.control.Either",
-    "allPublicClasses" : true
+    "name": "io.vavr.control.Either"
   }, {
     "name": "io.vavr.control.Either$Left"
   }, {
@@ -20,8 +19,7 @@
     "name": "java.lang.Number"
   }, {
     "name": "java.lang.Integer"
-  },
-  {
+  },{
     "name": "java.lang.StackTraceElement"
   }, {
     "name": "java.io.IOException"
@@ -31,5 +29,7 @@
     "name": "java.io.NotSerializableException"
   }, {
     "name": "pt.ist.photon_graal.runner.isolateutils.IsolateError"
+  }, {
+    "name": "pt.ist.photon_graal.runner.data.ResultWrapper"
   }
 ]
