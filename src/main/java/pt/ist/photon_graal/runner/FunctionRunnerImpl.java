@@ -2,14 +2,6 @@ package pt.ist.photon_graal.runner;
 
 import io.micrometer.core.instrument.Timer;
 import io.vavr.control.Either;
-import java.io.ByteArrayInputStream;
-import java.io.ObjectInputStream;
-import java.lang.reflect.Method;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.*;
-import java.util.function.IntFunction;
-import java.util.stream.Collectors;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.SerializationUtils;
 import org.graalvm.nativeimage.CurrentIsolate;
@@ -26,6 +18,14 @@ import pt.ist.photon_graal.runner.data.ResultWrapper;
 import pt.ist.photon_graal.runner.isolateutils.IsolateError;
 import pt.ist.photon_graal.runner.isolateutils.conversion.registry.TypeConversionRegistry;
 import pt.ist.photon_graal.runner.isolateutils.handles.HandleUnwrapUtils;
+
+import java.lang.reflect.Method;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.IntFunction;
 
 public class FunctionRunnerImpl implements FunctionRunner {
 
@@ -93,7 +93,7 @@ public class FunctionRunnerImpl implements FunctionRunner {
                                         ObjectHandle methodNameHandle,
                                         ObjectHandle argsHandle) {
         try {
-            List<Tuple<String, Duration>> stats = new LinkedList<>();
+            List<Tuple<String, Duration>> stats = new ArrayList<>();
 
             Instant beforeUnwrap = Instant.now();
 
