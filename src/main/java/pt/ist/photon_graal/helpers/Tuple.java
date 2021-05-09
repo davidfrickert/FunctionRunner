@@ -1,6 +1,10 @@
 package pt.ist.photon_graal.helpers;
 
-public class Tuple<T1, T2> {
+import java.io.Serializable;
+
+public class Tuple<T1, T2> implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private T1 first;
     private T2 second;
 
