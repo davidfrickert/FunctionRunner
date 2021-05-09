@@ -1,10 +1,13 @@
 package pt.ist.photon_graal.runner.data;
 
+import java.io.Serializable;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ResultWrapper<T> {
+public class ResultWrapper<T> implements Serializable {
+    private static final long serialVersionUID = 42L;
+
     private final Map<String, Duration> stats;
     private final T result;
 
