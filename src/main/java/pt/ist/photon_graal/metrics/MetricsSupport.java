@@ -24,8 +24,10 @@ public class MetricsSupport {
     private static final UUID runtimeIdentifier = UUID.randomUUID();
 
     private MetricsSupport(final MetricsConfig metricsConfig) {
-        this.registry = initRegistry(new PrometheusMeterRegistry(PrometheusConfig.DEFAULT));
+        this.registry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
         this.pushGateway = new PushGateway(metricsConfig.getPushAddress());
+
+        configureRegistryTags(registry);
     }
 
     public static MetricsSupport get() throws IOException {
@@ -63,11 +65,10 @@ public class MetricsSupport {
         }
     }
 
-    private MeterRegistry initRegistry(MeterRegistry registry) {
+    private void configureRegistryTags(MeterRegistry registry) {
         registry.config()
-                .commonTags("function.name", CurrentSettings.VALUE.toString())
-                .commonTags("framework", "photons@graal");
-        return registry;
+                .commonTags("function.name", CurrentSettings.VALUE.toString()
+                    , "framework", "photons@graal");
     }
 
 }
