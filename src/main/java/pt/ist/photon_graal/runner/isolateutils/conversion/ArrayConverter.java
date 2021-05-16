@@ -17,7 +17,7 @@ public class ArrayConverter implements TypeConverter<Object[]>{
 
     @Override
     public ObjectHandle createHandle(IsolateThread targetIsolate, Object[] ts) {
-        try (PinnedObject notUsed = PinnedObject.create(ts)) {
+        try (var ignored = PinnedObject.create(ts)) {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
                 oos.writeObject(ts);
@@ -27,7 +27,7 @@ public class ArrayConverter implements TypeConverter<Object[]>{
 
             byte[] bytes = bos.toByteArray();
 
-            try (PinnedObject pin = PinnedObject.create(bytes)) {
+            try (var pin = PinnedObject.create(bytes)) {
                 return toJava(targetIsolate, pin.addressOfArrayElement(0), bytes.length);
             }
         }

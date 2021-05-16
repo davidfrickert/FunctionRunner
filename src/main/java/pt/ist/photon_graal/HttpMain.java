@@ -18,7 +18,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pt.ist.photon_graal.metrics.MemoryHelper;
@@ -37,10 +36,9 @@ public class HttpMain {
 
 	private final HttpServer server;
 	private boolean initialized;
-	private MetricsSupport metricsSupport;
+	private final MetricsSupport metricsSupport;
 
 	private final Timer invocationTimer;
-	private final Runtime memoryUsedAfter;
 	private final AtomicInteger concurrentExecutions;
 	private final AtomicInteger maxConcurrentExecutions;
 
@@ -56,8 +54,11 @@ public class HttpMain {
 
 		this.metricsSupport = MetricsSupport.get();
 		this.invocationTimer = metricsSupport.getMeterRegistry().timer("exec_time");
-		this.memoryUsedAfter = metricsSupport.getMeterRegistry().gauge("memory_after", Collections.emptyList(), Runtime.getRuntime(),
-																	   MemoryHelper::currentMemoryUsage);
+
+		metricsSupport.getMeterRegistry().gauge("memory_after", Collections.emptyList(), Runtime.getRuntime(),
+												MemoryHelper::heapMemory);
+		metricsSupport.getMeterRegistry().gauge("memory_rss", Collections.emptyList(), Runtime.getRuntime(),
+												MemoryHelper::rssMemory);
 
 		this.concurrentExecutions = metricsSupport.getMeterRegistry().gauge("concurrent_executions", new AtomicInteger(0));
 		this.maxConcurrentExecutions = metricsSupport.getMeterRegistry().gauge("max_concurrent_executions", new AtomicInteger(0));
