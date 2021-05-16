@@ -21,7 +21,7 @@ public class ObjectConverter implements TypeConverter<Object> {
         Holder for a pinned object, such that the object doesn't move until the pin is removed.
         The garbage collector treats pinned object specially to ensure that they are not moved or discarded.
         */
-        try (PinnedObject pinOriginal = PinnedObject.create(o)) {
+        try (PinnedObject ignored = PinnedObject.create(o)) {
             byte[] serialized = SerializationUtils.serialize((Serializable) o);
 
             try (PinnedObject pin = PinnedObject.create(serialized)) {
