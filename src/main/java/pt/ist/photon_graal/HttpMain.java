@@ -21,6 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pt.ist.photon_graal.metrics.MemoryHelper;
+import pt.ist.photon_graal.metrics.MetricsPusher;
 import pt.ist.photon_graal.metrics.MetricsSupport;
 import pt.ist.photon_graal.rest.RunnerService;
 import pt.ist.photon_graal.rest.api.DTOFunctionArgs;
@@ -35,6 +36,7 @@ public class HttpMain {
 	private static final ObjectMapper mapper = new ObjectMapper();
 
 	private final HttpServer server;
+	private final MetricsPusher metricsPusher;
 	private boolean initialized;
 	private final MetricsSupport metricsSupport;
 
@@ -53,6 +55,7 @@ public class HttpMain {
 		this.server.setExecutor(Executors.newCachedThreadPool());
 
 		this.metricsSupport = MetricsSupport.get();
+		this.metricsPusher = new MetricsPusher(metricsSupport);
 		this.invocationTimer = metricsSupport.getMeterRegistry().timer("exec_time");
 
 		metricsSupport.getMeterRegistry().gauge("memory_after", Collections.emptyList(), Runtime.getRuntime(),
@@ -68,6 +71,7 @@ public class HttpMain {
 
 	public void start() {
 		this.server.start();
+		this.metricsPusher.start();
 	}
 
 	private static void writeResponse(HttpExchange t, int code, String content) {
@@ -118,7 +122,6 @@ public class HttpMain {
 			concurrentExecutions.incrementAndGet();
 
 			invocationTimer.record(() -> doHandle(exchange));
-			metricsSupport.push();
 		}
 
 		private void doHandle(HttpExchange exchange) {
