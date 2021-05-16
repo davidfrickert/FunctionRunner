@@ -26,4 +26,9 @@ public class Settings {
     public String toString() {
         return classFQN + "::" + methodName;
     }
+
+    public String simplifiedName() {
+        final String[] split = classFQN.split("\\.");
+        return split[split.length - 1];
+    }
 }

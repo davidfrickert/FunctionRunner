@@ -67,7 +67,7 @@ public class MetricsSupport {
 
     private void configureRegistryTags(MeterRegistry registry) {
         registry.config()
-                .commonTags("function.name", CurrentSettings.VALUE.toString()
+                .commonTags("function.name", CurrentSettings.VALUE.simplifiedName()
                     , "framework", "photons@graal");
     }
 
