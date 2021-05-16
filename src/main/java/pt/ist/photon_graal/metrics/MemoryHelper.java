@@ -33,6 +33,6 @@ public class MemoryHelper {
 			log.error("Couldn't fetch RSS memory!", e);
 		}
 
-		return Long.parseLong(output.toString().trim());
+		return Long.parseLong(output.toString().trim()) * 1000; // ps returns value in kb
 	}
 }
