@@ -194,6 +194,9 @@ public class HttpMain {
 	private static String returnValue(Object value) {
 		Object response;
 		if (value == null) {
+			ObjectNode root = mapper.createObjectNode();
+			root.put("error", "Function return value is null");
+
 			response = "";
 		} else if (value instanceof JsonNode) {
 			response = value;
