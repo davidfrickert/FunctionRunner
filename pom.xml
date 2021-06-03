@@ -76,8 +76,8 @@
 
         <!-- Function -->
         <dependency>
-            <groupId> photons.graal.functions</groupId>
-            <artifactId>Sleep</artifactId>
+            <groupId>photons.graal.functions</groupId>
+            <artifactId>Filehashing</artifactId>
             <version>0.0.1</version>
         </dependency>
 
