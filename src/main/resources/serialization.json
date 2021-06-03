@@ -48,6 +48,6 @@
   }, {
     "name": "com.fasterxml.jackson.databind.node.ObjectNode"
   }, {
-    "name": "com.fasterxml.jackson.databind.JsonSerializable.Base"
+    "name": "com.fasterxml.jackson.databind.JsonSerializable"
   }
 ]

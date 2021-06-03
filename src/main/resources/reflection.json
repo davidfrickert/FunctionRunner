@@ -144,7 +144,7 @@
 		"allDeclaredClasses": true,
 		"allPublicClasses": true
 	}, {
-		"name": "com.fasterxml.jackson.databind.JsonSerializable.Base",
+		"name": "com.fasterxml.jackson.databind.JsonSerializable",
 		"allDeclaredConstructors": true,
 		"allPublicConstructors": true,
 		"allDeclaredMethods": true,
