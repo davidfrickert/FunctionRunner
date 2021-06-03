@@ -1,5 +1,6 @@
 package pt.ist.photon_graal.runner;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import io.micrometer.core.instrument.Timer;
 import io.vavr.control.Either;
 import lombok.SneakyThrows;
@@ -46,7 +47,7 @@ public class FunctionRunnerImpl implements FunctionRunner {
 
     @Override
     @SneakyThrows
-    public <T> Either<IsolateError, T> run(String className, String methodName, Object... args) {
+    public <T> Either<IsolateError, T> run(String className, String methodName, JsonNode args) {
         var currentIsolateThread = CurrentIsolate.getCurrentThread();
 
         Timer.Sample isolateCreation = Timer.start();
@@ -99,7 +100,7 @@ public class FunctionRunnerImpl implements FunctionRunner {
 
             String className = HandleUnwrapUtils.get(classNameHandle);
             String methodName = HandleUnwrapUtils.get(methodNameHandle);
-            Object[] args = SerializationUtils.deserialize((byte[]) HandleUnwrapUtils.get(argsHandle));
+            JsonNode args = SerializationUtils.deserialize((byte[]) HandleUnwrapUtils.get(argsHandle));
 
             stats.add(new Tuple<>("isolate.inside.unwrap", Duration.between(beforeUnwrap, Instant.now())));
             /*
@@ -110,13 +111,9 @@ public class FunctionRunnerImpl implements FunctionRunner {
 
             Instant beforeFetchClasses = Instant.now();
 
-            Class<?>[] argTypes = Arrays.stream(args)
-                .map(Object::getClass)
-                .toArray((IntFunction<Class<?>[]>) Class[]::new);
-
             Class<?> klass = Class.forName(className);
             Method function = klass
-                    .getDeclaredMethod(methodName, argTypes);
+                    .getDeclaredMethod(methodName, JsonNode.class);
 
             stats.add(new Tuple<>("isolate.inside.fetch_classes", Duration.between(beforeFetchClasses, Instant.now())));
 
