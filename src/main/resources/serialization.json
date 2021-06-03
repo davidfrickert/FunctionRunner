@@ -41,5 +41,9 @@
     "name": "pt.ist.photon_graal.runner.isolateutils.IsolateError"
   }, {
     "name": "pt.ist.photon_graal.runner.data.ResultWrapper"
+  }, {
+    "name": "com.fasterxml.jackson.databind.JsonNode"
+  }, {
+    "name": "com.fasterxml.jackson.databind.node.ObjectNode"
   }
 ]
