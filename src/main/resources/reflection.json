@@ -111,14 +111,29 @@
 		"allDeclaredClasses" : true,
 		"allPublicClasses" : true
 	},
-
 	{
-		"name" : "org.apache.commons.logging.impl.LogFactoryImpl",
-		"allDeclaredConstructors" : true,
-		"allPublicConstructors" : true,
-		"allDeclaredMethods" : true,
-		"allPublicMethods" : true,
-		"allDeclaredClasses" : true,
-		"allPublicClasses" : true
-}
+		"name": "org.apache.commons.logging.impl.LogFactoryImpl",
+		"allDeclaredConstructors": true,
+		"allPublicConstructors": true,
+		"allDeclaredMethods": true,
+		"allPublicMethods": true,
+		"allDeclaredClasses": true,
+		"allPublicClasses": true
+	},  {
+		"name": "com.fasterxml.jackson.databind.JsonNode",
+		"allDeclaredConstructors": true,
+		"allPublicConstructors": true,
+		"allDeclaredMethods": true,
+		"allPublicMethods": true,
+		"allDeclaredClasses": true,
+		"allPublicClasses": true
+	}, {
+		"name": "com.fasterxml.jackson.databind.node.ObjectNode",
+		"allDeclaredConstructors": true,
+		"allPublicConstructors": true,
+		"allDeclaredMethods": true,
+		"allPublicMethods": true,
+		"allDeclaredClasses": true,
+		"allPublicClasses": true
+	}
 ]

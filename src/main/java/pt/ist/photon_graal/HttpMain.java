@@ -24,7 +24,6 @@ import pt.ist.photon_graal.metrics.MemoryHelper;
 import pt.ist.photon_graal.metrics.MetricsPusher;
 import pt.ist.photon_graal.metrics.MetricsSupport;
 import pt.ist.photon_graal.rest.RunnerService;
-import pt.ist.photon_graal.rest.api.DTOFunctionArgs;
 import pt.ist.photon_graal.rest.api.DTOFunctionExecute;
 import pt.ist.photon_graal.runner.FunctionRunnerImpl;
 import pt.ist.photon_graal.settings.Configuration;
@@ -127,19 +126,13 @@ public class HttpMain {
 		private void doHandle(HttpExchange exchange) {
 			try {
 				HttpMain.this.setMax();
-				//metricsSupport.push();
 				InputStream is = exchange.getRequestBody();
 
 				Timer.Sample beforeExec = Timer.start();
 
 				JsonNode inputJSON = mapper.readTree(new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8)));
-				JsonNode value = inputJSON.get("value");
-				DTOFunctionArgs args = mapper
-					.treeToValue(value, DTOFunctionArgs.class);
 
-				logger.debug(args.toString());
-
-				DTOFunctionExecute execute = DTOFunctionExecute.of(functionSettings, args);
+				DTOFunctionExecute execute = DTOFunctionExecute.of(functionSettings, inputJSON);
 
 				logger.debug(execute.toString());
 				beforeExec.stop(metricsSupport.getMeterRegistry().timer("proxy.parse_request"));
