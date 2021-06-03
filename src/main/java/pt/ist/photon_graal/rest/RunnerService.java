@@ -16,13 +16,12 @@ public class RunnerService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass().getName());
 
-    public String execute(DTOFunctionExecute input) {
+    public Object execute(DTOFunctionExecute input) {
 
         logger.debug("Received [{}] as input from REST", input);
 
-        // TODO fix this.. if the function returns something different this will classcastexception
-        Either<IsolateError, Integer> result = functionRunner.run(input.getClassFQN(), input.getMethodName(), input.getArgs());
+        Either<IsolateError, Object> result = functionRunner.run(input.getClassFQN(), input.getMethodName(), input.getArgs());
 
-        return result.isRight() ? result.get().toString() : result.getLeft().toString();
+        return result.isRight() ? result.get() : result.getLeft().toString();
     }
 }
