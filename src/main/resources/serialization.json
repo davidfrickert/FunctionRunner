@@ -45,5 +45,7 @@
     "name": "com.fasterxml.jackson.databind.JsonNode"
   }, {
     "name": "com.fasterxml.jackson.databind.node.ObjectNode"
+  }, {
+    "name": "com.fasterxml.jackson.databind.node.BaseJsonNode"
   }
 ]
