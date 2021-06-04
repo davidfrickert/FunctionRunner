@@ -3,6 +3,7 @@ package pt.ist.photon_graal;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.BaseJsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -130,7 +131,7 @@ public class HttpMain {
 
 				Timer.Sample beforeExec = Timer.start();
 
-				JsonNode inputJSON = mapper.readTree(new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8)));
+				BaseJsonNode inputJSON = (BaseJsonNode) mapper.readTree(new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8)));
 
 				DTOFunctionExecute execute = DTOFunctionExecute.of(functionSettings, inputJSON);
 
