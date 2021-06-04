@@ -1,21 +1,22 @@
 package pt.ist.photon_graal.rest.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.BaseJsonNode;
 import pt.ist.photon_graal.settings.Settings;
 import pt.ist.photon_graal.settings.CurrentSettings;
 
 public class DTOFunctionExecute {
     private final String classFQN;
     private final String methodName;
-    private final JsonNode args;
+    private final BaseJsonNode args;
 
     private final Boolean isStatic;
 
-    private DTOFunctionExecute(Settings functionSettings, JsonNode args) {
+    private DTOFunctionExecute(Settings functionSettings, BaseJsonNode args) {
         this(functionSettings.getClassFQN(), functionSettings.getMethodName(), functionSettings.isStatic(), args);
     }
 
-    private DTOFunctionExecute(String classFQN, String methodName, boolean isStatic, JsonNode args) {
+    private DTOFunctionExecute(String classFQN, String methodName, boolean isStatic, BaseJsonNode args) {
         this.classFQN = classFQN;
         this.methodName = methodName;
         this.args = args;
@@ -30,7 +31,7 @@ public class DTOFunctionExecute {
         return methodName;
     }
 
-    public JsonNode getArgs() {
+    public BaseJsonNode getArgs() {
         return args;
     }
 
@@ -45,15 +46,15 @@ public class DTOFunctionExecute {
         return isStatic != null && isStatic;
     }
 
-    public static DTOFunctionExecute of(Settings functionSettings, JsonNode args) {
+    public static DTOFunctionExecute of(Settings functionSettings, BaseJsonNode args) {
         return new DTOFunctionExecute(functionSettings, args);
     }
 
-    public static DTOFunctionExecute of(JsonNode args) {
+    public static DTOFunctionExecute of(BaseJsonNode args) {
         return new DTOFunctionExecute(CurrentSettings.VALUE, args);
     }
 
-    public static DTOFunctionExecute of(String classFQN, String methodName, boolean isStatic, JsonNode args) {
+    public static DTOFunctionExecute of(String classFQN, String methodName, boolean isStatic, BaseJsonNode args) {
         return new DTOFunctionExecute(classFQN, methodName, isStatic, args);
     }
 }
