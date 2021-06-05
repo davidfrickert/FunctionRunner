@@ -8,9 +8,9 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <graalvm.version>21.0.0.2</graalvm.version>
+        <graalvm.version>21.1.0</graalvm.version>
         <java.version>11</java.version>
-        <micrometer.version>1.6.6</micrometer.version>
+        <micrometer.version>1.7.0</micrometer.version>
         <lombok.version>1.18.20</lombok.version>
     </properties>
 

@@ -1,4 +1,4 @@
-# FaaS-GraalVM 
-[![Build Status](https://travis-ci.com/davidfrickert/FaaS-GraalVM.svg?token=mLVbiRxj7moeG3WoqyRU&branch=master)](https://travis-ci.com/davidfrickert/FaaS-GraalVM)
+# FaaS-GraalVM - MSc Thesis
 
-MSc Thesis - FaaS@GraalVM
+Main repository of a Serverless Framework that supports running functions that are compiled with the framework in a GraalVM Native Image instance.
+Using Isolates, it's possible to execute concurrently the same function ensuring data separation, since the function code is executed inside Isolates, which provide a disjunct heap, similar to V8 Engine Isolates.
