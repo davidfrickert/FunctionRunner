@@ -1,6 +1,4 @@
-package pt.ist.photon_graal.runner.data;
-
-import pt.ist.photon_graal.helpers.Tuple;
+package pt.ist.photon_graal.data;
 
 import java.io.Serializable;
 import java.time.Duration;

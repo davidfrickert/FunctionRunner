@@ -36,11 +36,11 @@
   }, {
     "name": "java.util.Collections$EmptyList"
   }, {
-    "name": "pt.ist.photon_graal.helpers.Tuple"
+    "name": "pt.ist.photon_graal.data.Tuple"
   },{
     "name": "pt.ist.photon_graal.runner.isolateutils.IsolateError"
   }, {
-    "name": "pt.ist.photon_graal.runner.data.ResultWrapper"
+    "name": "pt.ist.photon_graal.data.ResultWrapper"
   }, {
     "name": "com.fasterxml.jackson.databind.node.BaseJsonNode",
     "customTargetConstructorClass":"com.fasterxml.jackson.databind.JsonNode"
