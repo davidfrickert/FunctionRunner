@@ -101,14 +101,6 @@
 		"allDeclaredClasses": true,
 		"allPublicClasses": true
 	}, {
-		"name": "com.fasterxml.jackson.databind.node.BaseJsonNode",
-		"allDeclaredConstructors": true,
-		"allPublicConstructors": true,
-		"allDeclaredMethods": true,
-		"allPublicMethods": true,
-		"allDeclaredClasses": true,
-		"allPublicClasses": true
-	}, {
 		"name": "com.fasterxml.jackson.databind.JsonSerializable",
 		"allDeclaredConstructors": true,
 		"allPublicConstructors": true,
