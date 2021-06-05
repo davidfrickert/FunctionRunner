@@ -1,7 +1,6 @@
-package pt.ist.photon_graal.runner.isolateutils;
+package pt.ist.photon_graal.runner.isolateutils.error;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 public class IsolateError implements Serializable {

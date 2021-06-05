@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pt.ist.photon_graal.rest.api.DTOFunctionExecute;
 import pt.ist.photon_graal.runner.FunctionRunner;
-import pt.ist.photon_graal.runner.isolateutils.IsolateError;
+import pt.ist.photon_graal.runner.isolateutils.error.IsolateError;
 
 public class RunnerService {
     private final FunctionRunner functionRunner;
