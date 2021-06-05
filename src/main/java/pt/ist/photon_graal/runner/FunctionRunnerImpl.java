@@ -1,7 +1,6 @@
 package pt.ist.photon_graal.runner;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.BaseJsonNode;
 import io.micrometer.core.instrument.Timer;
 import io.vavr.control.Either;
 import lombok.SneakyThrows;
@@ -46,7 +45,7 @@ public class FunctionRunnerImpl implements FunctionRunner {
 
     @Override
     @SneakyThrows
-    public <T> Either<IsolateError, T> run(String className, String methodName, BaseJsonNode args) {
+    public <T> Either<IsolateError, T> run(String className, String methodName, JsonNode args) {
         var currentIsolateThread = CurrentIsolate.getCurrentThread();
 
         Timer.Sample isolateCreation = Timer.start();
