@@ -1,4 +1,4 @@
-package pt.ist.photon_graal.helpers;
+package pt.ist.photon_graal.data;
 
 import java.io.Serializable;
 
