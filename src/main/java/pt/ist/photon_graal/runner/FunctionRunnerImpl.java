@@ -24,8 +24,19 @@ import pt.ist.photon_graal.metrics.MetricsSupport;
 import pt.ist.photon_graal.runner.isolateutils.conversion.registry.TypeConversionRegistry;
 import pt.ist.photon_graal.runner.isolateutils.error.IsolateError;
 import pt.ist.photon_graal.runner.isolateutils.handles.HandleUnwrapUtils;
+import pt.ist.photon_graal.runner.isolateutils.management.IsolateStrategy;
 
 public class FunctionRunnerImpl implements FunctionRunner {
+
+    private final IsolateStrategy isolateStrategy;
+
+    public FunctionRunnerImpl(IsolateStrategy isolateStrategy) {
+        this.isolateStrategy = isolateStrategy;
+    }
+
+    public FunctionRunnerImpl() {
+        this.isolateStrategy = IsolateStrategy.DEFAULT;
+    }
 
     private static TypeConversionRegistry getRegistry() {
         return TypeConversionRegistry.getInstance();
@@ -35,10 +46,11 @@ public class FunctionRunnerImpl implements FunctionRunner {
 
     public <T> Either<IsolateError, T> run(String className, String methodName, JsonNode args) {
         getLogger().info("Running request in Native environment! This runtime is a Native Image.");
-        var currentIsolateThread = CurrentIsolate.getCurrentThread();
+
+        final var currentIsolateThread = CurrentIsolate.getCurrentThread();
 
         Timer.Sample isolateCreation = Timer.start();
-        var requestIsolate =  Isolates.createIsolate(Isolates.CreateIsolateParameters.getDefault());
+        var requestIsolate = isolateStrategy.get();
         isolateCreation.stop(ms.getMeterRegistry().timer("isolate.create"));
 
         final ObjectHandle result;
@@ -46,10 +58,8 @@ public class FunctionRunnerImpl implements FunctionRunner {
         Timer.Sample inputConversion = Timer.start();
         final ObjectHandle classNameHandle = getRegistry().createHandle(requestIsolate, className);
         final ObjectHandle methodNameHandle = getRegistry().createHandle(requestIsolate, methodName);
+        final ObjectHandle argsHandle = getRegistry().createHandle(requestIsolate, args);
 
-        final ObjectNode temp = (ObjectNode) args;
-
-        final ObjectHandle argsHandle = getRegistry().createHandle(requestIsolate, temp);
         inputConversion.stop(ms.getMeterRegistry().timer("isolate.input_conversion"));
 
         Timer.Sample execution = Timer.start();
@@ -62,11 +72,12 @@ public class FunctionRunnerImpl implements FunctionRunner {
         execution.stop(ms.getMeterRegistry().timer("isolate.execution"));
 
         Timer.Sample tearDown = Timer.start();
-        Isolates.tearDownIsolate(requestIsolate);
+        isolateStrategy.release(requestIsolate);
         tearDown.stop(ms.getMeterRegistry().timer("isolate.teardown"));
 
         Timer.Sample outputConversion = Timer.start();
-        final Either<IsolateError, ResultWrapper<T>> output = SerializationUtils.deserialize((byte[]) HandleUnwrapUtils.get(result));
+        final Either<IsolateError, ResultWrapper<T>> output =
+            SerializationUtils.deserialize((byte[]) HandleUnwrapUtils.get(result));
         outputConversion.stop(ms.getMeterRegistry().timer("isolate.output_conversion"));
 
         if (output.isRight()) {
