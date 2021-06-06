@@ -1,12 +1,16 @@
 package pt.ist.photon_graal.runner.isolateutils.conversion.registry;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import pt.ist.photon_graal.runner.isolateutils.conversion.*;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import pt.ist.photon_graal.runner.isolateutils.conversion.ArrayConverter;
+import pt.ist.photon_graal.runner.isolateutils.conversion.BooleanConverter;
+import pt.ist.photon_graal.runner.isolateutils.conversion.ByteArrayConverter;
+import pt.ist.photon_graal.runner.isolateutils.conversion.ObjectConverter;
+import pt.ist.photon_graal.runner.isolateutils.conversion.StringConverter;
+import pt.ist.photon_graal.runner.isolateutils.conversion.TypeConverter;
 
 public class RegistryMap {
     private final Map<Class<?>, TypeConverter<?>> registry = new HashMap<>();

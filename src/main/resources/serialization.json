@@ -38,7 +38,7 @@
   }, {
     "name": "pt.ist.photon_graal.data.Tuple"
   },{
-    "name": "pt.ist.photon_graal.runner.isolateutils.IsolateError"
+    "name": "pt.ist.photon_graal.runner.isolateutils.error.IsolateError"
   }, {
     "name": "pt.ist.photon_graal.data.ResultWrapper"
   },{

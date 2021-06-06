@@ -1,0 +1,43 @@
+[
+  {
+  "name":"pt.ist.photon_graal.data.ResultWrapper"
+  }, {
+  "name": "io.vavr.control.Either$Left"
+  },
+  {
+  "name":"io.vavr.control.Either$Right"
+  },
+  {
+  "name":"com.fasterxml.jackson.databind.node.NodeSerialization"
+  },
+  {
+  "name":"com.fasterxml.jackson.databind.node.ObjectNode",
+    "customTargetConstructorClass": "com.fasterxml.jackson.databind.node.BaseJsonNode"
+  },
+  {
+  "name":"java.util.ArrayList"
+  },
+  {
+  "name":"pt.ist.photon_graal.data.Tuple"
+  },
+  {
+  "name":"io.vavr.control.Either"
+  },
+  {
+  "name":"com.fasterxml.jackson.databind.node.BaseJsonNode"
+  },
+  {
+  "name":"java.time.Duration"
+  },
+  {
+  "name":"com.fasterxml.jackson.databind.node.ContainerNode"
+  },
+  {
+  "name":"java.lang.String"
+  },
+  {
+  "name":"java.time.Ser"
+  }, {
+  "name": "pt.ist.photon_graal.runner.isolateutils.error.IsolateError"
+  }
+]
