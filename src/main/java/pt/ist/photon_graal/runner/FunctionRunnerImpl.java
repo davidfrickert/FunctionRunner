@@ -1,9 +1,14 @@
 package pt.ist.photon_graal.runner;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.BaseJsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.micrometer.core.instrument.Timer;
 import io.vavr.control.Either;
+import java.lang.reflect.Method;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.SerializationUtils;
 import org.graalvm.nativeimage.CurrentIsolate;
@@ -14,19 +19,13 @@ import org.graalvm.nativeimage.c.function.CEntryPoint;
 import org.graalvm.nativeimage.c.function.CEntryPoint.IsolateThreadContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pt.ist.photon_graal.data.ResultWrapper;
 import pt.ist.photon_graal.data.Tuple;
 import pt.ist.photon_graal.metrics.MetricsSupport;
-import pt.ist.photon_graal.data.ResultWrapper;
 import pt.ist.photon_graal.runner.isolateutils.base.Enviroment;
-import pt.ist.photon_graal.runner.isolateutils.error.IsolateError;
 import pt.ist.photon_graal.runner.isolateutils.conversion.registry.TypeConversionRegistry;
+import pt.ist.photon_graal.runner.isolateutils.error.IsolateError;
 import pt.ist.photon_graal.runner.isolateutils.handles.HandleUnwrapUtils;
-
-import java.lang.reflect.Method;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FunctionRunnerImpl implements FunctionRunner {
 
@@ -55,10 +54,11 @@ public class FunctionRunnerImpl implements FunctionRunner {
     }
 
     private <T> Either<IsolateError, T> mockIsolateRun(String className, String methodName, JsonNode args) {
+        getLogger().warn("Running request in mock environment! This runtime is not a Native Image.");
         // serialization (Parent Isolate -> Child Isolate (that will be executing the function)
         final byte[] serializedClassName = SerializationUtils.serialize(className);
         final byte[] serializedMethodName = SerializationUtils.serialize(methodName);
-        final byte[] serializedArgs = SerializationUtils.serialize((BaseJsonNode)args);
+        final byte[] serializedArgs = SerializationUtils.serialize((ObjectNode)args);
 
         final byte[] result = mockExecute(serializedClassName, serializedMethodName, serializedArgs);
 
@@ -99,6 +99,7 @@ public class FunctionRunnerImpl implements FunctionRunner {
     }
 
     private <T> Either<IsolateError, T> runInIsolate(String className, String methodName, JsonNode args) {
+        getLogger().info("Running request in Native environment! This runtime is a Native Image.");
         var currentIsolateThread = CurrentIsolate.getCurrentThread();
 
         Timer.Sample isolateCreation = Timer.start();
@@ -110,7 +111,10 @@ public class FunctionRunnerImpl implements FunctionRunner {
         Timer.Sample inputConversion = Timer.start();
         final ObjectHandle classNameHandle = getRegistry().createHandle(requestIsolate, className);
         final ObjectHandle methodNameHandle = getRegistry().createHandle(requestIsolate, methodName);
-        final ObjectHandle argsHandle = getRegistry().createHandle(requestIsolate, args);
+
+        final ObjectNode temp = (ObjectNode) args;
+
+        final ObjectHandle argsHandle = getRegistry().createHandle(requestIsolate, temp);
         inputConversion.stop(ms.getMeterRegistry().timer("isolate.input_conversion"));
 
         Timer.Sample execution = Timer.start();
@@ -151,7 +155,7 @@ public class FunctionRunnerImpl implements FunctionRunner {
 
             String className = HandleUnwrapUtils.get(classNameHandle);
             String methodName = HandleUnwrapUtils.get(methodNameHandle);
-            JsonNode args = SerializationUtils.deserialize((byte[]) HandleUnwrapUtils.get(argsHandle));
+            ObjectNode args = SerializationUtils.deserialize((byte[]) HandleUnwrapUtils.get(argsHandle));
 
             stats.add(new Tuple<>("isolate.inside.unwrap", Duration.between(beforeUnwrap, Instant.now())));
             /*

@@ -130,7 +130,10 @@ public class HttpMain {
 
 				Timer.Sample beforeExec = Timer.start();
 
-				JsonNode inputJSON = (JsonNode) mapper.readTree(new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8)));
+				JsonNode inputJSON = mapper.readTree(new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8)))
+										   // adhere to openwhisk specification
+										   // input payload comes in "value" field
+										   .get("value");
 
 				DTOFunctionExecute execute = DTOFunctionExecute.of(functionSettings, inputJSON);
 
@@ -190,7 +193,7 @@ public class HttpMain {
 			ObjectNode root = mapper.createObjectNode();
 			root.put("error", "Function return value is null");
 
-			response = "";
+			response = root;
 		} else if (value instanceof JsonNode) {
 			response = value;
 		} else {
