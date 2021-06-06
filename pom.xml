@@ -120,7 +120,7 @@
                         <goals>
                             <goal>native-image</goal>
                         </goals>
-                        <phase>install</phase>
+                        <phase>package</phase>
                     </execution>
                 </executions>
                 <configuration>
