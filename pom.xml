@@ -12,6 +12,7 @@
         <java.version>11</java.version>
         <micrometer.version>1.7.0</micrometer.version>
         <lombok.version>1.18.20</lombok.version>
+        <exec.mainClass>pt.ist.photon_graal.HttpMain</exec.mainClass>
     </properties>
 
     <dependencies>
@@ -119,7 +120,7 @@
                         <goals>
                             <goal>native-image</goal>
                         </goals>
-                        <phase>package</phase>
+                        <phase>install</phase>
                     </execution>
                 </executions>
                 <configuration>
@@ -132,29 +133,25 @@
                         <!-- Enable HTTP + HTTPS -->
                         --enable-https
                         --enable-http
-                        <!-- Reflection conf for MinIO Lib-->
-                        -H:ReflectionConfigurationFiles=classes/reflection.json
-                        -H:SerializationConfigurationFiles=classes/serialization.json
-                        -H:ResourceConfigurationFiles=classes/resources.json
-                        -H:Log=registerResource
-                        <!---H:JNIConfigurationFiles=classes/native-conf.json-->
+                        <!-- Configs -->
+                        -H:ReflectionConfigurationFiles=classes/agent/reflect-config.json
+                        -H:SerializationConfigurationFiles=classes/agent/serialization-config.json
+                        -H:ResourceConfigurationFiles=classes/agent/resource-config.json
+                        -H:JNIConfigurationFiles=classes/agent/jni-config.json
+                        <!-- ??? - Can't remember why (or if) this is needed -->
                         -H:+ReportExceptionStackTraces
                         <!-- This option makes the build not fail if it can't find some classes in reflection.json-->
                         -H:+AllowIncompleteClasspath
-                        <!-- GC data
+                        <!-- This option is required for functions that use OkHttp lib
+                             If not set it will crash with java.nio.charset.UnsupportedCharsetException: UTF-32BE -->
+                        -H:+AddAllCharsets
 
+                        <!-- GC data
                         -R:+PrintGCSummary
                         -R:+PrintGC
                         -R:+PrintGCTimeStamps
                         -R:+VerboseGC
                         -->
-
-                        <!-- Alpine Linux containers
-                        -H:-CheckToolchain
-                         -\-static
-                         -\-libc=musl
-                         -->
-
                     </buildArgs>
                 </configuration>
             </plugin>

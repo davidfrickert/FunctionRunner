@@ -6,6 +6,7 @@ import io.micrometer.prometheus.PrometheusMeterRegistry;
 import io.prometheus.client.exporter.PushGateway;
 import java.util.Optional;
 import java.util.UUID;
+import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pt.ist.photon_graal.settings.CurrentSettings;
@@ -30,7 +31,8 @@ public class MetricsSupport {
         configureRegistryTags(registry);
     }
 
-    public static MetricsSupport get() throws IOException {
+    @SneakyThrows
+    public static MetricsSupport get() {
         if (instance == null) {
             instance = new MetricsSupport(Configuration.get());
         }

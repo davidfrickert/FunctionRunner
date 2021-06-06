@@ -43,10 +43,10 @@ public class HttpMain {
 	private final AtomicInteger concurrentExecutions;
 	private final AtomicInteger maxConcurrentExecutions;
 
-	public HttpMain(int port, Settings functionSettings, Configuration configuration) throws IOException {
+	public HttpMain(int port, Settings functionSettings) throws IOException {
 		this.server = HttpServer.create(new InetSocketAddress(port), -1);
 
-		final RunnerService rs = new RunnerService(new FunctionRunnerImpl());
+		final RunnerService rs = new RunnerService();
 
 		this.server.createContext("/init", new InitHandler());
 		this.server.createContext("/run", new RunHandler(functionSettings, rs));
@@ -169,8 +169,7 @@ public class HttpMain {
 
 	public static void main(String[] args) throws IOException {
 		Settings functionSettings = CurrentSettings.VALUE;
-		Configuration config = Configuration.get();
-		HttpMain proxy = new HttpMain(8080, functionSettings, config);
+		HttpMain proxy = new HttpMain(8080, functionSettings);
 		proxy.start();
 	}
 
