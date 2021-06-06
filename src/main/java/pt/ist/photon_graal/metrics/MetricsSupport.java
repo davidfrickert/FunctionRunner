@@ -9,10 +9,10 @@ import java.util.UUID;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pt.ist.photon_graal.settings.CurrentSettings;
+import pt.ist.photon_graal.config.function.CurrentSettings;
 
 import java.io.IOException;
-import pt.ist.photon_graal.settings.Configuration;
+import pt.ist.photon_graal.config.framework.Configuration;
 
 public class MetricsSupport {
     private static final Logger logger = LoggerFactory.getLogger(MetricsSupport.class);

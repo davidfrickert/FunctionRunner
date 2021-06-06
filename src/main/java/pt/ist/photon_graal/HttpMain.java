@@ -23,12 +23,10 @@ import org.slf4j.LoggerFactory;
 import pt.ist.photon_graal.metrics.MemoryHelper;
 import pt.ist.photon_graal.metrics.MetricsPusher;
 import pt.ist.photon_graal.metrics.MetricsSupport;
-import pt.ist.photon_graal.rest.RunnerService;
-import pt.ist.photon_graal.rest.api.DTOFunctionExecute;
-import pt.ist.photon_graal.runner.FunctionRunnerImpl;
-import pt.ist.photon_graal.settings.Configuration;
-import pt.ist.photon_graal.settings.CurrentSettings;
-import pt.ist.photon_graal.settings.Settings;
+import pt.ist.photon_graal.runner.api.RunnerService;
+import pt.ist.photon_graal.runner.api.DTOFunctionExecute;
+import pt.ist.photon_graal.config.function.CurrentSettings;
+import pt.ist.photon_graal.config.function.Settings;
 
 public class HttpMain {
 	private static final Logger logger = LoggerFactory.getLogger(HttpMain.class);

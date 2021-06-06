@@ -38,6 +38,6 @@
   {
   "name":"java.time.Ser"
   }, {
-  "name": "pt.ist.photon_graal.runner.isolateutils.error.IsolateError"
+  "name": "pt.ist.photon_graal.runner.api.error.IsolateError"
   }
 ]
