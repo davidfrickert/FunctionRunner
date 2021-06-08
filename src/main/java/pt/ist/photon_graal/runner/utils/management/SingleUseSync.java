@@ -3,7 +3,7 @@ package pt.ist.photon_graal.runner.utils.management;
 import org.graalvm.nativeimage.IsolateThread;
 import org.graalvm.nativeimage.Isolates;
 
-public class SingleUse implements IsolateStrategy {
+public class SingleUseSync implements IsolateStrategy {
 
 	@Override
 	public IsolateThread get() {
