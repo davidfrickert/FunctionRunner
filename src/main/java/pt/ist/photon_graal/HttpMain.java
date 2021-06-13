@@ -132,6 +132,7 @@ public class HttpMain {
 										   // adhere to openwhisk specification
 										   // input payload comes in "value" field
 										   .get("value");
+				is.close();
 
 				DTOFunctionExecute execute = DTOFunctionExecute.of(functionSettings, inputJSON);
 
