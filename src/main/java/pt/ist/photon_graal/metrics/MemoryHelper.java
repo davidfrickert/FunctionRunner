@@ -23,11 +23,11 @@ public class MemoryHelper {
 			final Process proc = runtime.exec(getRssOfPid);
 			proc.waitFor();
 
-			BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-
-			String line;
-			while ((line = reader.readLine()) != null) {
-				output.append(line).append("\n");
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()))) {
+				String line;
+				while ((line = reader.readLine()) != null) {
+					output.append(line).append("\n");
+				}
 			}
 		} catch (Exception e) {
 			log.error("Couldn't fetch RSS memory!", e);
