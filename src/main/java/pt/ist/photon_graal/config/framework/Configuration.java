@@ -17,10 +17,8 @@ public class Configuration implements MetricsConfig {
     private static Configuration INSTANCE;
 
     private Configuration()  {
-        InputStream fis = Configuration.class.getClassLoader().getResourceAsStream("config.properties");
-
         config = new TypedProperties();
-        try {
+        try (InputStream fis = Configuration.class.getClassLoader().getResourceAsStream("config.properties")) {
             config.load(fis);
         } catch (IOException e) {
             throw new RuntimeException("Couldn't initialize application configuration!", e);
@@ -28,7 +26,7 @@ public class Configuration implements MetricsConfig {
         logger.info("Successful load of properties file");
     }
 
-    public static Configuration get() {
+    public static synchronized Configuration get() {
         if(INSTANCE == null) {
             INSTANCE = new Configuration();
         }
