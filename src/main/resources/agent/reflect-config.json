@@ -2222,7 +2222,16 @@
 {
   "name":"pt.ist.photon_graal.HttpMain",
   "methods":[{"name":"main","parameterTypes":["java.lang.String[]"] }]
+}, {
+  "name": "pt.ist.photon_graal.metrics.function.FunctionMetric",
+  "allPublicConstructors" : true,
+  "allPublicClasses" : true
 },
+  {
+    "name": "pt.ist.photon_graal.metrics.function.FunctionMetrics",
+    "allPublicConstructors" : true,
+    "allPublicClasses" : true
+  },
 {
   "name":"sun.misc.Unsafe",
   "allDeclaredFields":true

@@ -2,35 +2,32 @@ package pt.ist.photon_graal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import io.micrometer.core.instrument.Timer;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import pt.ist.photon_graal.config.function.CurrentSettings;
+import pt.ist.photon_graal.config.function.Settings;
+import pt.ist.photon_graal.metrics.MemoryHelper;
+import pt.ist.photon_graal.metrics.MetricsPusher;
+import pt.ist.photon_graal.metrics.MetricsSupport;
+import pt.ist.photon_graal.runner.api.DTOFunctionExecute;
+import pt.ist.photon_graal.runner.api.RunnerService;
+
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import pt.ist.photon_graal.metrics.MemoryHelper;
-import pt.ist.photon_graal.metrics.MetricsPusher;
-import pt.ist.photon_graal.metrics.MetricsSupport;
-import pt.ist.photon_graal.runner.api.RunnerService;
-import pt.ist.photon_graal.runner.api.DTOFunctionExecute;
-import pt.ist.photon_graal.config.function.CurrentSettings;
-import pt.ist.photon_graal.config.function.Settings;
+
+import static pt.ist.photon_graal.rest.utils.Constants.mapper;
 
 public class HttpMain {
 	private static final Logger logger = LoggerFactory.getLogger(HttpMain.class);
-	private static final ObjectMapper mapper = new ObjectMapper();
 
 	private final HttpServer server;
 	private final MetricsPusher metricsPusher;
@@ -201,7 +198,7 @@ public class HttpMain {
 
 			response = root;
 		}
-		logger.info("Output: " + response);
+		logger.info("Output: {}", response);
 		return response.toString();
 	}
 }

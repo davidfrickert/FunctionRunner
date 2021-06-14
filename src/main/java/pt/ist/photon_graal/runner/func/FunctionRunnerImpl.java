@@ -4,11 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.micrometer.core.instrument.Timer;
 import io.vavr.control.Either;
-import java.lang.reflect.Method;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.commons.lang3.SerializationUtils;
 import org.graalvm.nativeimage.CurrentIsolate;
 import org.graalvm.nativeimage.IsolateThread;
@@ -20,10 +15,19 @@ import org.slf4j.LoggerFactory;
 import pt.ist.photon_graal.data.ResultWrapper;
 import pt.ist.photon_graal.data.Tuple;
 import pt.ist.photon_graal.metrics.MetricsSupport;
-import pt.ist.photon_graal.runner.utils.conversion.registry.TypeConversionRegistry;
+import pt.ist.photon_graal.metrics.function.FunctionMetrics;
 import pt.ist.photon_graal.runner.api.error.IsolateError;
+import pt.ist.photon_graal.runner.utils.conversion.registry.TypeConversionRegistry;
 import pt.ist.photon_graal.runner.utils.handles.HandleUnwrapUtils;
 import pt.ist.photon_graal.runner.utils.management.IsolateStrategy;
+
+import java.lang.reflect.Method;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+
+import static pt.ist.photon_graal.rest.utils.Constants.mapper;
 
 public class FunctionRunnerImpl implements FunctionRunner {
 
@@ -124,6 +128,12 @@ public class FunctionRunnerImpl implements FunctionRunner {
             Object result = function.invoke(null, args);
 
             stats.add(new Tuple<>("isolate.inside.exec", Duration.between(beforeExec, Instant.now())));
+
+            if (result instanceof JsonNode) {
+                mapper.treeToValue((JsonNode) result, FunctionMetrics.class)
+                        .getMetrics()
+                        .forEach(metric -> stats.add(new Tuple<>(metric.getName(), metric.getDuration())));
+            }
 
             return success(parentIsolate, result, stats);
         } catch (Throwable t) {
