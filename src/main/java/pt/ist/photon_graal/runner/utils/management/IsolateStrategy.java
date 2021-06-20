@@ -6,5 +6,5 @@ public interface IsolateStrategy {
 	IsolateThread get();
 	void release(IsolateThread isolateThread);
 
-	IsolateStrategy DEFAULT = new SimpleIsolatePool(2);
+	IsolateStrategy DEFAULT = new SimpleIsolatePool(4);
 }

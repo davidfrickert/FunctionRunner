@@ -23,12 +23,14 @@ public class SimpleIsolatePool implements IsolateStrategy {
 
 	@Override
 	public IsolateThread get() {
-		if (pool.isEmpty()) {
+		final Long isolateId = pool.poll();
+
+		if (isolateId == null) {
 			LOG.debug("Pool Empty - Creating new isolate.");
 			return Isolates.createIsolate(Isolates.CreateIsolateParameters.getDefault());
 		} else {
 			LOG.debug("Fetching isolate from pool");
-			return Isolates.attachCurrentThread(WordFactory.signed(pool.poll()));
+			return Isolates.attachCurrentThread(WordFactory.signed(isolateId));
 		}
 	}
 
@@ -37,8 +39,8 @@ public class SimpleIsolatePool implements IsolateStrategy {
 		final Isolate isolate = Isolates.getIsolate(isolateThread);
 		Isolates.detachThread(isolateThread);
 		if (pool.size() < maxCachedIsolates) {
-			LOG.debug("Adding isolate to pool");
 			pool.add(isolate.rawValue());
+			LOG.debug("Adding isolate to pool");
 		} else {
 			LOG.debug("Pool full. Discarding isolate");
 			new Thread(() ->
