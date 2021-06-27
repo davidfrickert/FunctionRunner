@@ -12,7 +12,6 @@
         <java.version>11</java.version>
         <micrometer.version>1.7.1</micrometer.version>
         <lombok.version>1.18.20</lombok.version>
-        <exec.mainClass>pt.ist.photon_graal.HttpMain</exec.mainClass>
     </properties>
 
     <dependencies>
@@ -58,6 +57,7 @@
             <artifactId>jackson-core</artifactId>
             <version>2.12.3</version>
         </dependency>
+
         <!-- Serialization -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -110,61 +110,6 @@
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.graalvm.nativeimage</groupId>
-                <artifactId>native-image-maven-plugin</artifactId>
-                <version>${graalvm.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>native-image</goal>
-                        </goals>
-                        <phase>package</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <skip>false</skip>
-                    <imageName>app</imageName>
-                    <mainClass>pt.ist.photon_graal.HttpMain</mainClass>
-                    <buildArgs>
-                        <!-- Forces a failure if NI is not built -->
-                        --no-fallback
-                        <!-- Enable HTTP + HTTPS -->
-                        --enable-https
-                        --enable-http
-                        <!-- Configs -->
-                        -H:ReflectionConfigurationFiles=classes/agent/reflect-config.json
-                        -H:SerializationConfigurationFiles=classes/agent/serialization-config.json
-                        -H:ResourceConfigurationFiles=classes/agent/resource-config.json
-                        -H:JNIConfigurationFiles=classes/agent/jni-config.json
-                        <!-- ??? - Can't remember why (or if) this is needed -->
-                        -H:+ReportExceptionStackTraces
-                        <!-- This option makes the build not fail if it can't find some classes in reflection.json-->
-                        -H:+AllowIncompleteClasspath
-                        <!-- This option is required for functions that use OkHttp lib
-                             If not set it will crash with java.nio.charset.UnsupportedCharsetException: UTF-32BE -->
-                        -H:+AddAllCharsets
-
-                        <!-- GC data
-                        -R:+PrintGCSummary
-                        -R:+PrintGC
-                        -R:+PrintGCTimeStamps
-                        -R:+VerboseGC
-                        -->
-                    </buildArgs>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-shade-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

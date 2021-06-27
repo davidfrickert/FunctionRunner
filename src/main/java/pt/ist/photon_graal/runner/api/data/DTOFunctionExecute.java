@@ -1,4 +1,4 @@
-package pt.ist.photon_graal.runner.api;
+package pt.ist.photon_graal.runner.api.data;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import pt.ist.photon_graal.config.function.Settings;
