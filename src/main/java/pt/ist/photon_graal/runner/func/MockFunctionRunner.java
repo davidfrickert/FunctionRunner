@@ -18,7 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MockFunctionRunner implements FunctionRunner {
+
+	private final MetricsSupport metricsSupport;
+
 	private static Logger LOG = LoggerFactory.getLogger(MockFunctionRunner.class);
+
+	public MockFunctionRunner(final MetricsSupport metricsSupport) {
+		this.metricsSupport = metricsSupport;
+	}
 
 	public  <T> Either<IsolateError, T> run(String className, String methodName, JsonNode args) {
 		LOG.warn("Running request in mock environment! This runtime is not a Native Image.");
@@ -33,7 +40,7 @@ public class MockFunctionRunner implements FunctionRunner {
 
 		if (resultDeserialized.isRight()) {
 			ResultWrapper<T> r = resultDeserialized.get();
-			r.getStats().forEach(stat -> MetricsSupport.get().getMeterRegistry().timer(stat._1()).record(stat._2()));
+			r.getStats().forEach(stat -> metricsSupport.getMeterRegistry().timer(stat._1()).record(stat._2()));
 		}
 		return resultDeserialized.map(ResultWrapper::getResult);
 	}

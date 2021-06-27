@@ -1,7 +1,10 @@
 package pt.ist.photon_graal.runner.func;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import io.micrometer.core.instrument.MeterRegistry;
 import io.vavr.control.Either;
+import pt.ist.photon_graal.config.function.Settings;
+import pt.ist.photon_graal.metrics.MetricsSupport;
 import pt.ist.photon_graal.runner.utils.base.Enviroment;
 import pt.ist.photon_graal.runner.api.error.IsolateError;
 
@@ -9,11 +12,14 @@ public class FunctionDispatcher implements FunctionRunner {
 
 	private final FunctionRunner runner;
 
-	public FunctionDispatcher() {
+	public FunctionDispatcher(final Settings config,
+							  final MeterRegistry registry) {
+		final var metricsSupport = new MetricsSupport(config, registry);
+
 		if (Enviroment.isNative()) {
-			runner = new FunctionRunnerImpl();
+			runner = new FunctionRunnerImpl(metricsSupport);
 		} else {
-			runner = new MockFunctionRunner();
+			runner = new MockFunctionRunner(metricsSupport);
 		}
 	}
 

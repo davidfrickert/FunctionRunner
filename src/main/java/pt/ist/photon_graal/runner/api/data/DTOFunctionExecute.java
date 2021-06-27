@@ -2,7 +2,6 @@ package pt.ist.photon_graal.runner.api.data;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import pt.ist.photon_graal.config.function.Settings;
-import pt.ist.photon_graal.config.function.CurrentSettings;
 
 public class DTOFunctionExecute {
     private final String classFQN;
@@ -45,15 +44,14 @@ public class DTOFunctionExecute {
         return isStatic != null && isStatic;
     }
 
-    public static DTOFunctionExecute of(Settings functionSettings, JsonNode args) {
+    public static DTOFunctionExecute of(final Settings functionSettings, final JsonNode args) {
         return new DTOFunctionExecute(functionSettings, args);
     }
 
-    public static DTOFunctionExecute of(JsonNode args) {
-        return new DTOFunctionExecute(CurrentSettings.VALUE, args);
-    }
-
-    public static DTOFunctionExecute of(String classFQN, String methodName, boolean isStatic, JsonNode args) {
+    public static DTOFunctionExecute of(final String classFQN,
+                                        final String methodName,
+                                        final boolean isStatic,
+                                        final JsonNode args) {
         return new DTOFunctionExecute(classFQN, methodName, isStatic, args);
     }
 }

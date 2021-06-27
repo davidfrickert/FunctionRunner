@@ -13,10 +13,10 @@ import org.graalvm.nativeimage.c.function.CEntryPoint;
 import org.graalvm.nativeimage.c.function.CEntryPoint.IsolateThreadContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pt.ist.photon_graal.runner.api.data.ResultWrapper;
-import pt.ist.photon_graal.runner.api.data.Tuple;
 import pt.ist.photon_graal.metrics.MetricsSupport;
 import pt.ist.photon_graal.metrics.function.FunctionMetrics;
+import pt.ist.photon_graal.runner.api.data.ResultWrapper;
+import pt.ist.photon_graal.runner.api.data.Tuple;
 import pt.ist.photon_graal.runner.api.error.IsolateError;
 import pt.ist.photon_graal.runner.utils.conversion.registry.TypeConversionRegistry;
 import pt.ist.photon_graal.runner.utils.handles.HandleUnwrapUtils;
@@ -31,20 +31,21 @@ import java.util.List;
 public class FunctionRunnerImpl implements FunctionRunner {
 
     private final IsolateStrategy isolateStrategy;
+    private final MetricsSupport metricsSupport;
 
-    public FunctionRunnerImpl(IsolateStrategy isolateStrategy) {
+    public FunctionRunnerImpl(final IsolateStrategy isolateStrategy,
+                              final MetricsSupport metricsSupport) {
         this.isolateStrategy = isolateStrategy;
+        this.metricsSupport = metricsSupport;
     }
 
-    public FunctionRunnerImpl() {
-        this.isolateStrategy = IsolateStrategy.DEFAULT;
+    public FunctionRunnerImpl(final MetricsSupport metricsSupport) {
+        this(IsolateStrategy.DEFAULT, metricsSupport);
     }
 
     private static TypeConversionRegistry getRegistry() {
         return TypeConversionRegistry.getInstance();
     }
-
-    private static final MetricsSupport ms = MetricsSupport.get();
 
     public <T> Either<IsolateError, T> run(String className, String methodName, JsonNode args) {
         getLogger().info("Running request in Native environment! This runtime is a Native Image.");
@@ -53,7 +54,7 @@ public class FunctionRunnerImpl implements FunctionRunner {
 
         Timer.Sample isolateCreation = Timer.start();
         var requestIsolate = isolateStrategy.get();
-        isolateCreation.stop(ms.getMeterRegistry().timer("isolate.create"));
+        isolateCreation.stop(metricsSupport.getMeterRegistry().timer("isolate.create"));
 
         final ObjectHandle result;
 
@@ -62,7 +63,7 @@ public class FunctionRunnerImpl implements FunctionRunner {
         final ObjectHandle methodNameHandle = getRegistry().createHandle(requestIsolate, methodName);
         final ObjectHandle argsHandle = getRegistry().createHandle(requestIsolate, args);
 
-        inputConversion.stop(ms.getMeterRegistry().timer("isolate.input_conversion"));
+        inputConversion.stop(metricsSupport.getMeterRegistry().timer("isolate.input_conversion"));
 
         Timer.Sample execution = Timer.start();
         result = FunctionRunnerImpl.execute(
@@ -71,20 +72,20 @@ public class FunctionRunnerImpl implements FunctionRunner {
             classNameHandle,
             methodNameHandle,
             argsHandle);
-        execution.stop(ms.getMeterRegistry().timer("isolate.execution"));
+        execution.stop(metricsSupport.getMeterRegistry().timer("isolate.execution"));
 
         Timer.Sample tearDown = Timer.start();
         isolateStrategy.release(requestIsolate);
-        tearDown.stop(ms.getMeterRegistry().timer("isolate.teardown"));
+        tearDown.stop(metricsSupport.getMeterRegistry().timer("isolate.teardown"));
 
         Timer.Sample outputConversion = Timer.start();
         final Either<IsolateError, ResultWrapper<T>> output =
             SerializationUtils.deserialize((byte[]) HandleUnwrapUtils.get(result));
-        outputConversion.stop(ms.getMeterRegistry().timer("isolate.output_conversion"));
+        outputConversion.stop(metricsSupport.getMeterRegistry().timer("isolate.output_conversion"));
 
         if (output.isRight()) {
             ResultWrapper<T> r = output.get();
-            r.getStats().forEach(stat -> ms.getMeterRegistry().timer(stat._1()).record(stat._2()));
+            r.getStats().forEach(stat -> metricsSupport.getMeterRegistry().timer(stat._1()).record(stat._2()));
         }
 
         return output.map(ResultWrapper::getResult);
