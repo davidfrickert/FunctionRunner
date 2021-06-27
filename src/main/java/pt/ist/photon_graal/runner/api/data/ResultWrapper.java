@@ -1,4 +1,4 @@
-package pt.ist.photon_graal.data;
+package pt.ist.photon_graal.runner.api.data;
 
 import java.io.Serializable;
 import java.time.Duration;

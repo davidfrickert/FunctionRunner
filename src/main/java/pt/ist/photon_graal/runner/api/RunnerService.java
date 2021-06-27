@@ -3,9 +3,10 @@ package pt.ist.photon_graal.runner.api;
 import io.vavr.control.Either;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pt.ist.photon_graal.runner.api.data.DTOFunctionExecute;
+import pt.ist.photon_graal.runner.api.error.IsolateError;
 import pt.ist.photon_graal.runner.func.FunctionDispatcher;
 import pt.ist.photon_graal.runner.func.FunctionRunner;
-import pt.ist.photon_graal.runner.api.error.IsolateError;
 
 public class RunnerService {
     private final FunctionRunner functionRunner;

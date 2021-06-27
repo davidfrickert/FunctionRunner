@@ -7,7 +7,7 @@ import pt.ist.photon_graal.runner.api.error.IsolateError;
 
 public class FunctionDispatcher implements FunctionRunner {
 
-	private FunctionRunner runner;
+	private final FunctionRunner runner;
 
 	public FunctionDispatcher() {
 		if (Enviroment.isNative()) {

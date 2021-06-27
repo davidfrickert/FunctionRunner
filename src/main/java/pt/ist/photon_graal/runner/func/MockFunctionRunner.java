@@ -3,18 +3,19 @@ package pt.ist.photon_graal.runner.func;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.vavr.control.Either;
+import org.apache.commons.lang3.SerializationUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import pt.ist.photon_graal.metrics.MetricsSupport;
+import pt.ist.photon_graal.runner.api.data.ResultWrapper;
+import pt.ist.photon_graal.runner.api.data.Tuple;
+import pt.ist.photon_graal.runner.api.error.IsolateError;
+
 import java.lang.reflect.Method;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang3.SerializationUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import pt.ist.photon_graal.data.ResultWrapper;
-import pt.ist.photon_graal.data.Tuple;
-import pt.ist.photon_graal.metrics.MetricsSupport;
-import pt.ist.photon_graal.runner.api.error.IsolateError;
 
 public class MockFunctionRunner implements FunctionRunner {
 	private static Logger LOG = LoggerFactory.getLogger(MockFunctionRunner.class);

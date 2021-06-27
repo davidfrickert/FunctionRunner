@@ -1,6 +1,7 @@
 package pt.ist.photon_graal.runner.func;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.micrometer.core.instrument.Timer;
 import io.vavr.control.Either;
@@ -12,8 +13,8 @@ import org.graalvm.nativeimage.c.function.CEntryPoint;
 import org.graalvm.nativeimage.c.function.CEntryPoint.IsolateThreadContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pt.ist.photon_graal.data.ResultWrapper;
-import pt.ist.photon_graal.data.Tuple;
+import pt.ist.photon_graal.runner.api.data.ResultWrapper;
+import pt.ist.photon_graal.runner.api.data.Tuple;
 import pt.ist.photon_graal.metrics.MetricsSupport;
 import pt.ist.photon_graal.metrics.function.FunctionMetrics;
 import pt.ist.photon_graal.runner.api.error.IsolateError;
@@ -26,8 +27,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-
-import static pt.ist.photon_graal.rest.utils.Constants.mapper;
 
 public class FunctionRunnerImpl implements FunctionRunner {
 
@@ -124,13 +123,15 @@ public class FunctionRunnerImpl implements FunctionRunner {
             //Object functionInstance = klass.getConstructor().newInstance();
 
             Instant beforeExec = Instant.now();
-            // TODO update this to run with instance if non-static method
+
+            // TODO this code currently assumes ALL functions are to be ran as static methods
+            // TODO improve this to allow non static method functions as well.
             Object result = function.invoke(null, args);
 
             stats.add(new Tuple<>("isolate.inside.exec", Duration.between(beforeExec, Instant.now())));
 
             if (result instanceof JsonNode) {
-                mapper.treeToValue((JsonNode) result, FunctionMetrics.class)
+                new ObjectMapper().treeToValue((JsonNode) result, FunctionMetrics.class)
                         .getMetrics()
                         .forEach(metric -> stats.add(new Tuple<>(metric.getName(), metric.getDuration())));
             }
