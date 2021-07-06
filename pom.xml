@@ -12,7 +12,7 @@
         <java.version>11</java.version>
         <micrometer.version>1.7.1</micrometer.version>
         <lombok.version>1.18.20</lombok.version>
-        <jackson.version>2.12.3</jackson.version>
+        <jackson.version>2.12.4</jackson.version>
     </properties>
 
     <dependencies>
