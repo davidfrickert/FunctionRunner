@@ -10,7 +10,7 @@
     <properties>
         <graalvm.version>21.1.0</graalvm.version>
         <java.version>11</java.version>
-        <micrometer.version>1.7.1</micrometer.version>
+        <micrometer.version>1.7.2</micrometer.version>
         <lombok.version>1.18.20</lombok.version>
         <jackson.version>2.12.3</jackson.version>
     </properties>
