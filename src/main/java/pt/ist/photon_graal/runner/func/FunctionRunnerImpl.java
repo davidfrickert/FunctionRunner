@@ -5,6 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.micrometer.core.instrument.Timer;
 import io.vavr.control.Either;
+import java.lang.reflect.Method;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.lang3.SerializationUtils;
 import org.graalvm.nativeimage.CurrentIsolate;
 import org.graalvm.nativeimage.IsolateThread;
@@ -20,27 +25,13 @@ import pt.ist.photon_graal.runner.api.data.Tuple;
 import pt.ist.photon_graal.runner.api.error.IsolateError;
 import pt.ist.photon_graal.runner.utils.conversion.registry.TypeConversionRegistry;
 import pt.ist.photon_graal.runner.utils.handles.HandleUnwrapUtils;
-import pt.ist.photon_graal.runner.utils.management.IsolateStrategy;
-
-import java.lang.reflect.Method;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FunctionRunnerImpl implements FunctionRunner {
 
-    private final IsolateStrategy isolateStrategy;
     private final MetricsSupport metricsSupport;
 
-    public FunctionRunnerImpl(final IsolateStrategy isolateStrategy,
-                              final MetricsSupport metricsSupport) {
-        this.isolateStrategy = isolateStrategy;
-        this.metricsSupport = metricsSupport;
-    }
-
     public FunctionRunnerImpl(final MetricsSupport metricsSupport) {
-        this(IsolateStrategy.DEFAULT, metricsSupport);
+        this.metricsSupport = metricsSupport;
     }
 
     private static TypeConversionRegistry getRegistry() {
@@ -53,7 +44,7 @@ public class FunctionRunnerImpl implements FunctionRunner {
         final var currentIsolateThread = CurrentIsolate.getCurrentThread();
 
         Timer.Sample isolateCreation = Timer.start();
-        var requestIsolate = isolateStrategy.get();
+        var requestIsolate = metricsSupport.getSettings().getIsolateStrategy().get();
         isolateCreation.stop(metricsSupport.getMeterRegistry().timer("isolate.create"));
 
         final ObjectHandle result;
@@ -75,7 +66,7 @@ public class FunctionRunnerImpl implements FunctionRunner {
         execution.stop(metricsSupport.getMeterRegistry().timer("isolate.execution"));
 
         Timer.Sample tearDown = Timer.start();
-        isolateStrategy.release(requestIsolate);
+        metricsSupport.getSettings().getIsolateStrategy().release(requestIsolate);
         tearDown.stop(metricsSupport.getMeterRegistry().timer("isolate.teardown"));
 
         Timer.Sample outputConversion = Timer.start();
